@@ -1,0 +1,42 @@
+# Units with no tech requirements are assumed to be immediately available (for their faction, if applicable)
+
+- type: tech
+  title: Neural Motivator
+  desctiption: During the status phase, draw 2 action cards instead of 1
+  tech_type: biotic
+  starting_factions: []
+
+- type: tech
+  title: Dacxive Animators
+  desctiption: After you win a ground combat, you may place 1 infantry from your reinforcements on that planet
+  tech_type: biotic
+  tech_requirements: [biotic]
+
+- type: tech
+  title: Hyper Metabolism
+  desctiption: During the status phase, gain 3 command tokens instead of 2
+  tech_type: biotic
+  tech_requirements: [biotic, biotic]
+
+- type: unit
+  unit_type: Flagship
+  title: The Inferno
+  desctiption: "Action: Spend 1 token from your strategy pool to place 1 cruiser in this unit's system"
+  faction: The Embers of Muaat
+  unit_abilities: [Sustain damage]
+  unit_cost: 8
+  unit_combat: 5 x 2
+  unit_move: 1
+  unit_capacity: 3
+
+- type: unit
+  unit_type: War Sun
+  title: Prototype War Sun I
+  subtitle: Muaat War Sun
+  desctiption: "Action: Spend 1 token from your strategy pool to place 1 cruiser in this unit's system"
+  faction: The Embers of Muaat
+  unit_abilities: [Sustain damage, Bombardment 3 x 3]
+  unit_cost: 12
+  unit_combat: 3 x 3
+  unit_move: 1
+  unit_capacity: 6
