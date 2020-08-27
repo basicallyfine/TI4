@@ -3,7 +3,8 @@ import _ from 'lodash';
 import { Router, Route, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 
-import Tech from './components/tech';
+// import Tech from './components/tech';
+import RollingCalculator from './components/rolling-calculator';
 
 import './styles/app.css';
 
@@ -13,7 +14,7 @@ export default () => {
   return (
   <Router history={history}>
       <Switch>
-        <Route path="/" component={Tech} />
+        <Route path="/" component={RollingCalculator} />
       </Switch>
   </Router>
   );
