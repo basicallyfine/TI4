@@ -1,9 +1,11 @@
-.rolling-calculator {  
+@import "../_includes.scss";
+
+.rolling-calculator {
   .dice-container {
     display: flex;
     flex-wrap: wrap;
   }
-  
+
   .die-box {
     display: block;
     position: relative;
@@ -18,11 +20,11 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   .die-box.inactive {
     border-style: dashed;
   }
-  
+
   .die-action-button {
     appearance: none;
     position: absolute;
@@ -44,48 +46,70 @@
     transition-duration: 0.2s;
     outline: none !important;
   }
-  
+
   .die-action-button:hover {
     opacity: 1;
     background-color: rgba(0, 0, 0, 1);
   }
-  
+
   .die-action-button svg {
     vertical-align: baseline;
     fill: currentColor;
     height: auto;
   }
-  
+
   /* .die-box .swiper-slide.swiper-slide-prev {
     transform: rotateX(-90deg);
     transform-origin: bottom;
   }
-  
+
   .die-box .swiper-slide.swiper-slide-next {
     transform: rotateX(90deg);
     transform-origin: top;
   } */
-  
+
   .calculation-table {
     border-collapse: collapse;
   }
-  
+
   .calculation-table th,
   .calculation-table td {
     border: 1px solid transparent;
     padding: 0.33em 0.67em;
     text-align: right;
   }
-  
+
   .calculation-table thead th {
     /* box-shadow: 0 1px currentColor; */
     border-bottom-color: currentColor;
     // padding-bottom: 0.5em;
   }
-  
+
   .calculation-table th:first-child {
     border-right-color: currentColor;
     text-align: center;
   }
-  
+
+  .add-die-button-container {
+    max-width: 100%;
+    overflow-x: auto;
+
+    @media (hover: none) {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      bottom: 0;
+      font-size: 1vw;
+      .btn-group {
+        flex-wrap: nowrap;
+        width: 100%;
+        .btn {
+          padding: ($spacer / 2) 0 $spacer;
+          font-size: 7vw;
+          line-height: 1;
+        }
+      }
+    }
+  }
+
 }

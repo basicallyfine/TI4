@@ -3,7 +3,7 @@
     transform: rotateX(-90deg);
     transform-origin: bottom;
   }
-  
+
   .die-box .swiper-slide.swiper-slide-next {
     transform: rotateX(90deg);
     transform-origin: top;
@@ -76,3 +76,22 @@
 .rolling-calculator .calculation-table th:first-child {
   border-right-color: currentColor;
   text-align: center; }
+
+.rolling-calculator .add-die-button-container {
+  max-width: 100%;
+  overflow-x: auto; }
+
+@media (hover: none) {
+  .rolling-calculator .add-die-button-container {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    font-size: 1vw; }
+  .rolling-calculator .add-die-button-container .btn-group {
+    flex-wrap: nowrap;
+    width: 100%; }
+  .rolling-calculator .add-die-button-container .btn-group .btn {
+    padding: 0.5rem 0 1rem;
+    font-size: 7vw;
+    line-height: 1; } }

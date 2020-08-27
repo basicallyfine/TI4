@@ -108,7 +108,7 @@ class Calculator extends Component {
       </table>
     );
   }
-  render() {    
+  render() {
     // const diceValueGroups = _.chain(this.state.dice)
     //   .filter()
     //   .groupBy()
@@ -117,13 +117,13 @@ class Calculator extends Component {
     //   .value();
 
     const addButtons = [];
-    for (let i = 1; i <= 10; i += 1) {
+    for (let i = 10; i >= 1; i -= 1) {
       addButtons.push((
         <button
           key={i}
           type="button"
-          // className="btn btn-outline-dark"
-          className="btn btn-light"
+          className="btn btn-outline-dark"
+          // className="btn btn-secondary"
           onClick={() => { this.addDie(i); }}
         >
           {i}
@@ -136,15 +136,8 @@ class Calculator extends Component {
         <h1>Set some dice to see some numbers</h1>
 
         <div className="add-die-button-container">
-          <div className="input-group my-1">
-            <div className="input-group-prepend">
-              <span className="input-group-text">
-                <FaPlusCircle />
-              </span>
-            </div>
-            <div className="input-group-append">
-              {addButtons}
-            </div>
+          <div class="btn-group" role="group">
+            {addButtons}
           </div>
         </div>
 
