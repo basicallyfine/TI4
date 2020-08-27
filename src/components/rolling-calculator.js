@@ -11,76 +11,13 @@ import { calculator } from "../lib/rolling-calculator";
 import "swiper/swiper-bundle.css";
 import "../styles/components/rolling-calculator.css";
 
-const DieActionButton = ({ onClick, children } = {}) => (
-  <button className="die-action-button" type="button" onClick={onClick}>
-    {children}
-  </button>
-);
-
-const DieBox = ({ onUpdate, onRemove, value } = {}) => {
-  // const [value, setValue] = useState(null);
-  const [swiperInstance, setSwiperInstance] = useState(null);
-
-  const handleSwiperChange = (swiper) => {
-    // setValue(swiper.activeIndex);
-    onUpdate(swiper.activeIndex);
-  };
-
-  useEffect(() => {
-    if (swiperInstance) {
-      swiperInstance.slideTo(value || 0, 0);
-    }
-  }, [value, swiperInstance]);
-
-  const dieValues = [];
-  for (let i = 1; i <= 10; i += 1) {
-    dieValues.push(<SwiperSlide key={i}>{i}</SwiperSlide>);
-  }
-
-  return (
-    <div className={`die-box ${value === null ? "inactive" : "active"}`}>
-      <Swiper
-        // spaceBetween={0.25}
-        // slidesPerView={1.75}
-        direction="vertical"
-        // cssMode={false}
-        mousewheel
-        // cubeEffect
-        onSlideChange={handleSwiperChange}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onScroll={(...stuff) => console.log("onScroll", stuff)}
-        // onScrollCapture={(...stuff) => console.log("onScrollCapture", stuff)}
-        onInit={(swiper) => {
-          setSwiperInstance(swiper);
-        }}
-      >
-        <SwiperSlide>
-          {value === null ? (
-            <DieActionButton
-              disabled={!(swiperInstance && swiperInstance.slideNext)}
-              onClick={() => {
-                swiperInstance.slideTo(1);
-              }}
-            >
-              <FaPlusCircle />
-            </DieActionButton>
-          ) : (
-            <DieActionButton>
-              <FaMinusCircle onClick={onRemove} />
-            </DieActionButton>
-          )}
-        </SwiperSlide>
-        {dieValues}
-      </Swiper>
-    </div>
-  );
-};
-
 class Calculator extends Component {
   constructor() {
     super();
-    this.state = { dice: [null] };
+    this.state = { dice: [] };
     this.setDice = this.setDice.bind(this);
+    this.addDie = this.addDie.bind(this);
+    this.removeDie = this.removeDie.bind(this);
     this.setCalculation = this.setCalculation.bind(this);
     this.renderCalulation = this.renderCalulation.bind(this);
   }
@@ -89,17 +26,19 @@ class Calculator extends Component {
     this.setState({ swiperInit: true });
   }
   setDice(values) {
-    const filteredValues = _.filter(values, (v) => typeof v === "number");
-    if (_.last(filteredValues)) {
-      filteredValues.push(null);
-    }
+    const filteredValues = _.chain(values).filter((v) => typeof v === "number").sortBy().value();
     this.setState({
       dice: filteredValues
-    });
-
-    this.setCalculation();
+    }, this.setCalculation);
   }
-  setCalculation() {
+  addDie(value) {
+    this.setDice(this.state.dice.concat(value));
+  }
+  removeDie(index) {
+    const newDice = _.clone(this.state.dice);
+    this.setDice(newDice.splice(index, 1));
+  }
+  async setCalculation() {
     const valueString = _.chain(this.state.dice)
       .filter()
       .sort()
@@ -124,10 +63,23 @@ class Calculator extends Component {
     this.setState({
       calculator: {
         results: calculation.results,
-        cumulative: calculation.cumulative
+        cumulative: calculation.cumulative,
       },
-      valueString
+      valueString,
     });
+  }
+  formatPercent(float) {
+    let rounded = Math.round(float * 100);
+    if (rounded === 100) {
+      console.log(rounded, float, 1 - float);
+      if (float < 1) {
+        rounded = '>99';
+      }
+      if (float > 1) {
+        rounded = '100';
+      }
+    }
+    return rounded;
   }
   renderCalulation() {
     if (!this.state.calculator) return null;
@@ -137,8 +89,8 @@ class Calculator extends Component {
       rows.push(
         <tr key={hits}>
           <th>{hits}</th>
-          <td>{Math.round(this.state.calculator.cumulative[hits] * 100)}%</td>
-          <td>{Math.round(this.state.calculator.results[hits] * 100)}%</td>
+          <td>{this.formatPercent(this.state.calculator.cumulative[hits])}%</td>
+          <td>{this.formatPercent(this.state.calculator.results[hits])}%</td>
         </tr>
       );
     }
@@ -156,46 +108,54 @@ class Calculator extends Component {
       </table>
     );
   }
-  render() {
-    const diceBoxes = [];
-    if (this.state.swiperInit) {
-      for (let i = 0; i < this.state.dice.length; i += 1) {
-        diceBoxes.push(
-          <DieBox
-            key={i}
-            value={this.state.dice[i]}
-            onUpdate={(value) => {
-              const newValues = _.clone(this.state.dice);
-              while (newValues[i] === undefined) {
-                newValues.push(null);
-              }
-              newValues[i] = value;
-              this.setDice(newValues);
-            }}
-            onRemove={() => {
-              const newValues = _.clone(this.state.dice);
-              newValues.splice(i, 1);
-              this.setDice(newValues);
-            }}
-          />
-        );
-      }
-    }
+  render() {    
+    // const diceValueGroups = _.chain(this.state.dice)
+    //   .filter()
+    //   .groupBy()
+    //   .toPairs()
+    //   .map(([value, rolls]) => `${value}×${rolls.length}`)
+    //   .value();
 
-    const diceValueGroups = _.chain(this.state.dice)
-      .filter()
-      .groupBy()
-      .toPairs()
-      .map(([value, rolls]) => `${value}×${rolls.length}`)
-      .value();
+    const addButtons = [];
+    for (let i = 1; i <= 10; i += 1) {
+      addButtons.push((
+        <button
+          key={i}
+          type="button"
+          // className="btn btn-outline-dark"
+          className="btn btn-light"
+          onClick={() => { this.addDie(i); }}
+        >
+          {i}
+        </button>
+      ));
+    }
 
     return (
       <div className="container rolling-calculator my-2">
         <h1>Set some dice to see some numbers</h1>
-        <div className="dice-container my-2">{diceBoxes}</div>
-        {diceValueGroups.length > 0 && (
+
+        <div className="add-die-button-container">
+          <div className="input-group my-1">
+            <div className="input-group-prepend">
+              <span className="input-group-text">
+                <FaPlusCircle />
+              </span>
+            </div>
+            <div className="input-group-append">
+              {addButtons}
+            </div>
+          </div>
+        </div>
+
+        <div className="dice-container my-2">
+          {this.state.dice.map((value, i) => (
+            <div className="die-box" key={i}>{value}</div>
+          ))}
+        </div>
+        {/* diceValueGroups.length > 0 && (
           <h4>Rolling for: {diceValueGroups.join(", ")}</h4>
-        )}
+        ) */}
         {this.renderCalulation()}
       </div>
     );

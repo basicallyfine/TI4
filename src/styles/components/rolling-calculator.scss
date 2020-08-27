@@ -7,34 +7,20 @@
   .die-box {
     display: block;
     position: relative;
-    width: 4rem;
-    height: 4rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border: 1px currentColor solid;
     margin: 0.2rem;
     /* overflow: hidden; */
-    font-size: 1.75em;
+    font-size: 1.25em;
     font-weight: 700;
-    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .die-box.inactive {
     border-style: dashed;
-  }
-  
-  .die-box .swiper-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    /* padding: 20% 10%; */
-  }
-  
-  .die-box .swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    /* transform: rotateX(0);
-    transition-duration: inherit; */
   }
   
   .die-action-button {
