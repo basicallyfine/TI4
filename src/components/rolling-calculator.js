@@ -109,6 +109,14 @@ class Calculator extends Component {
       return;
     }
 
+    if (!valueString) {
+      this.setState({
+        calculator: null,
+        valueString
+      });
+      return
+    }
+
     const calculation = new calculator(
       ...valueString.split(",").map((s) => parseInt(s, 10))
     );
