@@ -1,0 +1,26 @@
+.dice-chart .results-chart-wrapper {
+  position: relative;
+  height: 70vw;
+  max-width: 600px;
+  max-height: 420px; }
+
+.dice-chart .results-chart-contents {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  padding: 1em 0 3em 3em; }
+
+.dice-chart svg {
+  overflow: visible; }
+  .dice-chart svg text {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    fill: currentColor !important; }
+  .dice-chart svg line {
+    stroke: #555 !important;
+    stroke-width: 1px !important; }
+
+.dice-chart .result-label-bottom {
+  margin-top: 2.5em; }

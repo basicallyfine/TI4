@@ -1,0 +1,93 @@
+@import "../../../styles/_includes.scss";
+
+// .modal-wrapper {
+//     position: fixed;
+//     width: 100%;
+//     height: 100%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     color: #ffffff;
+//     background: rgba(0,0,0,0.5);
+//     transition: opacity 0.2s;
+//     opacity: 0;
+//     z-index: -1;
+//     &.modal-open {
+//         z-index: 9999;
+//         opacity: 1;
+//     }
+//     &.modal-transitioning {
+//         z-index: 9999;
+//     }
+// }
+
+.modal-wrapper {
+    .modal {
+        display: flex;
+        flex-direction: row;
+        z-index: -1;
+    }
+    .modal-backdrop {
+        opacity: 0;
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .modal-dialog {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        @include media-breakpoint-up(sm) {
+            &::before {
+                content: "";
+                flex-grow: 1;
+            }
+            &::after {
+                content: "";
+                flex-grow: 4;
+            }
+        }
+    }
+    .modal-dialog, .modal-custom {
+        position: relative;
+        z-index: $zindex-modal;
+    }
+    &.modal-open {
+        .modal-backdrop {
+            opacity: $modal-backdrop-opacity;
+        }
+    }
+    &.modal-open, &.modal-transitioning {
+        z-index: $zindex-modal;
+        .modal {
+            display: flex;
+            z-index: $zindex-modal;
+        }
+        .modal-backdrop {
+            display: block;
+            z-index: $zindex-modal-backdrop;
+        }
+    }
+    &.modal-inline {
+        .modal {
+            overflow: visible;
+        }
+        .modal-backdrop {
+            position: fixed;
+            left: -100vw;
+            width: 200vw;
+            top: -100vh;
+            height: 200vh;
+        }
+    }
+
+    .floating-close-button {
+        position: absolute;
+        top: $modal-header-padding-y;
+        right: $modal-header-padding-x;
+    }
+}
