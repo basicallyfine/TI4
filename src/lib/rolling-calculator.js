@@ -79,7 +79,13 @@ class simulator {
 
 class calculator {
     constructor(...dice) {
-        this.dice = dice;
+        this.dice = dice.map((input) => {
+            let dieValue = parseFloat(input, 10);
+            if (dieValue === 0) {
+                dieValue = 10;
+            }
+            return dieValue;
+        });
     }
     get results() {
         if (!this._results) {

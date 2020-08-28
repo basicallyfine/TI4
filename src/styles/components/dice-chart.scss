@@ -29,6 +29,12 @@
             stroke: $gray-600 !important;
             stroke-width: 1px !important;
         }
+        // path {
+        //     mix-blend-mode: screen;
+        // }
+    }
+    .result-label-top {
+        margin-bottom: 1em;
     }
     .result-label-bottom {
         margin-top: 2.5em;
