@@ -2,7 +2,7 @@
     "name": "ti4-reference",
     "version": "0.0.1",
     "private": true,
-    "homepage": "/ti4-reference/",
+    "homepage": "/TI4/",
     "dependencies": {
         "@nivo/line": "^0.62.0",
         "@testing-library/jest-dom": "^4.2.4",
@@ -15,7 +15,6 @@
         "object-hash": "^2.0.3",
         "querystring": "^0.2.0",
         "react": "^16.13.1",
-        "react-charts": "^2.0.0-beta.7",
         "react-dom": "^16.13.1",
         "react-icons": "^3.11.0",
         "react-router": "^5.2.0",
@@ -29,7 +28,7 @@
         "start-js": "PORT=3001 react-app-rewired start",
         "start": "npm-run-all -p watch-css start-js",
         "build": "npm run build-css && react-app-rewired build",
-        "deploy": "git subtree push --prefix build origin gh-pages",
+        "deploy": "npm run build && git subtree push --prefix build origin gh-pages",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
