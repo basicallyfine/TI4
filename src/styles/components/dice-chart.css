@@ -14,15 +14,13 @@
 
 .dice-chart svg {
   overflow: visible; }
-
-.dice-chart svg text {
-  font-family: inherit !important;
-  font-size: inherit !important;
-  fill: currentColor !important; }
-
-.dice-chart svg line {
-  stroke: #555 !important;
-  stroke-width: 1px !important; }
+  .dice-chart svg text {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    fill: currentColor !important; }
+  .dice-chart svg line {
+    stroke: #555 !important;
+    stroke-width: 1px !important; }
 
 .dice-chart .result-label-top {
   margin-bottom: 1em; }

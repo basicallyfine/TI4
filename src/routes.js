@@ -4,8 +4,7 @@ import { Router, Route, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 
 // import Tech from './components/tech';
-import RollingCalculator from './components/rolling-calculator';
-import DiceChart from './components/dice-chart';
+import DiceTable from './components/dice-table';
 
 import './styles/app.css';
 
@@ -15,8 +14,7 @@ export default () => {
   return (
   <Router history={history}>
       <Switch>
-        <Route path="/roll-calculator" component={RollingCalculator} />
-        <Route path="/" component={DiceChart} />
+        <Route path="/" component={DiceTable} />
       </Switch>
   </Router>
   );
