@@ -148,8 +148,8 @@ const DiceChart = () => {
 
     return (
         <div className="container dice-table my-2">
-            <h1>Enter hit values* into the table to see some probabilities</h1>
-            <p><strong>Probability of producing <a href="#" onClick={toggleResultMode}>{resultModeLabel}</a> X hits</strong></p>
+            <h1>Dice probabilities</h1>
+            <p>Enter combat values into the table to see the probability of producing different numbers of hits. Enter 0 for 10.</p>
             <div className="table-responsive">
               <form
                 onSubmit={(event) => {
@@ -203,8 +203,8 @@ const DiceChart = () => {
               </table>
               <input type="submit" style={{ position: 'fixed', left: '100%', top: '-100%' }} />
               </form>
-              <p className="mt-2 text-muted">*Enter <strong>0</strong> for 10</p>
             </div>
+            <p className="mt-0"><small>Probability of <a href="#" onClick={toggleResultMode}>{resultModeLabel}</a> X hits</small></p>
         </div>
     )
 };

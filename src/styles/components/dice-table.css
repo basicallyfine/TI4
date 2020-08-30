@@ -7,6 +7,7 @@
   position: relative;
   width: 5em; }
   .dice-table .dice-input-th .dice-input {
+    font-size: 1rem;
     appearance: none;
     background: none;
     border: 0 none;

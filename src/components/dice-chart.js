@@ -76,7 +76,7 @@ const DiceChart = () => {
             setInputs([
                 { key: 'ts1', dice: '699' },
                 { key: 'ts2', dice: '888' },
-                { key: 'ts3', dice: '8888' },
+                { key: 'ts3', dice: '5568' },
                 { key: 'ts4', dice: '333' },
                 { key: 'ts5', dice: '99999' },
             ]);
