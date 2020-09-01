@@ -1,29 +1,41 @@
 @import "../_includes.scss";
 
 .dice-table {
+  &.container {
+    max-width: map-get($container-max-widths, sm);
+  }
   .table {
     width: auto;
     min-width: 0;
   }
-  .dice-input-th {
-    padding: 0;
-    position: relative;
-    width: 5em;
-    .dice-input {
-      font-size: 1rem;
-      appearance: none;
-      background: none;
-      border: 0 none;
-      color: inherit;
-      font: inherit;
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      padding: 0 0.2em 0 0.8;
-      letter-spacing: 0.2em;
-      &::placeholder {
-        letter-spacing: 0;
-      }
+  .dice-input {
+    font-size: 1rem !important;
+    .form-control {
+      font-size: inherit;
+      padding-left: 0.55em;
+      padding-right: 0.25em;
+      min-width: 2.5em;
     }
   }
+  // .dice-input-th {
+  //   padding: 0;
+  //   position: relative;
+  //   width: 5em;
+  //   .dice-input {
+  //     font-size: 1rem;
+  //     appearance: none;
+  //     background: none;
+  //     border: 0 none;
+  //     color: inherit;
+  //     font: inherit;
+  //     position: absolute;
+  //     height: 100%;
+  //     width: 100%;
+  //     padding: 0 0.2em 0 0.8;
+  //     letter-spacing: 0.2em;
+  //     &::placeholder {
+  //       letter-spacing: 0;
+  //     }
+  //   }
+  // }
 }
