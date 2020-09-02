@@ -17,6 +17,17 @@
       min-width: 2.5em;
     }
   }
+
+  .results-table .table {
+    // font-size: $font-size-sm;
+    th, td {
+      padding: 0.4em 0.5em;
+    }
+    tbody th {
+      white-space: nowrap;
+      padding-right: 0.75em;
+    }
+  }
   // .dice-input-th {
   //   padding: 0;
   //   position: relative;

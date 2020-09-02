@@ -7,9 +7,15 @@
 
 .dice-table .dice-input {
   font-size: 1rem !important; }
+  .dice-table .dice-input .form-control {
+    font-size: inherit;
+    padding-left: 0.55em;
+    padding-right: 0.25em;
+    min-width: 2.5em; }
 
-.dice-table .dice-input .form-control {
-  font-size: inherit;
-  padding-left: 0.55em;
-  padding-right: 0.25em;
-  min-width: 2.5em; }
+.dice-table .results-table .table th, .dice-table .results-table .table td {
+  padding: 0.4em 0.5em; }
+
+.dice-table .results-table .table tbody th {
+  white-space: nowrap;
+  padding-right: 0.75em; }

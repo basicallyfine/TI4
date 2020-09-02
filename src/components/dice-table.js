@@ -45,6 +45,14 @@ function rowKey(seed) {
   return (Date.now() + Math.random() + seed).toString();
 }
 
+// const summariseDice = inputString => _.chain(inputString.split(''))
+//   .groupBy()
+//   .toPairs()
+//   .map(([groupValue, group]) => group.length === 1 ? groupValue : `${groupValue}×${group.length}`)
+//   .value()
+//   .join(',\u2009');
+const summariseDice = inputString => inputString.split('').sort().join('').replace(/([0-9])(?!\1+)/g, '$& ').replace(/[^\d]+$/, '');
+
 const ResultsChart = ({ data, colours = [], ...props } = {}) => (
   <ResponsiveLine
     data={data}
@@ -89,26 +97,26 @@ const DiceInput = ({ onUpdate, onRemove, value, colour }) => {
   )
 };
 
-const DiceChart = () => {
+const DiceTable = () => {
   const [resultMode, setResultMode] = useState(RESULT_MODE.AT_LEAST);
   const [inputs, setInputs] = useState([]);
   const [focus, setFocus] = useState(null);
 
   // EXAMPLE CONTENT
-  // useEffect(() => {
-  //     setInputs([
-  //       '',
-  //       '1',
-  //       '22',
-  //       '333',
-  //       '4444',
-  //       '55555',
-  //       '666666',
-  //       // '8888',
-  //       // '333',
-  //       // '99999',
-  //     ]);
-  // }, []);
+  useEffect(() => {
+      setInputs([
+        // '',
+        // '1',
+        // '22',
+        // '333',
+        // '4444',
+        // '55555',
+        // '666666',
+        // '8888',
+        // '333',
+        // '99999',
+      ]);
+  }, []);
 
   const rows = [];
 
@@ -127,7 +135,7 @@ const DiceChart = () => {
   const valueRange = { min: Infinity, max: -Infinity };
   const headerCols = [];
 
-  const data = _.chain(inputs).filter().map((dice, inputIndex) => {
+  const data = _.chain(inputs).filter().uniqBy(summariseDice).map((dice, inputIndex) => {
     const result = getCalculation(dice)[resultMode === RESULT_MODE.EXACT ? 'results' : 'cumulative'];
     const cols = [];
     for (let i = (resultMode === RESULT_MODE.EXACT ? 0 : 1); i <= maxHits; i += 1) {
@@ -152,6 +160,9 @@ const DiceChart = () => {
 
   return (
     <div className="container dice-table my-2">
+      <h1>Hit probabilities</h1>
+      <p>Enter combat values below to see the probability of producing different numbers of hits (enter 0 for 10). Click "Add dice" to get started.</p>
+
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -159,17 +170,17 @@ const DiceChart = () => {
           if (focused) focused.blur();
           setInputs(inputs.filter(dice => !!dice.replace(/[^\d]/g, '')));
         }}
-        className="d-flex flex-wrap mb-2"
+        className="d-flex flex-wrap mt-2 mb-2"
       >
         {inputs.map((dice, index) => (
-          <div className="dice-input input-group input-group-sm flex-nowrap flex-grow-0 flex-shrink-1 mb-0-5 mr-0-5 w-auto">
+          <div key={index} className="dice-input input-group input-group-sm flex-nowrap flex-grow-0 flex-shrink-1 mb-0-5 mr-0-5 w-auto">
             <input
               type="text"
               inputMode="numeric"
               className="form-control flex-grow-0 flex-shrink-0"
               value={dice}
-              placeholder="XXX"
-              style={{ width: `${(dice.length * 0.6) + 1.35}em` }}
+              placeholder="..."
+              style={{ width: `${(Math.max(3, dice.length) * 0.6) + 1.35}em` }}
               autoFocus={index === focus}
               onChange={(e) => {
                 const updateInputs = _.clone(inputs);
@@ -177,6 +188,7 @@ const DiceChart = () => {
                 setInputs(updateInputs);
               }}
               onBlur={() => { setFocus(null); }}
+              onFocus={() => { setFocus(index); }}
             />
             <div className="input-group-append">
               <button
@@ -204,15 +216,21 @@ const DiceChart = () => {
             setFocus(updateInputs.length - 1);
           }}
         >
-          + Add dice
+          + Add values
           </button>
         <input type="submit" style={{ position: 'fixed', left: '100%', top: '-100%' }} />
       </form>
+      {focus !== null && inputs.filter(v => v).length === 0 && (
+        <p class="mt-n2 text-muted">
+          <small>Combat values, eg "<u>688</u>"</small>
+        </p>
+      )}
 
       {data.length > 0 ? (
-        <div>
+        <div className="results-table">
+          <p><strong>Probability of <a href="#" onClick={toggleResultMode}>{resultModeLabel}</a> X hits</strong></p>
           <div className="table-responsive">
-            <table className="table table-bordered">
+            <table className="table">
               <thead>
                 <tr>
                   <th scope="col" />
@@ -221,26 +239,18 @@ const DiceChart = () => {
               </thead>
               <tbody>
                 {data.map(({ dice, cols }, rowIndex) => (
-                  <tr key={rowIndex}>
-                    <th scope="col">{dice}</th>
+                  <tr key={summariseDice(dice)}>
+                    <th scope="col">{summariseDice(dice)}</th>
                     {cols.map((value, colIndex) => <td key={colIndex} className="text-center" style={{ backgroundColor: typeof value === 'number' ? interpolateColours([20, 20, 50], [255, 40, 220], (value - valueRange.min) / (valueRange.max - valueRange.min)) : 'transparent' }}>{formatPercent(value)}</td>)}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className="mt-0"><small>Probability of <a href="#" onClick={toggleResultMode}>{resultModeLabel}</a> X hits</small></p>
         </div>
       ) : null}
     </div>
   );
-
-  return (
-    <div className="container dice-table my-2">
-      <h1>Dice probabilities</h1>
-      <p>Enter combat values into the table to see the probability of producing different numbers of hits. Enter 0 for 10.</p>
-    </div>
-  )
 };
 
-export default DiceChart;
+export default DiceTable;
