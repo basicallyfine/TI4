@@ -161,7 +161,7 @@ const DiceTable = () => {
   return (
     <div className="container dice-table my-2">
       <h1>Hit probabilities</h1>
-      <p>Enter combat values below to see the probability of producing different numbers of hits (enter 0 for 10). Click "Add dice" to get started.</p>
+      <p>Enter combat values below to see the probability of producing different numbers of hits.</p>
 
       <form
         onSubmit={(event) => {
@@ -222,7 +222,7 @@ const DiceTable = () => {
       </form>
       {focus !== null && inputs.filter(v => v).length === 0 && (
         <p class="mt-n2 text-muted">
-          <small>Combat values, eg "<u>688</u>"</small>
+          <small>Combat values, eg "<u>688</u>". Enter <u>0</u> for 10.</small>
         </p>
       )}
 
