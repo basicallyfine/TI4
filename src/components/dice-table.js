@@ -148,7 +148,7 @@ const DiceTable = () => {
         headerCols.push(i);
       }
     }
-    return { key: inputIndex, dice, cols };
+    return { key: inputIndex, dice, cols, average: getCalculation(dice).average };
   }).value();
 
   // if (inputs.filter(({ dice }) => dice).length > 0) {
@@ -221,7 +221,7 @@ const DiceTable = () => {
         <input type="submit" style={{ position: 'fixed', left: '100%', top: '-100%' }} />
       </form>
       {focus !== null && inputs.filter(v => v).length === 0 && (
-        <p class="mt-n2 text-muted">
+        <p className="mt-n2 text-muted">
           <small>Combat values, eg "<u>688</u>". Enter <u>0</u> for 10.</small>
         </p>
       )}
@@ -235,13 +235,15 @@ const DiceTable = () => {
                 <tr>
                   <th scope="col" />
                   {headerCols.map(hits => <th scope="col" className="text-center" key={hits}>{hits}</th>)}
+                  <th>Avg. hits</th>
                 </tr>
               </thead>
               <tbody>
-                {data.map(({ dice, cols }, rowIndex) => (
+                {data.map(({ dice, cols, average }, rowIndex) => (
                   <tr key={summariseDice(dice)}>
                     <th scope="col">{summariseDice(dice)}</th>
                     {cols.map((value, colIndex) => <td key={colIndex} className="text-center" style={{ backgroundColor: typeof value === 'number' ? interpolateColours([20, 20, 50], [255, 40, 220], (value - valueRange.min) / (valueRange.max - valueRange.min)) : 'transparent' }}>{formatPercent(value)}</td>)}
+                    <td className="text-right">{(Math.round(average * 10) / 10).toFixed(1)}</td>
                   </tr>
                 ))}
               </tbody>

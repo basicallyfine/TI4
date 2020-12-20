@@ -1,3 +1,5 @@
+/* --
+
 class simulator {
     constructor(...dice) {
         this.dice = dice;
@@ -77,6 +79,8 @@ class simulator {
     }
 }
 
+-- */
+
 class calculator {
     constructor(...dice) {
         this.dice = dice.map((input) => {
@@ -113,6 +117,15 @@ class calculator {
         }
         return this._cumulative;
     }
+    get average() {
+      let avg = 0;
+      for (const k in this._results) {
+        avg += parseInt(k, 10) * this._results[k];
+      }
+
+      return avg;
+    }
+
     format(text = true) {
         this.textOutput = text;
         return this;
@@ -154,4 +167,4 @@ class calculator {
     }
 }
 
-export { simulator, calculator };
+export { calculator };
