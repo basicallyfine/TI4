@@ -1,0 +1,33 @@
+# BASE FACTIONS
+- name: The Arborec
+- name: The Barony of Letnev
+- name: The Clan of Saar
+- name: The Embers of Muaat
+- name: The Emirates of Hacan
+- name: The Federation of Sol
+- name: The Ghosts of Creuss
+- name: The L1Z1X Mindnet
+- name: The Mentak Coalition
+- name: The Naalu Collective
+- name: The Nekro Virus
+- name: Sardakk N’orr
+- name: The Universities of Jol-Nar
+- name: The Winnu
+- name: The Xxcha Kingdom
+- name: The Yin Brotherhood
+- name: The Yssaril Tribes
+# POK FACTIONS
+- name: The Argent Flight
+  pok: true
+- name: The Empyrean
+  pok: true
+- name: The Mahact Gene-Sorcerers
+  pok: true
+- name: The Naaz-Rokha Alliance
+  pok: true
+- name: The Nomad
+  pok: true
+- name: The Titans of Ul
+  pok: true
+- name: The Vuil'Raith Cabal
+  pok: true

@@ -160,7 +160,7 @@ const DiceTable = () => {
 
   return (
     <div className="container dice-table my-2">
-      <h1>Hit probabilities</h1>
+      <h2>Dice probability calculator</h2>
       <p>Enter combat values below to see the probability of producing different numbers of hits.</p>
 
       <form
