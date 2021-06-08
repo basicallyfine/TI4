@@ -123,14 +123,14 @@ const FactionDeal = () => {
                         <input
                             type="checkbox"
                             className="form-check-input"
-                            id={`faction-checkbox-${faction.key}`}
+                            id={`faction-checkbox-${faction.code}`}
                             name="factions"
                             checked={!!(faction.selected && (expansions.pok || !faction.pok))}
                             disabled={faction.pok && !expansions.pok}
                             onChange={(e) => {
                                 selectFaction(faction.name, !!e.target.checked)
                             }}
-                            value={faction.key}
+                            value={faction.code}
                         />
                         <label className="form-check-label" htmlFor={`faction-checkbox-${i}`}>{faction.name}</label>
                     </div>

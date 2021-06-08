@@ -19,111 +19,32 @@ const GAME_COLOURS = {
 
 const FACTIONS = [
     // BASE GAME
-    {
-        key: 'AR',
-        name: 'The Arborec',
-    },
-    {
-        key: 'BL',
-        name: 'The Barony of Letnev',
-    },
-    {
-        key: 'CS',
-        name: 'The Clan of Saar',
-    },
-    {
-        key: 'EM',
-        name: 'The Embers of Muaat',
-    },
-    {
-        key: 'EH',
-        name: 'The Emirates of Hacan',
-    },
-    {
-        key: 'EP',
-        name: 'The Empyrean',
-    },
-    {
-        key: 'FS',
-        name: 'The Federation of Sol',
-    },
-    {
-        key: 'GC',
-        name: 'The Ghosts of Creuss',
-    },
-    {
-        key: 'LM',
-        name: 'The L1Z1X Mindnet',
-    },
-    {
-        key: 'MC',
-        name: 'The Mentak Coalition',
-    },
-    {
-        key: 'NC',
-        name: 'The Naalu Collective',
-    },
-    {
-        key: 'NV',
-        name: 'The Nekro Virus',
-    },
-    {
-        key: 'SN',
-        name: 'Sardakk N’orr',
-    },
-    {
-        key: 'UJ',
-        name: 'The Universities of Jol-Nar',
-    },
-    {
-        key: 'WN',
-        name: 'The Winnu',
-    },
-    {
-        key: 'XK',
-        name: 'The Xxcha Kingdom',
-    },
-    {
-        key: 'YB',
-        name: 'The Yin Brotherhood',
-    },
-    {
-        key: 'YT',
-        name: 'The Yssaril Tribes',
-    },
-
+    { code: 'AR', name: 'The Arborec', },
+    { code: 'BL', name: 'The Barony of Letnev', },
+    { code: 'CS', name: 'The Clan of Saar', },
+    { code: 'EM', name: 'The Embers of Muaat', },
+    { code: 'EH', name: 'The Emirates of Hacan', },
+    { code: 'EP', name: 'The Empyrean', },
+    { code: 'FS', name: 'The Federation of Sol', },
+    { code: 'GC', name: 'The Ghosts of Creuss', },
+    { code: 'LM', name: 'The L1Z1X Mindnet', },
+    { code: 'MC', name: 'The Mentak Coalition', },
+    { code: 'NC', name: 'The Naalu Collective', },
+    { code: 'NV', name: 'The Nekro Virus', },
+    { code: 'SN', name: 'Sardakk N’orr', },
+    { code: 'UJ', name: 'The Universities of Jol-Nar', },
+    { code: 'WN', name: 'The Winnu', },
+    { code: 'XK', name: 'The Xxcha Kingdom', },
+    { code: 'YB', name: 'The Yin Brotherhood', },
+    { code: 'YT', name: 'The Yssaril Tribes', },
     // POK
-    {
-        key: 'AF',
-        name: 'The Argent Flight',
-        pok: TRUE
-    },
-    {
-        key: 'MG',
-        name: 'The Mahact Gene-Sorcerers',
-        pok: TRUE
-    },
-    {
-        key: 'NR',
-        name: 'The Naaz-Rokha Alliance',
-        pok: TRUE
-    },
-    {
-        key: 'NM',
-        name: 'The Nomad',
-        pok: TRUE
-    },
-    {
-        key: 'TU',
-        name: 'The Titans of Ul',
-        pok: TRUE
-    },
-    {
-        key: 'VR',
-        name: 'The Vuil’Raith Cabal',
-        pok: TRUE
-    },
-]
+    { code: 'AF', name: 'The Argent Flight', pok: TRUE },
+    { code: 'MG', name: 'The Mahact Gene-Sorcerers', pok: TRUE },
+    { code: 'NR', name: 'The Naaz-Rokha Alliance', pok: TRUE },
+    { code: 'NM', name: 'The Nomad', pok: TRUE },
+    { code: 'TU', name: 'The Titans of Ul', pok: TRUE },
+    { code: 'VR', name: 'The Vuil’Raith Cabal', pok: TRUE },
+];
 
 export {
     GAME_COLOURS,
