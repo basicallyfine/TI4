@@ -1,0 +1,7 @@
+@function hexWidth($height) {
+    @return round($height * 1.15470053837925 * 10) / 10;
+}
+
+@function hexHeight($width) {
+    @return round($width * 0.866025403784439 * 10) / 10;
+}
