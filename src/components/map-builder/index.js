@@ -9,6 +9,7 @@ import { SYSTEMS } from '../../lib/constants';
 import { TILE_PLACEMENT } from './map-constants';
 
 import MapContainer from './MapContainer';
+import TileDisplay from './TileDisplay';
 
 import './styles.css';
 
@@ -28,6 +29,20 @@ const defaultTilePlacement = _.chain(SYSTEMS)
 const MapBuilder = () => {
     const [tilePlacement, setTilePlacement] = useState(defaultTilePlacement);
 
+    useEffect(() => {
+        moveTile(78, TILE_PLACEMENT.MAP_19);
+        moveTile(50, TILE_PLACEMENT.MAP_22);
+        moveTile(49, TILE_PLACEMENT.MAP_25);
+        moveTile(48, TILE_PLACEMENT.MAP_28);
+        moveTile(47, TILE_PLACEMENT.MAP_31);
+        moveTile(46, TILE_PLACEMENT.MAP_34);
+        
+        _.chain(SYSTEMS)
+        .filter(s => _.get(s, 'planets.length'))
+        .sampleSize(6)
+        .forEach((s) => { moveTile(s.number, TILE_PLACEMENT.TABLE); })
+        .value();
+    }, [])
     // useEffect(() => {
     // }, [JSON.stringify(tilePlacement)])
 
@@ -49,19 +64,33 @@ const MapBuilder = () => {
             }
         }
 
-        _.find(newPlacements, { place }).number = system;
+        _.find(newPlacements, { system }).place = place;
 
         setTilePlacement(newPlacements);
     }
 
     return (
         <div id="map-builder" className="container-fluid">
-            <DndProvider backend={HTML5Backend}>
-                <MapContainer
-                    tilePlacement={tilePlacement}
-                    moveTile={moveTile}
-                />
-            </DndProvider>
+            <div className="build-area">
+                <DndProvider backend={HTML5Backend}>
+                    <MapContainer
+                        tilePlacement={tilePlacement}
+                        moveTile={moveTile}
+                    />
+                    <TileDisplay
+                        systems={_.chain(tilePlacement)
+                            .filter({ place: TILE_PLACEMENT.TABLE })
+                            .map('system')
+                            .value()
+                        }
+                    />
+                </DndProvider>
+            </div>
+            <div className="stat-tables">
+                <table className="table">
+                    <thead><tr><th>TABLE STUFF</th></tr></thead>
+                </table>
+            </div>
         </div>
     );
 };

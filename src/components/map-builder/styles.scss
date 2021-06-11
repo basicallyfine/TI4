@@ -1,21 +1,39 @@
 @import '../../styles/includes';
 
-$tile-width-relative: 17.5vw;
-$place-wrapper-relative: 13vw;
-$tile-absolute-breakpoint: 600px + $grid-gutter-width;
-$tile-width: 105px;
-$place-wrapper: 78px;
+@function map-width($_tile-width) {
+    @return $_tile-width * 5.5;
+}
+@function map-height($_tile-height) {
+    @return $_tile-height * 7;
+}
+
+$tile-width-ratio: 0.175;
+$place-wrapper-ratio: 0.13;
+$tile-width-relative: 100vw * $tile-width-ratio;
+$place-wrapper-relative: 100vw * $place-wrapper-ratio;
+$tile-absolute-breakpoint: 685px + $grid-gutter-width;
+$tile-width: round(($tile-absolute-breakpoint - $grid-gutter-width) * $tile-width-ratio);
+$place-wrapper: round(($tile-absolute-breakpoint - $grid-gutter-width) * $place-wrapper-ratio);
+
+$tile-display-spacing: ($grid-gutter-width / 2);
+$tile-display-padding: $grid-gutter-width - $tile-display-spacing;
+$tile-display-margin-left: $grid-gutter-width * 2;
+$tile-display-layout-breakpoint: $tile-absolute-breakpoint + ($tile-width + $tile-display-spacing) + $tile-display-margin-left;  
 
 #map-builder {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     padding-top: 1rem;
     padding-bottom: 1rem;
+
+    .build-area {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
     .map-container {
-        width: $tile-width-relative * 5.5;
-        height: hexHeight($tile-width-relative) * 7;
-        margin: 0 auto 1rem;
+        width: map-width($tile-width-relative);
+        height: map-height(hex-height($tile-width-relative));
+        margin: 0 auto 4rem;
         position: relative;
     }
     .map-place-wrapper {
@@ -23,40 +41,93 @@ $place-wrapper: 78px;
         transform: translate(-50%, -50%);
         width: $place-wrapper-relative;
         height: $place-wrapper-relative;
-        border-radius: 50%;
-        border: 2px dashed rgba(255,255,255,0.1);
-        &:hover {
-            border: 2px dashed #ffffff;
-            z-index: 200 !important;
-            .map-place {
-                background: rgba(255,255,255,0.2);
-            }
-        }
-        .map-place {
+        .system-tile {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            background: none no-repeat 50% 50%;
-            background-size: contain;
-
-            width: $tile-width-relative;
-            height: hexHeight($tile-width-relative);
         }
+    }
+
+    .tile-display-container {
+        margin: 0 0 4rem;
+        flex-basis: 100%;
+        // padding: $grid-gutter-width / 2;
+        border: 1px dashed #ffffff;
+        padding: $tile-display-padding;
+
+        .system-tile {
+            margin: $tile-display-spacing / 2;
+            display: inline-block;
+            &.box-drop-area {
+                border: 1px solid #ffffff;
+                background: rgba(255,255,255,0.1);
+            }
+        }
+    }
+
+    .system-tile {
+        background: none no-repeat 50% 50%;
+        background-size: contain;
+
+        width: $tile-width-relative;
+        height: hex-height($tile-width-relative);
+    }
+
+    .stat-tables {
+        width: 100%;
     }
 
     @media only screen and (min-width: $tile-absolute-breakpoint) {
         .map-container {
-            width: $tile-width * 5.5;
-            height: hexHeight($tile-width) * 7;
+            width: map-width($tile-width);
+            height: map-height(hex-height($tile-width));
         }
         .map-place-wrapper {
             width: $place-wrapper;
             height: $place-wrapper;
-            .map-place {
-                width: $tile-width;
-                height: hexHeight($tile-width);
-            }
+        }
+        .system-tile {
+            width: $tile-width;
+            height: hex-height($tile-width);
+        }
+    }
+
+    @media only screen and (min-width: $tile-display-layout-breakpoint) {
+        .map-container {
+            margin-right: 0;
+        }
+        .tile-display-container {
+            height: map-height(hex-height($tile-width));
+            width: auto;
+            flex-grow: 1;
+            flex-basis: 0;
+            margin-right: auto;
+            margin-left: $tile-display-margin-left;
+            overflow-y: auto;
+            text-align: center;
+
+            max-width: $tile-width + $tile-display-spacing + ($tile-display-padding * 2);
+
+            // flex-grow: 1;
+            // width: auto;
+
+            // flex-wrap: nowrap;
+            // width: auto;
+            // min-width: $tile-display-width;
+            // max-width: ($tile-display-width + $tile-display-spacing) * 2;
+            // flex-grow: 1;
+            // overflow-y: auto;
+            // justify-content: flex-start;
+            // .system-tile {
+            //     margin: ($tile-display-spacing / 2) auto;
+            // }
+        }
+    }
+
+    @media only screen and (min-width: $tile-display-layout-breakpoint + ($tile-width + $tile-display-spacing)) {
+        .tile-display-container {
+            max-width: ($tile-width + $tile-display-spacing) * 2 + ($tile-display-padding * 2);
         }
     }
 }

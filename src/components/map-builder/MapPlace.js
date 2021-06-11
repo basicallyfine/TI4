@@ -4,7 +4,11 @@ import _ from 'lodash';
 import { URL } from '../../lib/constants';
 import { MAP_PLACE_POSITION } from './map-constants';
 
-const placeWrapperStyle = ({ position }) => {
+import SystemTile from './SystemTile';
+
+const placeWrapperStyle = ({ place }) => {
+    const position = _.get(MAP_PLACE_POSITION, place);
+
     const style = {
         left: _.get(position, 'left') || null,
         top: _.get(position, 'top') || null,
@@ -20,8 +24,8 @@ const placeBackground = ({ system, backgroundType = 'svg' }) => {
 }
 
 const MapPlace = ({ place, system = null, ...props }) => (
-    <div className="map-place-wrapper" style={placeWrapperStyle({ position: MAP_PLACE_POSITION[place], system })} >
-        <div className="map-place" key={place} style={{ backgroundImage: placeBackground({ system }) }} />
+    <div className="map-place-wrapper" key={place} style={placeWrapperStyle({ place })} >
+        <SystemTile system={system} />
     </div>
 );
 
