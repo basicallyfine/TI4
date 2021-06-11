@@ -1,3 +1,8 @@
+const URL = {
+    ASSETS_BUCKET: 'https://s3-ap-southeast-2.amazonaws.com/com.basicallyfine.public-assets',
+    SYSTEM_BACKGROUNDS_DIR: 'https://s3-ap-southeast-2.amazonaws.com/com.basicallyfine.public-assets/ti4/map/systems',
+};
+
 const GAME_COLOURS = {
     WHITE: '#FFFFFF',
     WHITE_2: '#828282',
@@ -48,7 +53,9 @@ const FACTIONS = [
 
 const SYSTEM_TILE_BACK = {
     BLUE: 'BLUE SYSTEM',
-    RED: 'RED SYSTEM'
+    RED: 'RED SYSTEM',
+    HS: 'HOME SYSTEM',
+    SPECIAL: 'SPECIAL',
 };
 
 const TECH_COLOR = {
@@ -77,6 +84,13 @@ const WORMHOLE = {
 };
 
 const SYSTEMS = [
+    {
+        number: 18,
+        back: SYSTEM_TILE_BACK.SPECIAL,
+        planets: [
+            { name: 'Mecatol Rex', trait: null, tech: null, legendary: false, resources: 1, influence: 6 }
+        ]
+    },
     {
         number: 61,
         back: SYSTEM_TILE_BACK.BLUE,
@@ -521,6 +535,7 @@ const SYSTEMS = [
 ];
 
 export {
+    URL,
     GAME_COLOURS,
     FACTIONS,
     SYSTEM_TILE_BACK,

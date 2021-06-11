@@ -1,51 +1,59 @@
 @import '../../styles/includes';
 
-$tile-width-relative: 18vw;
-$tile-wrapper-relative: 13vw;
-$tile-absolute-breakpoint: 600px;
+$tile-width-relative: 17.5vw;
+$place-wrapper-relative: 13vw;
+$tile-absolute-breakpoint: 600px + $grid-gutter-width;
 $tile-width: 105px;
-$tile-wrapper: 78px;
+$place-wrapper: 78px;
 
 #map-builder {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    .map-tile-container {
-        background: #002266;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    .map-container {
         width: $tile-width-relative * 5.5;
         height: hexHeight($tile-width-relative) * 7;
-        margin: 1rem auto;
+        margin: 0 auto 1rem;
         position: relative;
     }
-    .system-tile-wrapper {
+    .map-place-wrapper {
         position: absolute;
         transform: translate(-50%, -50%);
-        width: $tile-wrapper-relative;
-        height: $tile-wrapper-relative;
+        width: $place-wrapper-relative;
+        height: $place-wrapper-relative;
         border-radius: 50%;
+        border: 2px dashed rgba(255,255,255,0.1);
         &:hover {
             border: 2px dashed #ffffff;
             z-index: 200 !important;
+            .map-place {
+                background: rgba(255,255,255,0.2);
+            }
         }
-        .system-tile {
+        .map-place {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: none no-repeat 50% 50%;
+            background-size: contain;
+
             width: $tile-width-relative;
             height: hexHeight($tile-width-relative);
-            position: absolute;
-            left: ($tile-wrapper-relative - $tile-width-relative) / 2;
-            top: ($tile-wrapper-relative - hexHeight($tile-width-relative)) / 2;
-            background: rgba(0,0,0,0.5);
         }
     }
 
     @media only screen and (min-width: $tile-absolute-breakpoint) {
-        .map-tile-container {
+        .map-container {
             width: $tile-width * 5.5;
             height: hexHeight($tile-width) * 7;
         }
-        .system-tile-wrapper {
-            width: $tile-wrapper;
-            height: $tile-wrapper;
-            .system-tile {
+        .map-place-wrapper {
+            width: $place-wrapper;
+            height: $place-wrapper;
+            .map-place {
                 width: $tile-width;
                 height: hexHeight($tile-width);
             }
