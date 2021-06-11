@@ -1,1 +1,54 @@
 @import '../../styles/includes';
+
+$tile-width-relative: 18vw;
+$tile-wrapper-relative: 13vw;
+$tile-absolute-breakpoint: 600px;
+$tile-width: 105px;
+$tile-wrapper: 78px;
+
+#map-builder {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .map-tile-container {
+        background: #002266;
+        width: $tile-width-relative * 5.5;
+        height: hexHeight($tile-width-relative) * 7;
+        margin: 1rem auto;
+        position: relative;
+    }
+    .system-tile-wrapper {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: $tile-wrapper-relative;
+        height: $tile-wrapper-relative;
+        border-radius: 50%;
+        &:hover {
+            border: 2px dashed #ffffff;
+            z-index: 200 !important;
+        }
+        .system-tile {
+            width: $tile-width-relative;
+            height: hexHeight($tile-width-relative);
+            position: absolute;
+            left: ($tile-wrapper-relative - $tile-width-relative) / 2;
+            top: ($tile-wrapper-relative - hexHeight($tile-width-relative)) / 2;
+            background: rgba(0,0,0,0.5);
+        }
+    }
+
+    @media only screen and (min-width: $tile-absolute-breakpoint) {
+        .map-tile-container {
+            width: $tile-width * 5.5;
+            height: hexHeight($tile-width) * 7;
+        }
+        .system-tile-wrapper {
+            width: $tile-wrapper;
+            height: $tile-wrapper;
+            .system-tile {
+                width: $tile-width;
+                height: hexHeight($tile-width);
+            }
+        }
+    }
+}
