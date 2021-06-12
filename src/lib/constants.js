@@ -1,6 +1,5 @@
 const URL = {
-    ASSETS_BUCKET: 'https://s3-ap-southeast-2.amazonaws.com/com.basicallyfine.public-assets',
-    SYSTEM_BACKGROUNDS_DIR: 'https://s3-ap-southeast-2.amazonaws.com/com.basicallyfine.public-assets/ti4/map/systems',
+    ASSETS_BUCKET: 'https://s3-ap-southeast-2.amazonaws.com/com.basicallyfine.public-assets/'
 };
 
 const GAME_COLOURS = {

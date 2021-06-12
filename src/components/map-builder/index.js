@@ -36,12 +36,22 @@ const MapBuilder = () => {
         moveTile(48, TILE_PLACEMENT.MAP_28);
         moveTile(47, TILE_PLACEMENT.MAP_31);
         moveTile(46, TILE_PLACEMENT.MAP_34);
-        
-        _.chain(SYSTEMS)
-        .filter(s => _.get(s, 'planets.length'))
-        .sampleSize(6)
-        .forEach((s) => { moveTile(s.number, TILE_PLACEMENT.TABLE); })
-        .value();
+
+        moveTile(19, TILE_PLACEMENT.TABLE);
+        moveTile(20, TILE_PLACEMENT.TABLE);
+        moveTile(25, TILE_PLACEMENT.TABLE);
+        moveTile(29, TILE_PLACEMENT.TABLE);
+        moveTile(41, TILE_PLACEMENT.TABLE);
+        moveTile(43, TILE_PLACEMENT.TABLE);
+        moveTile(39, TILE_PLACEMENT.TABLE);
+        moveTile(40, TILE_PLACEMENT.TABLE);
+        moveTile(42, TILE_PLACEMENT.TABLE);
+        moveTile(44, TILE_PLACEMENT.TABLE);
+        moveTile(75, TILE_PLACEMENT.TABLE);
+        moveTile(67, TILE_PLACEMENT.TABLE);
+        moveTile(68, TILE_PLACEMENT.TABLE);
+        moveTile(65, TILE_PLACEMENT.TABLE);
+        moveTile(79, TILE_PLACEMENT.TABLE);
     }, [])
     // useEffect(() => {
     // }, [JSON.stringify(tilePlacement)])

@@ -18,7 +18,7 @@ $place-wrapper: round(($tile-absolute-breakpoint - $grid-gutter-width) * $place-
 $tile-display-spacing: ($grid-gutter-width / 2);
 $tile-display-padding: $grid-gutter-width - $tile-display-spacing;
 $tile-display-margin-left: $grid-gutter-width * 2;
-$tile-display-layout-breakpoint: $tile-absolute-breakpoint + ($tile-width + $tile-display-spacing) + $tile-display-margin-left;  
+$tile-display-layout-breakpoint: $tile-absolute-breakpoint + ($tile-width + $tile-display-spacing) + $tile-display-margin-left;
 
 #map-builder {
     padding-top: 1rem;
@@ -67,11 +67,18 @@ $tile-display-layout-breakpoint: $tile-absolute-breakpoint + ($tile-width + $til
     }
 
     .system-tile {
-        background: none no-repeat 50% 50%;
-        background-size: contain;
+        position: relative;
 
         width: $tile-width-relative;
         height: hex-height($tile-width-relative);
+
+        .system-image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
     }
 
     .stat-tables {

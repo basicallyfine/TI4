@@ -1,3 +1,5 @@
+import { URL } from '../../lib/constants';
+
 const TILE_PLACEMENT = {
     BOX: 'BOX',
     TABLE: 'TABLE',
@@ -120,8 +122,11 @@ const MAP_PLACE_POSITION = {
     MAP_36: { left: '36.4%', top: '14.3%', zIndex: 163 },
 };
 
+const SYSTEM_PNG_URL = `${URL.ASSETS_BUCKET}ti4/map/systems/png/`;
+
 export {
     TILE_PLACEMENT,
     MAP_PLACES,
     MAP_PLACE_POSITION,
+    SYSTEM_PNG_URL,
 }
