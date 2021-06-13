@@ -1,8 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 
-import { SYSTEMS } from '../../lib/constants';
+import {
+  SYSTEMS,
+} from '../../lib/constants';
 import { SYSTEM_PNG_URL } from './map-constants';
+
+import SystemTileContents from './SystemTileContents';
 
 const placeBackground = ({ system, backgroundType = 'svg' }) => {
     if (!system) return null;
@@ -11,13 +15,14 @@ const placeBackground = ({ system, backgroundType = 'svg' }) => {
 
 const systemContent = (systemNumber, contentType) => {
   const system = _.find(SYSTEMS, { number: systemNumber });
+
   if (!system) return null;
 
   if (contentType === 'image') {
     return <img src={`${SYSTEM_PNG_URL}${systemNumber}.png`} alt={`System ${systemNumber}`} className="system-image" />;
   }
 
-  return systemNumber;
+  return <SystemTileContents system={system} />;
 }
 
 const SystemTile = ({ system, style = {}, contentType = 'text', ...props }) => {

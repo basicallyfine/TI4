@@ -87,7 +87,7 @@ const SYSTEMS = [
         number: 18,
         back: SYSTEM_TILE_BACK.SPECIAL,
         planets: [
-            { name: 'Mecatol Rex', trait: null, tech: null, legendary: false, resources: 1, influence: 6 }
+            { name: 'Mecatol Rex', trait: null, tech: null, legendary: false, resources: 1, influence: 6, mecatol: true }
         ]
     },
     {

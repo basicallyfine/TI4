@@ -37,21 +37,22 @@ const MapBuilder = () => {
         moveTile(47, TILE_PLACEMENT.MAP_31);
         moveTile(46, TILE_PLACEMENT.MAP_34);
 
-        moveTile(19, TILE_PLACEMENT.TABLE);
-        moveTile(20, TILE_PLACEMENT.TABLE);
-        moveTile(25, TILE_PLACEMENT.TABLE);
-        moveTile(29, TILE_PLACEMENT.TABLE);
-        moveTile(41, TILE_PLACEMENT.TABLE);
-        moveTile(43, TILE_PLACEMENT.TABLE);
-        moveTile(39, TILE_PLACEMENT.TABLE);
-        moveTile(40, TILE_PLACEMENT.TABLE);
-        moveTile(42, TILE_PLACEMENT.TABLE);
-        moveTile(44, TILE_PLACEMENT.TABLE);
-        moveTile(75, TILE_PLACEMENT.TABLE);
-        moveTile(67, TILE_PLACEMENT.TABLE);
-        moveTile(68, TILE_PLACEMENT.TABLE);
-        moveTile(65, TILE_PLACEMENT.TABLE);
-        moveTile(79, TILE_PLACEMENT.TABLE);
+        moveTile(19, TILE_PLACEMENT.MAP_01);
+        moveTile(20, TILE_PLACEMENT.MAP_02);
+        moveTile(25, TILE_PLACEMENT.MAP_03);
+        moveTile(29, TILE_PLACEMENT.MAP_04);
+        moveTile(41, TILE_PLACEMENT.MAP_06);
+        moveTile(43, TILE_PLACEMENT.MAP_07);
+        moveTile(39, TILE_PLACEMENT.MAP_08);
+        moveTile(40, TILE_PLACEMENT.MAP_09);
+        moveTile(42, TILE_PLACEMENT.MAP_10);
+        moveTile(44, TILE_PLACEMENT.MAP_11);
+        moveTile(75, TILE_PLACEMENT.MAP_12);
+        moveTile(67, TILE_PLACEMENT.MAP_13);
+        moveTile(68, TILE_PLACEMENT.MAP_14);
+        moveTile(65, TILE_PLACEMENT.MAP_15);
+        moveTile(79, TILE_PLACEMENT.MAP_16);
+        moveTile(80, TILE_PLACEMENT.MAP_17);
     }, [])
     // useEffect(() => {
     // }, [JSON.stringify(tilePlacement)])

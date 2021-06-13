@@ -20,6 +20,14 @@ $tile-display-padding: $grid-gutter-width - $tile-display-spacing;
 $tile-display-margin-left: $grid-gutter-width * 2;
 $tile-display-layout-breakpoint: $tile-absolute-breakpoint + ($tile-width + $tile-display-spacing) + $tile-display-margin-left;
 
+$RED: #ff0000;
+$YELLOW: #ffff00;
+$BLUE: #0099ff;
+$ORANGE: #ff9900;
+$GREEN: #00CC00;
+
+$canvas-overflow: 3%;
+
 #map-builder {
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -56,6 +64,8 @@ $tile-display-layout-breakpoint: $tile-absolute-breakpoint + ($tile-width + $til
         border: 1px dashed #ffffff;
         padding: $tile-display-padding;
 
+        display: block;
+
         .system-tile {
             margin: $tile-display-spacing / 2;
             display: inline-block;
@@ -78,6 +88,21 @@ $tile-display-layout-breakpoint: $tile-absolute-breakpoint + ($tile-width + $til
           left: 0;
           width: 100%;
           height: 100%;
+        }
+
+        .konvajs-content {
+          position: absolute !important;
+          top: -$canvas-overflow !important;
+          left: -$canvas-overflow !important;
+          width: (100% + $canvas-overflow) !important;
+          height: (100% + $canvas-overflow) !important;
+          canvas {
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: visible;
+          }
         }
     }
 
