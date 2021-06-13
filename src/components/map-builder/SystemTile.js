@@ -22,7 +22,9 @@ const systemContent = (systemNumber, contentType) => {
     return <img src={`${SYSTEM_PNG_URL}${systemNumber}.png`} alt={`System ${systemNumber}`} className="system-image" />;
   }
 
-  return <SystemTileContents system={system} />;
+  return (
+    <SystemTileContents system={system} />
+  );
 }
 
 const SystemTile = ({ system, style = {}, contentType = 'text', ...props }) => {
