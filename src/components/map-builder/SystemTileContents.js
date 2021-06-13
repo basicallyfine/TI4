@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+
+import FontFaceObserver from 'fontfaceobserver';
 
 import 'konva';
 import { Stage, Layer, Group, RegularPolygon, Path, Circle, Text, Rect } from 'react-konva';
@@ -36,18 +38,37 @@ const OBJECT_RADIUS = WIDTH * 0.15;
 const OBJECT_LARGE_RADIUS = WIDTH * 0.23;
 const OBJECT_STROKE_WIDTH = 6;
 
-const TEXT = {
+const TEXT_PROPS = {
   BASE: {
     fontFamily: 'Roboto Mono',
     fontStyle: 'bold',
     fill: COLOR.WHITE,
     align: 'center',
     verticalAlign: 'middle',
+    lineHeight: 1.1,
   },
   OBJECT_LABEL: { fontSize: 22 },
   SYSTEM_LABEL: { fontSize: 22 },
   PLANET_VALUES: { fontSize: 30 },
 };
+
+const TextWithFont = ({ key, ...props }) => {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  useEffect(async () => {
+    // TODO: set from text props
+    const font = new FontFaceObserver('Roboto Mono', {
+      weight: 700,
+    });
+    await font.load().catch(function () {
+      console.log('font failed failed to load');
+    });
+    setFontLoaded(true);
+  }, []);
+
+  if (!fontLoaded) return null;
+  return <Text key={key} {...props} />;
+}
 
 const TileBorder = () => (
   <RegularPolygon
@@ -62,7 +83,7 @@ const TileBorder = () => (
 );
 
 const AnomalyBorder = () => {
-  const radius = WIDTH/2 - (BORDER_WIDTH * 2);
+  const radius = WIDTH/2 - (BORDER_WIDTH * 2.3);
   return (
     <RegularPolygon
       stroke={COLOR.RED}
@@ -85,8 +106,8 @@ const Planet = ({ position, planet }) => {
     strokeWidth: OBJECT_STROKE_WIDTH,
   };
   const labelProps = {
-      ...TEXT.BASE,
-      ...TEXT.OBJECT_LABEL,
+      ...TEXT_PROPS.BASE,
+      ...TEXT_PROPS.OBJECT_LABEL,
       text: planet.name.toUpperCase(),
       x: 0,
       y: 0,
@@ -110,10 +131,10 @@ const Planet = ({ position, planet }) => {
     break;
     default:
       labelProps.width = WIDTH / 2;
-      labelProps.height = TEXT.OBJECT_LABEL.fontSize;
+      labelProps.height = labelProps.fontSize * labelProps.lineHeight;
       labelProps.offsetX = labelProps.width / 2;
-      labelProps.offsetY = planetProps.radius + (planetProps.strokeWidth * 2) + TEXT.OBJECT_LABEL.fontSize;
-      labelProps.verticalAlign = 'top';
+      labelProps.offsetY = planetProps.radius + (planetProps.strokeWidth * 2) + (labelProps.height);
+      labelProps.verticalAlign = 'bottom';
   }
 
   return (
@@ -129,9 +150,9 @@ const SystemObject = ({ position, type, object }) => {
   switch (type) {
     case OBJECT_TYPE.PLANET: return <Planet planet={object} position={position} />;
     case OBJECT_TYPE.ANOMALY:
-      return <Text text={object} fill={COLOR.WHITE} x={0} y={0} />;
+      return <TextWithFont text={object} fill={COLOR.WHITE} x={0} y={0} />;
     case OBJECT_TYPE.WORMHOLE:
-      return <Text text={`${object} hole`} fill={COLOR.WHITE} x={0} y={0} />;
+      return <TextWithFont text={`${object} hole`} fill={COLOR.WHITE} x={0} y={0} />;
   }
 }
 

@@ -10,6 +10,7 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "bootstrap": "^4.5.0",
+        "fontfaceobserver": "^2.1.0",
         "history": "4.9.0",
         "konva": "^8.0.4",
         "lodash": "^4.17.15",
