@@ -4,7 +4,7 @@ import _ from 'lodash';
 import FontFaceObserver from 'fontfaceobserver';
 
 import 'konva';
-import { Stage, Layer, Group, RegularPolygon, Path, Circle, Text, Rect } from 'react-konva';
+import { Stage, Layer, Group, RegularPolygon, Circle, Text, Rect, Ellipse } from 'react-konva';
 
 import {
   GAME_COLOURS,
@@ -92,16 +92,30 @@ const AnomalyBorder = () => {
 }
 
 const PlanetIcon = ({ planet, size, ...props }) => {
-  // const strokeWidth = OBJECT_STROKE_WIDTH * 0.5;
-  const srcSize = 26;
-  const relativeUnit = src => ((src / srcSize) * size);
-
-  const baseProps = { strokeWidth: OBJECT_STROKE_WIDTH * 0.5, stroke: COLOR.BLACK };
-
   if (!planet) {
     console.error('No planet', this);
     return null;
   }
+
+  // const strokeWidth = OBJECT_STROKE_WIDTH * 0.5;
+  const srcSize = 26;
+  const relativeSize = src => (size / srcSize) * src;
+
+  const baseProps = {
+    strokeWidth: relativeSize(2.5),
+    stroke: COLOR.BLACK
+  };
+
+  const groupProps = {
+    width: size,
+    height: size,
+    offsetX: size * 0.5,
+    offsetY: size,
+    ...props,
+  };
+
+  const background = <Rect width={size} height={size} fill="rgba(255,255,255,0.5)" />;
+
   if (planet.legendary) return (
     <Rect
       width={size}
@@ -115,46 +129,131 @@ const PlanetIcon = ({ planet, size, ...props }) => {
   switch (planet.tech) {
     case TECH_COLOR.GREEN:
       return (
-        <Group
-          width={size}
-          height={size}
-          offsetX={size * 0.5}
-          offsetY={size}
-          {...props}
-          stroke="#ff0"
-          strokeWidth={1}
-        >
+        <Group {...groupProps} >
           <Circle
             {...baseProps}
             fill={COLOR.GREEN}
-            x={relativeUnit(5)}
-            y={relativeUnit(13)}
-            radius={relativeUnit(8)}
+            x={relativeSize(6)}
+            y={relativeSize(13)}
+            radius={relativeSize(4)}
           />
           <Circle
             {...baseProps}
             fill={COLOR.GREEN}
-            x={relativeUnit(21)}
-            y={relativeUnit(13)}
-            radius={relativeUnit(8)}
+            x={relativeSize(20)}
+            y={relativeSize(13)}
+            radius={relativeSize(4)}
           />
           <Circle
             {...baseProps}
             fill={COLOR.GREEN}
-            x={relativeUnit(13)}
-            y={relativeUnit(5)}
-            radius={relativeUnit(10)}
+            x={relativeSize(13)}
+            y={relativeSize(8)}
+            radius={relativeSize(7)}
           />
           <Circle
             {...baseProps}
             fill={COLOR.GREEN}
-            x={relativeUnit(13)}
-            y={relativeUnit(21)}
-            radius={relativeUnit(10)}
+            x={relativeSize(13)}
+            y={relativeSize(18)}
+            radius={relativeSize(7)}
           />
         </Group>
-      )
-    break;
+      );
+    case TECH_COLOR.YELLOW:
+      return (
+        <Group {...groupProps} >
+          <RegularPolygon
+            // radius={srcSize * 0.5}
+            sides={3}
+            width={size}
+            height={size}
+            {...baseProps}
+            fill={COLOR.YELLOW}
+            x={size * 0.5}
+            y={size * 0.4}
+            scaleY={-1.1}
+            strokeScaleEnabled={false}
+            lineJoin="round"
+          />
+          <Circle
+            {...baseProps}
+            fill={COLOR.YELLOW}
+            x={size * 0.5}
+            y={size * 0.4}
+            radius={relativeSize(6)}
+          />
+        </Group>
+      );
+    case TECH_COLOR.BLUE:
+      return (
+        <Group {...groupProps} >
+          <RegularPolygon
+            // radius={srcSize * 0.5}
+            sides={3}
+            width={size}
+            height={size}
+            {...baseProps}
+            fill={COLOR.BLUE}
+            x={size * 0.5}
+            y={size * 0.5}
+            scaleY={-1}
+            strokeScaleEnabled={false}
+            lineJoin="round"
+          />
+          <RegularPolygon
+            // radius={srcSize * 0.5}
+            sides={3}
+            width={size * 0.75}
+            height={size * 0.75}
+            {...baseProps}
+            fill={COLOR.BLUE}
+            x={size * 0.5}
+            y={size * 0.2}
+            scaleY={-1}
+            strokeScaleEnabled={false}
+            lineJoin="round"
+          />
+        </Group>
+      );
+    case TECH_COLOR.RED:
+      return (
+        <Group {...groupProps} >
+          <Ellipse
+            radius={{ x: relativeSize(9), y: relativeSize(11) }}
+            {...baseProps}
+            fill={COLOR.RED}
+            x={size * 0.5}
+            y={relativeSize(15)}
+          />
+          <RegularPolygon
+            sides={3}
+            width={relativeSize(14)}
+            height={relativeSize(14)}
+            {...baseProps}
+            fill={COLOR.RED}
+            rotation={-90}
+            x={relativeSize(7)}
+            y={relativeSize(8)}
+            lineJoin="round"
+            scaleX={1.2}
+            strokeScaleEnabled={false}
+          />
+          <RegularPolygon
+            sides={3}
+            width={relativeSize(14)}
+            height={relativeSize(14)}
+            {...baseProps}
+            fill={COLOR.RED}
+            rotation={90}
+            x={relativeSize(19)}
+            y={relativeSize(8)}
+            lineJoin="round"
+            scaleX={1.2}
+            strokeScaleEnabled={false}
+          />
+        </Group>
+      );
     default:
       return null
   }

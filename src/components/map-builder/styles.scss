@@ -11,7 +11,7 @@ $tile-width-ratio: 0.173;
 $place-wrapper-ratio: 0.13;
 $tile-width-relative: 100vw * $tile-width-ratio;
 $place-wrapper-relative: 100vw * $place-wrapper-ratio;
-$tile-absolute-breakpoint: 685px + $grid-gutter-width;
+$tile-absolute-breakpoint: 720px + $grid-gutter-width;
 $tile-width: round(($tile-absolute-breakpoint - $grid-gutter-width) * $tile-width-ratio);
 $place-wrapper: round(($tile-absolute-breakpoint - $grid-gutter-width) * $place-wrapper-ratio);
 
