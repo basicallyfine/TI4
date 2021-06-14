@@ -26,7 +26,6 @@ const COLOR = {
   BLUE: GAME_COLOURS.BLUE,
   YELLOW: GAME_COLOURS.YELLOW,
 };
-const BORDER_WIDTH = 12;
 
 const OBJECT_TYPE = {
   PLANET: 'PLANET',
@@ -83,11 +82,12 @@ const TileBorder = () => (
 );
 
 const AnomalyBorder = () => {
-  const radius = WIDTH/2 - (BORDER_WIDTH * 2.3);
+  const width = 12;
+  const radius = WIDTH * 0.5 - width * 1.5;
   return (
     <RegularPolygon
       stroke={COLOR.RED}
-      strokeWidth={BORDER_WIDTH}
+      strokeWidth={width}
       // dash={[0, radius/4, radius/2, radius/4]}
       dash={[0, radius * 0.15, radius * 0.2, radius * 0.15]}
       radius={radius}
@@ -196,13 +196,17 @@ const SystemObjects = ({ system }) => {
 const SystemTileContents = ({ system }) => {
 
   return (
-    <Stage width={WIDTH} height={HEIGHT}>
-      <Layer>
-        <TileBorder />
-        {system.anomaly ? <AnomalyBorder /> : null}
-        <SystemObjects system={system} />
-      </Layer>
-    </Stage>
+    <div className="svg-wrapper">
+      <svg xmlns="http://www.w3.org/1999/xlink" viewBox="0 0 515 446" className="system-image svg-border">
+        <path d="m 0 223 l 128.75 -223 l 257.5 0 l 128.75 223 l -128.75 223 l -257.5 0 z " stroke="#000000" stroke-width="1" />
+      </svg>
+      <Stage width={WIDTH} height={HEIGHT}>
+        <Layer>
+          {system.anomaly ? <AnomalyBorder /> : null}
+          <SystemObjects system={system} />
+        </Layer>
+      </Stage>
+    </div>
   );
 
   // return system.number;
