@@ -35,7 +35,7 @@ const OBJECT_TYPE = {
 
 const OBJECT_RADIUS = WIDTH * 0.15;
 const OBJECT_LARGE_RADIUS = WIDTH * 0.23;
-const OBJECT_STROKE_WIDTH = 6;
+const OBJECT_STROKE_WIDTH = 8;
 
 const TEXT_PROPS = {
   BASE: {
@@ -48,7 +48,7 @@ const TEXT_PROPS = {
   },
   OBJECT_LABEL: { fontSize: 22 },
   SYSTEM_LABEL: { fontSize: 22 },
-  PLANET_VALUES: { fontSize: 30 },
+  PLANET_VALUES: { fontSize: 44 },
 };
 
 const TextWithFont = ({ key, ...props }) => {
@@ -87,6 +87,24 @@ const AnomalyBorder = () => {
   );
 }
 
+const PlanetIcon = ({ planet, size, ...props }) => {
+  if (!planet) {
+    console.error('No planet', this);
+    return null;
+  }
+  if (planet.tech || planet.legendary) return (
+    <Rect
+      width={size}
+      height={size}
+      offsetX={size * 0.5}
+      offsetY={size}
+      fill="rgba(255,0,255,0.3)"
+      {...props}
+    />
+  );
+  return null;
+};
+
 const Planet = ({ position, planet }) => {
   const planetProps = {
     radius: (planet.mecatol || planet.legendary) ? OBJECT_LARGE_RADIUS : OBJECT_RADIUS,
@@ -101,34 +119,86 @@ const Planet = ({ position, planet }) => {
     y: 0,
   };
 
+  const labelMarginY = planetProps.strokeWidth * 2 - labelProps.fontSize * 0.1;
+  const labelMarginX = planetProps.strokeWidth * 2.2;
+
   switch (position) {
     case '2,0':
-
-      break;
+      labelProps.width = WIDTH * 0.24;
+      labelProps.height = HEIGHT * 0.2;
+      labelProps.x = planetProps.radius + labelMarginX;
+      labelProps.offsetY = labelProps.height * 0.5;
+      labelProps.verticalAlign = 'middle';
+      labelProps.align = 'left';
+    break;
     case '2,1':
-
-      break;
+      labelProps.width = WIDTH * 0.27;
+      labelProps.height = HEIGHT * 0.2;
+      labelProps.offsetX = labelProps.width;
+      labelProps.x = (planetProps.radius + labelMarginX) * -1;
+      labelProps.offsetY = labelProps.height * 0.5;
+      labelProps.verticalAlign = 'middle';
+      labelProps.align = 'right';
+    break;
     case '3,0':
-
-      break;
+      labelProps.width = WIDTH * 0.24;
+      labelProps.height = HEIGHT * 0.2;
+      labelProps.x = planetProps.radius + labelMarginX;
+      labelProps.offsetY = labelProps.height * 0.8;
+      labelProps.verticalAlign = 'middle';
+      labelProps.align = 'left';
+    break;
     case '3,1':
-
-      break;
-    case '3,2':
-
-      break;
-    default:
-      labelProps.width = WIDTH / 2;
+      labelProps.width = WIDTH * 0.5;
       labelProps.height = labelProps.fontSize * labelProps.lineHeight;
-      labelProps.offsetX = labelProps.width / 2;
-      labelProps.offsetY = planetProps.radius + (planetProps.strokeWidth * 2) + (labelProps.height);
+      labelProps.offsetX = labelProps.width;
+      labelProps.x = (planetProps.radius + labelMarginX) * -1;
+      labelProps.offsetY = labelProps.height * 0.5;
+      labelProps.verticalAlign = 'middle';
+      labelProps.align = 'right';
+    break;
+    case '3,2':
+      labelProps.width = WIDTH * 0.24;
+      labelProps.height = HEIGHT * 0.2;
+      labelProps.x = planetProps.radius + labelMarginX;
+      labelProps.offsetY = labelProps.height * 0.2;
+      labelProps.verticalAlign = 'middle';
+      labelProps.align = 'left';
+    break;
+    default:
+      labelProps.width = WIDTH * 0.5;
+      labelProps.height = labelProps.fontSize * labelProps.lineHeight;
+      labelProps.offsetX = labelProps.width * 0.5;
+      labelProps.offsetY = labelProps.height;
+      labelProps.y = planetProps.radius * -1 - labelMarginY
       labelProps.verticalAlign = 'bottom';
+  }
+
+  const planetValueProps = {
+    ...TEXT_PROPS.BASE,
+    ...TEXT_PROPS.PLANET_VALUES,
+    text: `${planet.resources}/${planet.influence}`,
+    width: planetProps.radius * 2,
+  };
+
+  const iconSize = 40;
+  const iconMargin = planetValueProps.fontSize * 0.3;
+  const icon = (planet.tech || planet.legendary) ? <PlanetIcon planet={planet} y={iconMargin * -0.5} size={iconSize} /> : null;
+
+  planetValueProps.height = planetValueProps.fontSize * planetValueProps.lineHeight;
+  planetValueProps.offsetX = planetValueProps.width * 0.5;
+  planetValueProps.offsetY = planetValueProps.height * 0.5;
+
+  if (icon) {
+    planetValueProps.y = (iconSize * 0.5) + (iconMargin * 0.5);
   }
 
   return (
     <>
       <Circle {...planetProps} />
-      <Rect {..._.pick(labelProps, ['x', 'y', 'width', 'height', 'offsetX', 'offsetY'])} fill="#00ffff" opacity={0.5} />
+      {icon}
+      <Text {...planetValueProps} />
+      {/* <Rect {..._.pick(labelProps, ['x', 'y', 'width', 'height', 'offsetX', 'offsetY'])} fill="#00ffff" opacity={0.5} /> */}
       <Text {...labelProps} />
     </>
   );
@@ -186,7 +256,7 @@ const SystemTileContents = ({ system }) => {
   return (
     <div className="svg-wrapper">
       <svg xmlns="http://www.w3.org/1999/xlink" viewBox="0 0 515 446" className="system-image svg-border">
-        <path d="m 0 223 l 128.75 -223 l 257.5 0 l 128.75 223 l -128.75 223 l -257.5 0 z " stroke="#000000" stroke-width="1" />
+        <path d="m 0 223 l 128.75 -223 l 257.5 0 l 128.75 223 l -128.75 223 l -257.5 0 z " />
       </svg>
       <Stage width={WIDTH} height={HEIGHT}>
         <Layer>
