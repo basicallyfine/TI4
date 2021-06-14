@@ -4,7 +4,7 @@ import _ from 'lodash';
 import FontFaceObserver from 'fontfaceobserver';
 
 import 'konva';
-import { Stage, Layer, Group, RegularPolygon, Circle, Text, Rect, Ellipse } from 'react-konva';
+import { Stage, Layer, Group, RegularPolygon, Circle, Text, Rect, Star } from 'react-konva';
 
 import {
   GAME_COLOURS,
@@ -28,6 +28,7 @@ const COLOR = {
   GREEN: GAME_COLOURS.GREEN,
   BLUE: GAME_COLOURS.BLUE,
   YELLOW: GAME_COLOURS.YELLOW,
+  GREY: "#C0C0C0",
 };
 
 const OBJECT_TYPE = {
@@ -97,166 +98,42 @@ const PlanetIcon = ({ planet, size, ...props }) => {
     return null;
   }
 
-  // const strokeWidth = OBJECT_STROKE_WIDTH * 0.5;
-  const srcSize = 26;
-  const relativeSize = src => (size / srcSize) * src;
-
-  const baseProps = {
-    strokeWidth: relativeSize(2.5),
-    stroke: COLOR.BLACK
-  };
-
-  const groupProps = {
-    width: size,
-    height: size,
-    offsetX: size * 0.5,
-    offsetY: size,
-    ...props,
-  };
-
-  const background = <Rect width={size} height={size} fill="rgba(255,255,255,0.5)" />;
-
   if (planet.legendary) return (
-    <Rect
-      width={size}
-      height={size}
-      offsetX={size * 0.5}
-      offsetY={size}
-      fill="rgba(255,0,255,0.3)"
+    <Star
+      numPoints={5}
+      fill={COLOR.GREY}
+      offsetY={size * 0.7}
+      outerRadius={size * 0.7}
+      innerRadius={size * 0.35}
       {...props}
     />
   );
+
+  const iconProps = {
+    width: size,
+    height: size,
+    offsetY: size * 0.5,
+    ...props,
+  };
+
   switch (planet.tech) {
     case TECH_COLOR.GREEN:
-      return (
-        <Group {...groupProps} >
-          <Circle
-            {...baseProps}
-            fill={COLOR.GREEN}
-            x={relativeSize(6)}
-            y={relativeSize(13)}
-            radius={relativeSize(4)}
-          />
-          <Circle
-            {...baseProps}
-            fill={COLOR.GREEN}
-            x={relativeSize(20)}
-            y={relativeSize(13)}
-            radius={relativeSize(4)}
-          />
-          <Circle
-            {...baseProps}
-            fill={COLOR.GREEN}
-            x={relativeSize(13)}
-            y={relativeSize(8)}
-            radius={relativeSize(7)}
-          />
-          <Circle
-            {...baseProps}
-            fill={COLOR.GREEN}
-            x={relativeSize(13)}
-            y={relativeSize(18)}
-            radius={relativeSize(7)}
-          />
-        </Group>
-      );
+      iconProps.fill = COLOR.GREEN;
+    break;
     case TECH_COLOR.YELLOW:
-      return (
-        <Group {...groupProps} >
-          <RegularPolygon
-            // radius={srcSize * 0.5}
-            sides={3}
-            width={size}
-            height={size}
-            {...baseProps}
-            fill={COLOR.YELLOW}
-            x={size * 0.5}
-            y={size * 0.4}
-            scaleY={-1.1}
-            strokeScaleEnabled={false}
-            lineJoin="round"
-          />
-          <Circle
-            {...baseProps}
-            fill={COLOR.YELLOW}
-            x={size * 0.5}
-            y={size * 0.4}
-            radius={relativeSize(6)}
-          />
-        </Group>
-      );
+      iconProps.fill = COLOR.YELLOW;
+    break;
     case TECH_COLOR.BLUE:
-      return (
-        <Group {...groupProps} >
-          <RegularPolygon
-            // radius={srcSize * 0.5}
-            sides={3}
-            width={size}
-            height={size}
-            {...baseProps}
-            fill={COLOR.BLUE}
-            x={size * 0.5}
-            y={size * 0.5}
-            scaleY={-1}
-            strokeScaleEnabled={false}
-            lineJoin="round"
-          />
-          <RegularPolygon
-            // radius={srcSize * 0.5}
-            sides={3}
-            width={size * 0.75}
-            height={size * 0.75}
-            {...baseProps}
-            fill={COLOR.BLUE}
-            x={size * 0.5}
-            y={size * 0.2}
-            scaleY={-1}
-            strokeScaleEnabled={false}
-            lineJoin="round"
-          />
-        </Group>
-      );
+      iconProps.fill = COLOR.BLUE;
+    break;
     case TECH_COLOR.RED:
-      return (
-        <Group {...groupProps} >
-          <Ellipse
-            radius={{ x: relativeSize(9), y: relativeSize(11) }}
-            {...baseProps}
-            fill={COLOR.RED}
-            x={size * 0.5}
-            y={relativeSize(15)}
-          />
-          <RegularPolygon
-            sides={3}
-            width={relativeSize(14)}
-            height={relativeSize(14)}
-            {...baseProps}
-            fill={COLOR.RED}
-            rotation={-90}
-            x={relativeSize(7)}
-            y={relativeSize(8)}
-            lineJoin="round"
-            scaleX={1.2}
-            strokeScaleEnabled={false}
-          />
-          <RegularPolygon
-            sides={3}
-            width={relativeSize(14)}
-            height={relativeSize(14)}
-            {...baseProps}
-            fill={COLOR.RED}
-            rotation={90}
-            x={relativeSize(19)}
-            y={relativeSize(8)}
-            lineJoin="round"
-            scaleX={1.2}
-            strokeScaleEnabled={false}
-          />
-        </Group>
-      );
+      iconProps.fill = COLOR.RED;
+    break;
     default:
-      return null
+      return null;
   }
+
+  return <Circle {...iconProps} />;
 };
 
 const Planet = ({ position, planet }) => {
@@ -350,16 +227,16 @@ const Planet = ({ position, planet }) => {
     width: planetProps.radius * 2,
   };
 
-  const iconSize = 6.5 * PT;
-  const iconMargin = planetValueProps.fontSize * 0.4;
-  const icon = (planet.tech || planet.legendary) ? <PlanetIcon planet={planet} y={iconMargin * -0.5} size={iconSize} /> : null;
+  const iconSize = 6 * PT;
+  const iconMargin = planetValueProps.fontSize * 0.5;
+  const icon = (planet.tech || planet.legendary) ? <PlanetIcon planet={planet} y={iconMargin * -0.8} size={iconSize} /> : null;
 
   planetValueProps.height = planetValueProps.fontSize * planetValueProps.lineHeight;
   planetValueProps.offsetX = planetValueProps.width * 0.5;
   planetValueProps.offsetY = planetValueProps.height * 0.5;
 
   if (icon) {
-    planetValueProps.y = (iconSize * 0.5) + (iconMargin * 0.5);
+    planetValueProps.y = (iconSize * 0.5) + (iconMargin * 0.3);
   }
 
   return (
@@ -376,8 +253,13 @@ const Planet = ({ position, planet }) => {
 const SystemObject = ({ position, type, object }) => {
   switch (type) {
     case OBJECT_TYPE.PLANET: return <Planet planet={object} position={position} />;
-    case OBJECT_TYPE.ANOMALY:
-      return <TextWithFont text={object} fill={COLOR.WHITE} x={0} y={0} />;
+    case OBJECT_TYPE.ANOMALY: {
+      switch (object) {
+        
+        default:
+          return null;
+      }
+    }
     case OBJECT_TYPE.WORMHOLE:
       return <TextWithFont text={`${object} hole`} fill={COLOR.WHITE} x={0} y={0} />;
   }
