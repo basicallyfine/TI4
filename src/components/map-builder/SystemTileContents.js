@@ -16,8 +16,11 @@ import {
   SYSTEMS,
 } from '../../lib/constants';
 
-const WIDTH = 470;
-const HEIGHT = 407;
+const WIDTH = 119 * 2;
+const HEIGHT = Math.round(WIDTH * 0.866025);
+
+const PT = WIDTH * 0.01;
+
 const COLOR = {
   WHITE: GAME_COLOURS.WHITE,
   BLACK: "#000000",
@@ -35,7 +38,7 @@ const OBJECT_TYPE = {
 
 const OBJECT_RADIUS = WIDTH * 0.15;
 const OBJECT_LARGE_RADIUS = WIDTH * 0.23;
-const OBJECT_STROKE_WIDTH = 8;
+const OBJECT_STROKE_WIDTH = 2 * PT;
 
 const TEXT_PROPS = {
   BASE: {
@@ -46,9 +49,9 @@ const TEXT_PROPS = {
     verticalAlign: 'middle',
     lineHeight: 1.1,
   },
-  OBJECT_LABEL: { fontSize: 22 },
-  SYSTEM_LABEL: { fontSize: 22 },
-  PLANET_VALUES: { fontSize: 44 },
+  OBJECT_LABEL: { fontSize: 4.75 * PT },
+  SYSTEM_LABEL: { fontSize: 4 * PT },
+  PLANET_VALUES: { fontSize: 10 * PT },
 };
 
 const TextWithFont = ({ key, ...props }) => {
@@ -70,14 +73,15 @@ const TextWithFont = ({ key, ...props }) => {
 }
 
 const AnomalyBorder = () => {
-  const width = 12;
+  const width = 2.5 * PT;
   const radius = WIDTH * 0.5 - width * 1.5;
   return (
     <RegularPolygon
       stroke={COLOR.RED}
       strokeWidth={width}
       // dash={[0, radius/4, radius/2, radius/4]}
-      dash={[0, radius * 0.15, radius * 0.2, radius * 0.15]}
+      // dash={[0, radius * 0.15, radius * 0.2, radius * 0.15]}
+      dash={[0, radius * 0.2, radius * 0.6, radius * 0.2]}
       radius={radius}
       sides={6}
       x={WIDTH / 2}
@@ -174,6 +178,21 @@ const Planet = ({ position, planet }) => {
       labelProps.verticalAlign = 'bottom';
   }
 
+  switch (planet.trait) {
+    case PLANET_TRAIT.BLUE:
+      planetProps.stroke = COLOR.BLUE;
+      labelProps.fill = COLOR.BLUE;
+    break;
+    case PLANET_TRAIT.RED:
+      planetProps.stroke = COLOR.RED;
+      labelProps.fill = COLOR.RED;
+    break;
+    case PLANET_TRAIT.GREEN:
+      planetProps.stroke = COLOR.GREEN;
+      labelProps.fill = COLOR.GREEN;
+    break;
+  }
+
   const planetValueProps = {
     ...TEXT_PROPS.BASE,
     ...TEXT_PROPS.PLANET_VALUES,
@@ -181,7 +200,7 @@ const Planet = ({ position, planet }) => {
     width: planetProps.radius * 2,
   };
 
-  const iconSize = 40;
+  const iconSize = 8 * PT;
   const iconMargin = planetValueProps.fontSize * 0.3;
   const icon = (planet.tech || planet.legendary) ? <PlanetIcon planet={planet} y={iconMargin * -0.5} size={iconSize} /> : null;
 
