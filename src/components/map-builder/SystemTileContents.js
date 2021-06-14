@@ -51,7 +51,7 @@ const TEXT_PROPS = {
   },
   OBJECT_LABEL: { fontSize: 4.75 * PT },
   SYSTEM_LABEL: { fontSize: 4 * PT },
-  PLANET_VALUES: { fontSize: 10 * PT },
+  PLANET_VALUES: { fontSize: 9 * PT },
 };
 
 const TextWithFont = ({ key, ...props }) => {
@@ -92,11 +92,17 @@ const AnomalyBorder = () => {
 }
 
 const PlanetIcon = ({ planet, size, ...props }) => {
+  // const strokeWidth = OBJECT_STROKE_WIDTH * 0.5;
+  const srcSize = 26;
+  const relativeUnit = src => ((src / srcSize) * size);
+
+  const baseProps = { strokeWidth: OBJECT_STROKE_WIDTH * 0.5, stroke: COLOR.BLACK };
+
   if (!planet) {
     console.error('No planet', this);
     return null;
   }
-  if (planet.tech || planet.legendary) return (
+  if (planet.legendary) return (
     <Rect
       width={size}
       height={size}
@@ -106,7 +112,52 @@ const PlanetIcon = ({ planet, size, ...props }) => {
       {...props}
     />
   );
-  return null;
+  switch (planet.tech) {
+    case TECH_COLOR.GREEN:
+      return (
+        <Group
+          width={size}
+          height={size}
+          offsetX={size * 0.5}
+          offsetY={size}
+          {...props}
+          stroke="#ff0"
+          strokeWidth={1}
+        >
+          <Circle
+            {...baseProps}
+            fill={COLOR.GREEN}
+            x={relativeUnit(5)}
+            y={relativeUnit(13)}
+            radius={relativeUnit(8)}
+          />
+          <Circle
+            {...baseProps}
+            fill={COLOR.GREEN}
+            x={relativeUnit(21)}
+            y={relativeUnit(13)}
+            radius={relativeUnit(8)}
+          />
+          <Circle
+            {...baseProps}
+            fill={COLOR.GREEN}
+            x={relativeUnit(13)}
+            y={relativeUnit(5)}
+            radius={relativeUnit(10)}
+          />
+          <Circle
+            {...baseProps}
+            fill={COLOR.GREEN}
+            x={relativeUnit(13)}
+            y={relativeUnit(21)}
+            radius={relativeUnit(10)}
+          />
+        </Group>
+      )
+    break;
+    default:
+      return null
+  }
 };
 
 const Planet = ({ position, planet }) => {
@@ -200,8 +251,8 @@ const Planet = ({ position, planet }) => {
     width: planetProps.radius * 2,
   };
 
-  const iconSize = 8 * PT;
-  const iconMargin = planetValueProps.fontSize * 0.3;
+  const iconSize = 6.5 * PT;
+  const iconMargin = planetValueProps.fontSize * 0.4;
   const icon = (planet.tech || planet.legendary) ? <PlanetIcon planet={planet} y={iconMargin * -0.5} size={iconSize} /> : null;
 
   planetValueProps.height = planetValueProps.fontSize * planetValueProps.lineHeight;
