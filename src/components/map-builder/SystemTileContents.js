@@ -69,18 +69,6 @@ const TextWithFont = ({ key, ...props }) => {
   return <Text key={key} {...props} />;
 }
 
-const TileBorder = () => (
-  <RegularPolygon
-    stroke={COLOR.WHITE}
-    strokeWidth={BORDER_WIDTH}
-    radius={WIDTH/2 - BORDER_WIDTH/2}
-    sides={6}
-    x={WIDTH/2}
-    y={HEIGHT/2}
-    rotation={90}
-  />
-);
-
 const AnomalyBorder = () => {
   const width = 12;
   const radius = WIDTH * 0.5 - width * 1.5;
@@ -92,8 +80,8 @@ const AnomalyBorder = () => {
       dash={[0, radius * 0.15, radius * 0.2, radius * 0.15]}
       radius={radius}
       sides={6}
-      x={WIDTH/2}
-      y={HEIGHT/2}
+      x={WIDTH / 2}
+      y={HEIGHT / 2}
       rotation={90}
     />
   );
@@ -106,29 +94,29 @@ const Planet = ({ position, planet }) => {
     strokeWidth: OBJECT_STROKE_WIDTH,
   };
   const labelProps = {
-      ...TEXT_PROPS.BASE,
-      ...TEXT_PROPS.OBJECT_LABEL,
-      text: planet.name.toUpperCase(),
-      x: 0,
-      y: 0,
+    ...TEXT_PROPS.BASE,
+    ...TEXT_PROPS.OBJECT_LABEL,
+    text: planet.name.toUpperCase(),
+    x: 0,
+    y: 0,
   };
 
   switch (position) {
     case '2,0':
 
-    break;
+      break;
     case '2,1':
 
-    break;
+      break;
     case '3,0':
 
-    break;
+      break;
     case '3,1':
 
-    break;
+      break;
     case '3,2':
 
-    break;
+      break;
     default:
       labelProps.width = WIDTH / 2;
       labelProps.height = labelProps.fontSize * labelProps.lineHeight;
@@ -140,7 +128,7 @@ const Planet = ({ position, planet }) => {
   return (
     <>
       <Circle {...planetProps} />
-      <Rect {..._.pick(labelProps, ['x','y','width','height','offsetX','offsetY'])} fill="#00ffff" opacity={0.5} />
+      <Rect {..._.pick(labelProps, ['x', 'y', 'width', 'height', 'offsetX', 'offsetY'])} fill="#00ffff" opacity={0.5} />
       <Text {...labelProps} />
     </>
   );
