@@ -4,7 +4,7 @@ import _ from 'lodash';
 import FontFaceObserver from 'fontfaceobserver';
 
 import 'konva';
-import { Stage, Layer, Group, RegularPolygon, Circle, Text, Rect, Star } from 'react-konva';
+import { Stage, Layer, Group, RegularPolygon, Circle, Text, Rect, Line, Star } from 'react-konva';
 
 import {
   GAME_COLOURS,
@@ -54,7 +54,7 @@ const TEXT_PROPS = {
     lineHeight: 1.1,
   },
   OBJECT_LABEL: { fontSize: 4.75 * PT },
-  SYSTEM_LABEL: { fontSize: 4 * PT },
+  SYSTEM_LABEL: { fontSize: 4.75 * PT },
   PLANET_VALUES: { fontSize: 9 * PT },
 };
 
@@ -77,22 +77,49 @@ const TextWithFont = ({ key, ...props }) => {
 }
 
 const AnomalyBorder = () => {
-  const width = 2.5 * PT;
+  const width = 2 * PT;
   const radius = WIDTH * 0.5 - width * 1.5;
-  return (
-    <RegularPolygon
+  // return (
+  //   <RegularPolygon
+  //     stroke={COLOR.RED}
+  //     strokeWidth={width}
+  //     // dash={[0, radius/4, radius/2, radius/4]}
+  //     // dash={[0, radius * 0.15, radius * 0.2, radius * 0.15]}
+  //     dash={[0, radius * 0.2, radius * 0.6, radius * 0.2]}
+  //     radius={radius}
+  //     sides={6}
+  //     x={WIDTH / 2}
+  //     y={HEIGHT / 2}
+  //     rotation={90}
+  //   />
+  // );
+  const size = WIDTH * 0.09;
+  const corner = (angle) => (
+    <Line
+      points={[
+        0, size * -1,
+        size * 0.5772, 0,
+        0, size,
+      ]}
       stroke={COLOR.RED}
+      closed={false}
       strokeWidth={width}
-      // dash={[0, radius/4, radius/2, radius/4]}
-      // dash={[0, radius * 0.15, radius * 0.2, radius * 0.15]}
-      dash={[0, radius * 0.2, radius * 0.6, radius * 0.2]}
-      radius={radius}
-      sides={6}
       x={WIDTH / 2}
       y={HEIGHT / 2}
-      rotation={90}
+      offsetX={WIDTH * -0.391}
+      rotation={angle}
     />
   );
+
+  return (
+    <Group>
+    {corner(-120)}
+    {corner(-60)}
+    {corner(0)}
+    {corner(60)}
+    {corner(120)}
+    </Group>
+  )
 }
 
 const PlanetIcon = ({ planet, size, ...props }) => {
@@ -246,9 +273,9 @@ const Planet = ({ position, planet }) => {
     <>
       <Circle {...planetProps} />
       {icon}
-      <Text {...planetValueProps} />
+      <TextWithFont {...planetValueProps} />
       {/* <Rect {..._.pick(labelProps, ['x', 'y', 'width', 'height', 'offsetX', 'offsetY'])} fill="#00ffff" opacity={0.5} /> */}
-      <Text {...labelProps} />
+      <TextWithFont {...labelProps} />
     </>
   );
 }
@@ -264,7 +291,7 @@ const AnomalyObject = ({ type }) => {
             radius={OBJECT_LARGE_RADIUS}
             fill={COLOR.ORANGE}
           />
-          <Text
+          <TextWithFont
             {...TEXT_PROPS.BASE}
             {...TEXT_PROPS.OBJECT_LABEL}
             text={type.toUpperCase()}
@@ -282,7 +309,7 @@ const AnomalyObject = ({ type }) => {
             strokeWidth={OBJECT_STROKE_WIDTH}
             dash={OBJECT_STROKE_DASH}
           />
-          <Text
+          <TextWithFont
             {...TEXT_PROPS.BASE}
             {...TEXT_PROPS.OBJECT_LABEL}
             text={type.toUpperCase()}
@@ -300,7 +327,7 @@ const AnomalyObject = ({ type }) => {
             strokeWidth={OBJECT_STROKE_WIDTH}
             dash={OBJECT_STROKE_DASH}
           />
-          <Text
+          <TextWithFont
             {...TEXT_PROPS.BASE}
             {...TEXT_PROPS.OBJECT_LABEL}
             text={type.toUpperCase()}
@@ -316,7 +343,7 @@ const AnomalyObject = ({ type }) => {
             radius={OBJECT_RADIUS}
             fill={COLOR.GREY}
           />
-          <Text
+          <TextWithFont
             {...TEXT_PROPS.BASE}
             {...TEXT_PROPS.OBJECT_LABEL}
             text={type.toUpperCase()}
@@ -353,7 +380,7 @@ const WormholeObject = ({ type }) => {
         strokeWidth={OBJECT_STROKE_WIDTH}
         dash={OBJECT_STROKE_DASH}
       />
-      <Text
+      <TextWithFont
         {...TEXT_PROPS.BASE}
         fontFamily="sans-serif"
         text={wormholeProps.text}
@@ -411,7 +438,36 @@ const SystemObjects = ({ system }) => {
       </Group>
     );
   });
-}
+};
+
+const SystemNumber = ({ system }) => {
+  const labelProps = {
+    ...TEXT_PROPS.BASE,
+    ...TEXT_PROPS.SYSTEM_LABEL,
+    text: system.number,
+    x: WIDTH * 0.5,
+    y: HEIGHT * 0.5,
+    width: WIDTH * 0.86,
+    align: 'left',
+  };
+
+  labelProps.height = labelProps.fontSize * 2;
+  labelProps.offsetX = labelProps.width / 2;
+  labelProps.offsetY = labelProps.height / 2;
+
+  switch (system.back) {
+    case SYSTEM_TILE_BACK.RED:
+      labelProps.fill = COLOR.RED;
+    break;
+    case SYSTEM_TILE_BACK.BLUE:
+      labelProps.fill = COLOR.BLUE;
+    break;
+    default:
+      labelProps.fill = COLOR.GREY;
+  }
+
+  return <Text {...labelProps} />;
+};
 
 const SystemTileContents = ({ system }) => {
 
@@ -423,6 +479,7 @@ const SystemTileContents = ({ system }) => {
       <Stage width={WIDTH} height={HEIGHT}>
         <Layer>
           {system.anomaly ? <AnomalyBorder /> : null}
+          <SystemNumber system={system} />
           <SystemObjects system={system} />
         </Layer>
       </Stage>

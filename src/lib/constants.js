@@ -11,7 +11,7 @@ const GAME_COLOURS = {
     GREEN_2: '#006328',
     YELLOW: '#FFE600',
     YELLOW_2: '#837704',
-    ORANGE: '#FFA800',
+    ORANGE: '#FF9922',
     ORANGE_2: '#835804',
     RED: '#FF4A31',
     RED_2: '#973C30',
