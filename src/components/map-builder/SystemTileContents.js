@@ -28,6 +28,8 @@ const COLOR = {
   GREEN: GAME_COLOURS.GREEN,
   BLUE: GAME_COLOURS.BLUE,
   YELLOW: GAME_COLOURS.YELLOW,
+  ORANGE: GAME_COLOURS.ORANGE,
+  PINK: GAME_COLOURS.PINK,
   GREY: "#C0C0C0",
 };
 
@@ -37,9 +39,10 @@ const OBJECT_TYPE = {
   WORMHOLE: 'WORMHOLE',
 };
 
-const OBJECT_RADIUS = WIDTH * 0.15;
+const OBJECT_RADIUS = WIDTH * 0.155;
 const OBJECT_LARGE_RADIUS = WIDTH * 0.23;
 const OBJECT_STROKE_WIDTH = 2 * PT;
+const OBJECT_STROKE_DASH = [OBJECT_STROKE_WIDTH * 2, OBJECT_STROKE_WIDTH * 2];
 
 const TEXT_PROPS = {
   BASE: {
@@ -250,18 +253,126 @@ const Planet = ({ position, planet }) => {
   );
 }
 
+const AnomalyObject = ({ type }) => {
+  const textBoxSize = radius => ({ width: radius * 1.8, height: radius * 1.8, offsetX: radius * 0.9, offsetY: radius * 0.9 })
+
+  switch (type) {
+    case ANOMALY.SUPERNOVA:
+      return (
+        <>
+          <Circle
+            radius={OBJECT_LARGE_RADIUS}
+            fill={COLOR.ORANGE}
+          />
+          <Text
+            {...TEXT_PROPS.BASE}
+            {...TEXT_PROPS.OBJECT_LABEL}
+            text={type.toUpperCase()}
+            fill={COLOR.BLACK}
+            {...textBoxSize(OBJECT_LARGE_RADIUS)}
+          />
+        </>
+      );
+    case ANOMALY.ASTEROID_FIELD:
+      return (
+        <>
+          <Circle
+            radius={OBJECT_RADIUS}
+            stroke={COLOR.GREY}
+            strokeWidth={OBJECT_STROKE_WIDTH}
+            dash={OBJECT_STROKE_DASH}
+          />
+          <Text
+            {...TEXT_PROPS.BASE}
+            {...TEXT_PROPS.OBJECT_LABEL}
+            text={type.toUpperCase()}
+            fill={COLOR.GREY}
+            {...textBoxSize(OBJECT_RADIUS)}
+          />
+        </>
+      );
+    case ANOMALY.NEBULA:
+      return (
+        <>
+          <Circle
+            radius={OBJECT_RADIUS}
+            stroke={COLOR.PINK}
+            strokeWidth={OBJECT_STROKE_WIDTH}
+            dash={OBJECT_STROKE_DASH}
+          />
+          <Text
+            {...TEXT_PROPS.BASE}
+            {...TEXT_PROPS.OBJECT_LABEL}
+            text={type.toUpperCase()}
+            fill={COLOR.PINK}
+            {...textBoxSize(OBJECT_RADIUS)}
+          />
+        </>
+      );
+    case ANOMALY.GRAV_RIFT:
+      return (
+        <>
+          <Circle
+            radius={OBJECT_RADIUS}
+            fill={COLOR.GREY}
+          />
+          <Text
+            {...TEXT_PROPS.BASE}
+            {...TEXT_PROPS.OBJECT_LABEL}
+            text={type.toUpperCase()}
+            fill={COLOR.BLACK}
+            {...textBoxSize(OBJECT_RADIUS)}
+          />
+        </>
+      );
+    default:
+      return null;
+  }
+};
+
+const WormholeObject = ({ type }) => {
+  const wormholeProps = {};
+
+  switch (type) {
+    case WORMHOLE.A:
+      wormholeProps.color = COLOR.ORANGE;
+      wormholeProps.text = 'α';
+    break;
+    case WORMHOLE.B:
+      wormholeProps.color = COLOR.GREEN;
+      wormholeProps.text = 'β';
+    break;
+    default:
+      return null;
+  }
+  return (
+    <>
+      <Circle
+        radius={OBJECT_RADIUS}
+        stroke={wormholeProps.color}
+        strokeWidth={OBJECT_STROKE_WIDTH}
+        dash={OBJECT_STROKE_DASH}
+      />
+      <Text
+        {...TEXT_PROPS.BASE}
+        fontFamily="sans-serif"
+        text={wormholeProps.text}
+        fill={wormholeProps.color}
+        fontSize={OBJECT_RADIUS * 0.8}
+        width={OBJECT_RADIUS * 2}
+        height={OBJECT_RADIUS * 2}
+        offsetX={OBJECT_RADIUS}
+        offsetY={OBJECT_RADIUS}
+      />
+    </>
+  );
+}
+
 const SystemObject = ({ position, type, object }) => {
   switch (type) {
     case OBJECT_TYPE.PLANET: return <Planet planet={object} position={position} />;
-    case OBJECT_TYPE.ANOMALY: {
-      switch (object) {
-        
-        default:
-          return null;
-      }
-    }
-    case OBJECT_TYPE.WORMHOLE:
-      return <TextWithFont text={`${object} hole`} fill={COLOR.WHITE} x={0} y={0} />;
+    case OBJECT_TYPE.ANOMALY: return <AnomalyObject type={object} />;
+    case OBJECT_TYPE.WORMHOLE: return <WormholeObject type={object} />;
   }
 }
 
