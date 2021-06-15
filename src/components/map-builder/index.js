@@ -6,7 +6,11 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { SYSTEMS } from '../../lib/constants';
-import { TILE_PLACEMENT } from './map-constants';
+import {
+    TILE_PLACEMENT,
+    MAP_CONFIG,
+    MAP_OPTION,
+} from './map-constants';
 
 import MapContainer from './MapContainer';
 import TileDisplay from './TileDisplay';
@@ -28,40 +32,8 @@ const defaultTilePlacement = _.chain(SYSTEMS)
 
 const MapBuilder = () => {
     const [tilePlacement, setTilePlacement] = useState(defaultTilePlacement);
+    const [mapOption, setMapOption] = useState(MAP_OPTION.THREE_PLAYER);
 
-    useEffect(() => {
-        // moveTile(78, TILE_PLACEMENT.MAP_19);
-        // moveTile(50, TILE_PLACEMENT.MAP_22);
-        // moveTile(49, TILE_PLACEMENT.MAP_25);
-        // moveTile(48, TILE_PLACEMENT.MAP_28);
-        // moveTile(47, TILE_PLACEMENT.MAP_31);
-        // moveTile(46, TILE_PLACEMENT.MAP_34);
-        //
-        // moveTile(19, TILE_PLACEMENT.MAP_01);
-        // moveTile(20, TILE_PLACEMENT.MAP_02);
-        // moveTile(25, TILE_PLACEMENT.MAP_03);
-        // moveTile(29, TILE_PLACEMENT.MAP_04);
-        // moveTile(41, TILE_PLACEMENT.MAP_06);
-        // moveTile(43, TILE_PLACEMENT.MAP_07);
-        // moveTile(39, TILE_PLACEMENT.MAP_08);
-        // moveTile(40, TILE_PLACEMENT.MAP_09);
-        // moveTile(42, TILE_PLACEMENT.MAP_10);
-        // moveTile(44, TILE_PLACEMENT.MAP_11);
-        // moveTile(75, TILE_PLACEMENT.MAP_12);
-        // moveTile(67, TILE_PLACEMENT.MAP_13);
-        // moveTile(68, TILE_PLACEMENT.MAP_14);
-        // moveTile(65, TILE_PLACEMENT.MAP_15);
-        // moveTile(79, TILE_PLACEMENT.MAP_16);
-        // moveTile(80, TILE_PLACEMENT.MAP_17);
-        _.chain(SYSTEMS)
-        .without()
-        .shuffle()
-        .value()
-        .forEach((system, i) => {
-          moveTile(system.number, TILE_PLACEMENT[`MAP_${i.toString(10).padStart(2, '0')}`] || TILE_PLACEMENT.TABLE);
-        });
-
-    }, [])
     // useEffect(() => {
     // }, [JSON.stringify(tilePlacement)])
 
@@ -95,6 +67,7 @@ const MapBuilder = () => {
                     <MapContainer
                         tilePlacement={tilePlacement}
                         moveTile={moveTile}
+                        config={MAP_CONFIG[mapOption]}
                     />
                     <TileDisplay
                         systems={_.chain(tilePlacement)
@@ -104,6 +77,19 @@ const MapBuilder = () => {
                         }
                     />
                 </DndProvider>
+            </div>
+            <div className="config-options">
+                <div className="form-inline mb-1">
+                    <label className="my-auto mr-1" htmlFor="map-option-select">Map setup</label>
+                    <select
+                        className="custom-select"
+                        id="map-option-select"
+                        onChange={(e) => { setMapOption(e.target.value); }}
+                        value={mapOption}
+                    >
+                        {_.values(MAP_OPTION).map(key => <option value={key} key={key}>{_.get(MAP_CONFIG, `${key}.name`)}</option>)}
+                    </select>
+                </div>
             </div>
             <div className="stat-tables">
                 <table className="table">

@@ -5,6 +5,7 @@ import { URL } from '../../lib/constants';
 import { MAP_PLACE_POSITION } from './map-constants';
 
 import SystemTile from './SystemTile';
+import HomeSystemTile from './HomeSystemTile';
 
 const placeWrapperStyle = ({ place }) => {
     const position = _.get(MAP_PLACE_POSITION, place);
@@ -18,14 +19,10 @@ const placeWrapperStyle = ({ place }) => {
     return style;
 }
 
-const placeBackground = ({ system, backgroundType = 'svg' }) => {
-    if (!system) return null;
-    return `url('${URL.SYSTEM_BACKGROUNDS_DIR}/${backgroundType}/${system}.${backgroundType}')`;
-}
-
-const MapPlace = ({ place, system = null, ...props }) => (
+const MapPlace = ({ place, system = null, playerHome = null, contentType = 'svg', ...props }) => (
     <div className="map-place-wrapper" key={place} style={placeWrapperStyle({ place })} >
-        <SystemTile system={system} />
+        {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} />}
+        {system && <SystemTile system={system} contentType={contentType} />}
     </div>
 );
 

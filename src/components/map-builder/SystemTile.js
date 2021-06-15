@@ -6,30 +6,33 @@ import {
 } from '../../lib/constants';
 import { SYSTEM_PNG_URL } from './map-constants';
 
-import SystemTileContents from './SystemTileContents';
+import SystemTileSVG from './SystemTileSVG';
+import SystemTileKonvaStage from './SystemTileKonvaStage';
 
-const placeBackground = ({ system, backgroundType = 'svg' }) => {
-    if (!system) return null;
-    return `url('${SYSTEM_PNG_URL}${system}.${backgroundType}')`;
-}
-
-const systemContent = (systemNumber, contentType) => {
-  const system = _.find(SYSTEMS, { number: systemNumber });
+const SystemTileContent = ({ number, type }) => {
+  const system = _.find(SYSTEMS, { number });
 
   if (!system) return null;
 
-  if (contentType === 'image') {
-    return <img src={`${SYSTEM_PNG_URL}${systemNumber}.png`} alt={`System ${systemNumber}`} className="system-image" />;
+  if (type === 'image') {
+    return <img src={`${SYSTEM_PNG_URL}${number}.png`} alt={`System ${number}`} className="system-image" />;
   }
 
   return (
-    <SystemTileContents system={system} />
+    <SystemTileSVG><SystemTileKonvaStage system={system} /></SystemTileSVG>
   );
 }
 
-const SystemTile = ({ system, style = {}, contentType = 'text', ...props }) => {
+const SystemTile = ({ system, style = {}, contentType }) => {
     // style.backgroundImage = placeBackground({ system });
-    return <div className="system-tile" style={style}>{systemContent(system, contentType)}</div>;
+    return (
+      <div className={`system-tile content-${contentType}`} style={style}>
+        <SystemTileContent
+          number={system}
+          type={contentType}
+        />
+      </div>
+    );
 };
 
 export default SystemTile;

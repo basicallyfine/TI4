@@ -4,7 +4,7 @@ import _ from 'lodash';
 import FontFaceObserver from 'fontfaceobserver';
 
 import 'konva';
-import { Stage, Layer, Group, RegularPolygon, Circle, Text, Rect, Line, Star } from 'react-konva';
+import { Stage, Layer, Group, Circle, Text, Line, Star } from 'react-konva';
 
 import {
   GAME_COLOURS,
@@ -13,7 +13,6 @@ import {
   PLANET_TRAIT,
   ANOMALY,
   WORMHOLE,
-  SYSTEMS,
 } from '../../lib/constants';
 
 const WIDTH = 119 * 2;
@@ -78,21 +77,6 @@ const TextWithFont = ({ key, ...props }) => {
 
 const AnomalyBorder = () => {
   const width = 2 * PT;
-  const radius = WIDTH * 0.5 - width * 1.5;
-  // return (
-  //   <RegularPolygon
-  //     stroke={COLOR.RED}
-  //     strokeWidth={width}
-  //     // dash={[0, radius/4, radius/2, radius/4]}
-  //     // dash={[0, radius * 0.15, radius * 0.2, radius * 0.15]}
-  //     dash={[0, radius * 0.2, radius * 0.6, radius * 0.2]}
-  //     radius={radius}
-  //     sides={6}
-  //     x={WIDTH / 2}
-  //     y={HEIGHT / 2}
-  //     rotation={90}
-  //   />
-  // );
   const size = WIDTH * 0.09;
   const corner = (angle) => (
     <Line
@@ -469,66 +453,14 @@ const SystemNumber = ({ system }) => {
   return <Text {...labelProps} />;
 };
 
-const SystemTileContents = ({ system }) => {
-
-  return (
-    <div className="svg-wrapper">
-      <svg xmlns="http://www.w3.org/1999/xlink" viewBox="0 0 515 446" className="system-image svg-border">
-        <path d="m 0 223 l 128.75 -223 l 257.5 0 l 128.75 223 l -128.75 223 l -257.5 0 z " />
-      </svg>
-      <Stage width={WIDTH} height={HEIGHT}>
-        <Layer>
-          {system.anomaly ? <AnomalyBorder /> : null}
-          <SystemNumber system={system} />
-          <SystemObjects system={system} />
-        </Layer>
-      </Stage>
-    </div>
-  );
-
-  // return system.number;
-};
+const SystemTileContents = ({ system }) => (
+  <Stage width={WIDTH} height={HEIGHT}>
+    <Layer>
+      {system.anomaly ? <AnomalyBorder /> : null}
+      <SystemNumber system={system} />
+      <SystemObjects system={system} />
+    </Layer>
+  </Stage>
+);
 
 export default SystemTileContents;
-
-
-// const Planet = ({ planet }) => {
-//   const classes = ['planet'];
-//
-//   let icon = null;
-//
-//   if (planet.mecatol || planet.legendary) classes.push('big-planet');
-//
-//   if (planet.legendary) {
-//     icon = SVG_ASSETS.PLANET_ICON_LEGENDARY;
-//   }
-//   switch (planet.tech) {
-//     case TECH_COLOR.BLUE:
-//       icon = SVG_ASSETS.PLANET_ICON_TECH_BLUE;
-//     break;
-//     case TECH_COLOR.GREEN:
-//       icon = SVG_ASSETS.PLANET_ICON_TECH_GREEN;
-//     break;
-//     case TECH_COLOR.RED:
-//       icon = SVG_ASSETS.PLANET_ICON_TECH_RED;
-//     break;
-//     case TECH_COLOR.YELLOW:
-//       icon = SVG_ASSETS.PLANET_ICON_TECH_BLUE;
-//     break;
-//     default:
-//   }
-//
-//
-//   return (
-//     <div class="object">
-//       {SVG_ASSETS.CIRCLE}
-//       {icon}
-//       <span className="name">{planet.name}</span>
-//       <span className="value">{planet.resources} / {planet.influence}</span>
-//     </div>
-//   );
-// };
-//
-// const NonPlanet = ({ wormhole, anomaly }) => {
-//   return '*';
-// };

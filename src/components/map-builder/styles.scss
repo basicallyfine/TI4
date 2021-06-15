@@ -21,6 +21,10 @@ $tile-display-padding: $tile-display-spacing / 2;
 $tile-display-margin-left: $grid-gutter-width * 2;
 $tile-display-layout-breakpoint: $tile-absolute-breakpoint + ($tile-width + $tile-display-spacing) + $tile-display-margin-left;
 
+$tile-font-size-ratio: 0.03;
+$tile-font-size-relative: 100vw * $tile-font-size-ratio;
+$tile-font-size: round(($tile-absolute-breakpoint - $grid-gutter-width) * $tile-font-size-ratio);
+
 $RED: #ff0000;
 $YELLOW: #ffff00;
 $BLUE: #0099ff;
@@ -81,6 +85,8 @@ $GREEN: #00CC00;
         width: $tile-width-relative;
         height: hex-height($tile-width-relative);
 
+        font-size: $tile-font-size-relative;
+
         .system-image {
           position: absolute;
           top: 0;
@@ -115,6 +121,24 @@ $GREEN: #00CC00;
             overflow: visible;
           }
         }
+
+        &.home-system {
+            &.content-image {
+                color: $body-bg;
+                .player-number {
+                    text-shadow: 0 0 1em #e9ecef, 0 0 0.6em #e9ecef, 0 0 0.3em #e9ecef, 0 0 0.2em #e9ecef;
+                }
+            }
+            .player-number {
+                font-weight: bold;
+                letter-spacing: 0.1em;
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                top: 50%;
+                line-height: 0;
+            }
+        }
     }
 
     .stat-tables {
@@ -133,6 +157,7 @@ $GREEN: #00CC00;
         .system-tile {
             width: $tile-width;
             height: hex-height($tile-width);
+            font-size: $tile-font-size;
         }
     }
 

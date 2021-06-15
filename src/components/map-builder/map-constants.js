@@ -124,9 +124,93 @@ const MAP_PLACE_POSITION = {
 
 const SYSTEM_PNG_URL = `${URL.ASSETS_BUCKET}ti4/map/systems/png/`;
 
+const MAP_OPTION = {
+    THREE_PLAYER: 'THREE_PLAYER',
+    FOUR_PLAYER: 'FOUR_PLAYER',
+};
+
+const MAP_CONFIG = {
+    [MAP_OPTION.THREE_PLAYER]: {
+        name: 'Three player',
+        systems: {
+            blue: 18,
+            red: 6,
+        },
+        players: [
+            {
+                position: {
+                    hs: TILE_PLACEMENT.MAP_22,
+                    adjacent: [TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_23],
+                    slice: [TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_23, TILE_PLACEMENT.MAP_08, TILE_PLACEMENT.MAP_02, TILE_PLACEMENT.MAP_10],
+                    equidistant: [TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_01, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11]
+                }
+            },
+            {
+                position: {
+                    hs: TILE_PLACEMENT.MAP_34,
+                    adjacent: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_17, TILE_PLACEMENT.MAP_33],
+                    slice: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_17, TILE_PLACEMENT.MAP_33, TILE_PLACEMENT.MAP_18, TILE_PLACEMENT.MAP_06, TILE_PLACEMENT.MAP_16],
+                    equidistant: [TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_01, TILE_PLACEMENT.MAP_05, TILE_PLACEMENT.MAP_15]
+                }
+            },
+            {
+                position: {
+                    hs: TILE_PLACEMENT.MAP_28,
+                    adjacent: [TILE_PLACEMENT.MAP_29, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_27],
+                    slice: [TILE_PLACEMENT.MAP_29, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_27, TILE_PLACEMENT.MAP_14, TILE_PLACEMENT.MAP_04, TILE_PLACEMENT.MAP_12],
+                    equidistant: [TILE_PLACEMENT.MAP_05, TILE_PLACEMENT.MAP_15, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11]
+                }
+            },
+        ],
+    },
+    [MAP_OPTION.FOUR_PLAYER]: {
+        name: 'Four player',
+        systems: {
+            blue: 20,
+            red: 12,
+        },
+        players: [
+            {
+                position: {
+                    hs: TILE_PLACEMENT.MAP_36,
+                    adjacent: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_18, TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_19],
+                    slice: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_18, TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_19, TILE_PLACEMENT.MAP_20, TILE_PLACEMENT.MAP_01],
+                    equidistant: [TILE_PLACEMENT.MAP_08, TILE_PLACEMENT.MAP_34, TILE_PLACEMENT.MAP_17, TILE_PLACEMENT.MAP_06]
+                }
+            },
+            {
+                position: {
+                    hs: TILE_PLACEMENT.MAP_23,
+                    adjacent: [TILE_PLACEMENT.MAP_22, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_10, TILE_PLACEMENT.MAP_24],
+                    slice: [TILE_PLACEMENT.MAP_22, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_10, TILE_PLACEMENT.MAP_24, TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_02],
+                    equidistant: [TILE_PLACEMENT.MAP_08, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11, TILE_PLACEMENT.MAP_25]
+                }
+            },
+            {
+                position: {
+                    hs: TILE_PLACEMENT.MAP_27,
+                    adjacent: [TILE_PLACEMENT.MAP_28, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_12, TILE_PLACEMENT.MAP_26],
+                    slice: [TILE_PLACEMENT.MAP_28, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_12, TILE_PLACEMENT.MAP_26, TILE_PLACEMENT.MAP_29, TILE_PLACEMENT.MAP_04],
+                    equidistant: [TILE_PLACEMENT.MAP_14, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11, TILE_PLACEMENT.MAP_25]
+                }
+            },
+            {
+                position: {
+                    hs: TILE_PLACEMENT.MAP_32,
+                    adjacent: [TILE_PLACEMENT.MAP_33, TILE_PLACEMENT.MAP_16, TILE_PLACEMENT.MAP_15, TILE_PLACEMENT.MAP_31],
+                    slice: [TILE_PLACEMENT.MAP_33, TILE_PLACEMENT.MAP_16, TILE_PLACEMENT.MAP_15, TILE_PLACEMENT.MAP_31, TILE_PLACEMENT.MAP_05, TILE_PLACEMENT.MAP_30],
+                    equidistant: [TILE_PLACEMENT.MAP_14, TILE_PLACEMENT.MAP_34, TILE_PLACEMENT.MAP_17, TILE_PLACEMENT.MAP_06]
+                }
+            },
+        ],
+    }
+};
+
 export {
     TILE_PLACEMENT,
     MAP_PLACES,
     MAP_PLACE_POSITION,
     SYSTEM_PNG_URL,
+    MAP_OPTION,
+    MAP_CONFIG,
 }
