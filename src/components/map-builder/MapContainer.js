@@ -9,13 +9,10 @@ const MapContainer = ({
     tilePlacement,
     moveTile,
     config,
+    homeSystems,
+    displayType,
     ...props
 }) => {
-    const homeSystems = _.chain(config)
-        .get('players', [])
-        .map((player, i) => ({ player: i + 1, place: _.get(player, 'position.hs') }))
-        .value();
-
     return (
         <div className="map-container">
             {MAP_PLACES.map((place) => {
@@ -27,6 +24,7 @@ const MapContainer = ({
                         system={_.chain(tilePlacement).find({ place }).get('system').value() || null}
                         playerHome={_.get(homeSystem, 'player') || null}
                         fixed={!!(homeSystem || place === TILE_PLACEMENT.MAP_00)}
+                        contentType={displayType}
                     />
                 );
             })}

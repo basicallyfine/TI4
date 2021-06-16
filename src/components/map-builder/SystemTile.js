@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {
   SYSTEMS,
 } from '../../lib/constants';
-import { SYSTEM_PNG_URL } from './map-constants';
+import { SYSTEM_PNG_URL, TILE_DISPLAY_TYPE } from './map-constants';
 
 import SystemTileSVG from './SystemTileSVG';
 import SystemTileKonvaStage from './SystemTileKonvaStage';
@@ -14,7 +14,7 @@ const SystemTileContent = ({ number, type }) => {
 
   if (!system) return null;
 
-  if (type === 'image') {
+  if (type === TILE_DISPLAY_TYPE.IMAGE) {
     return <img src={`${SYSTEM_PNG_URL}${number}.png`} alt={`System ${number}`} className="system-image" />;
   }
 

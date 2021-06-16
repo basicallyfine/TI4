@@ -19,7 +19,7 @@ const placeWrapperStyle = ({ place }) => {
     return style;
 }
 
-const MapPlace = ({ place, system = null, playerHome = null, contentType = 'svg', ...props }) => (
+const MapPlace = ({ place, system = null, playerHome = null, contentType, ...props }) => (
     <div className="map-place-wrapper" key={place} style={placeWrapperStyle({ place })} >
         {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} />}
         {system && <SystemTile system={system} contentType={contentType} />}

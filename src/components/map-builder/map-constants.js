@@ -138,14 +138,7 @@ const MAP_CONFIG = {
         },
         players: [
             {
-                position: {
-                    hs: TILE_PLACEMENT.MAP_22,
-                    adjacent: [TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_23],
-                    slice: [TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_23, TILE_PLACEMENT.MAP_08, TILE_PLACEMENT.MAP_02, TILE_PLACEMENT.MAP_10],
-                    equidistant: [TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_01, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11]
-                }
-            },
-            {
+                label: 'A',
                 position: {
                     hs: TILE_PLACEMENT.MAP_34,
                     adjacent: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_17, TILE_PLACEMENT.MAP_33],
@@ -154,6 +147,16 @@ const MAP_CONFIG = {
                 }
             },
             {
+                label: 'B',
+                position: {
+                    hs: TILE_PLACEMENT.MAP_22,
+                    adjacent: [TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_23],
+                    slice: [TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_23, TILE_PLACEMENT.MAP_08, TILE_PLACEMENT.MAP_02, TILE_PLACEMENT.MAP_10],
+                    equidistant: [TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_01, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11]
+                }
+            },
+            {
+                label: 'C',
                 position: {
                     hs: TILE_PLACEMENT.MAP_28,
                     adjacent: [TILE_PLACEMENT.MAP_29, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_27],
@@ -171,6 +174,7 @@ const MAP_CONFIG = {
         },
         players: [
             {
+                label: 'A',
                 position: {
                     hs: TILE_PLACEMENT.MAP_36,
                     adjacent: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_18, TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_19],
@@ -179,6 +183,7 @@ const MAP_CONFIG = {
                 }
             },
             {
+                label: 'B',
                 position: {
                     hs: TILE_PLACEMENT.MAP_23,
                     adjacent: [TILE_PLACEMENT.MAP_22, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_10, TILE_PLACEMENT.MAP_24],
@@ -187,6 +192,7 @@ const MAP_CONFIG = {
                 }
             },
             {
+                label: 'C',
                 position: {
                     hs: TILE_PLACEMENT.MAP_27,
                     adjacent: [TILE_PLACEMENT.MAP_28, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_12, TILE_PLACEMENT.MAP_26],
@@ -195,6 +201,7 @@ const MAP_CONFIG = {
                 }
             },
             {
+                label: 'D',
                 position: {
                     hs: TILE_PLACEMENT.MAP_32,
                     adjacent: [TILE_PLACEMENT.MAP_33, TILE_PLACEMENT.MAP_16, TILE_PLACEMENT.MAP_15, TILE_PLACEMENT.MAP_31],
@@ -206,6 +213,11 @@ const MAP_CONFIG = {
     }
 };
 
+const TILE_DISPLAY_TYPE = {
+    SVG: 'svg',
+    IMAGE: 'image',
+}
+
 export {
     TILE_PLACEMENT,
     MAP_PLACES,
@@ -213,4 +225,5 @@ export {
     SYSTEM_PNG_URL,
     MAP_OPTION,
     MAP_CONFIG,
+    TILE_DISPLAY_TYPE,
 }

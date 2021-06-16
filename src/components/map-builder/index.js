@@ -10,6 +10,7 @@ import {
     TILE_PLACEMENT,
     MAP_CONFIG,
     MAP_OPTION,
+    TILE_DISPLAY_TYPE,
 } from './map-constants';
 
 import MapContainer from './MapContainer';
@@ -33,9 +34,64 @@ const defaultTilePlacement = _.chain(SYSTEMS)
 const MapBuilder = () => {
     const [tilePlacement, setTilePlacement] = useState(defaultTilePlacement);
     const [mapOption, setMapOption] = useState(MAP_OPTION.THREE_PLAYER);
+    const [homeSystems, setHomeSystems] = useState([]);
+    const [availablePlaces, setAvailablePlaces] = useState([]);
+
+    const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.SVG)
 
     // useEffect(() => {
     // }, [JSON.stringify(tilePlacement)])
+
+    const config = _.get(MAP_CONFIG, mapOption) || {};
+
+    useEffect(() => {
+        setHomeSystems(
+            _.chain(config)
+            .get('players', [])
+            .map((player) => ({ player: player.label, place: _.get(player, 'position.hs') }))
+            .value()
+        );
+        setAvailablePlaces(
+            _.chain(config)
+            .get('players', [])
+            .reduce((systems, player) => {
+                return systems.concat(player.position.adjacent, player.position.slice, player.position.equidistant)
+            }, [])
+            .uniq()
+            .sortBy()
+            .value()
+        );
+
+        // TODO: send back tiles on unavailable spaces
+
+    }, [mapOption]);
+
+    useEffect(() => {
+        availablePlaces.forEach((place) => {
+            const existingTile = _.find(tilePlacement, { place });
+            if (existingTile) {
+                moveTile(existingTile.system, place);
+            }
+        });
+    }, [availablePlaces.join(',')])
+
+    // for testing
+    const setRandomMap = () => {
+        const randomPlacement = _.cloneDeep(defaultTilePlacement);
+
+        _.chain(randomPlacement)
+        .filter({ place: TILE_PLACEMENT.BOX })
+        .shuffle()
+        .slice(0, availablePlaces.length)
+        .value()
+        .forEach(({ system }, i) => {
+            _.find(randomPlacement, { system }).place = availablePlaces[i];
+        });
+
+        console.log(randomPlacement);
+
+        setTilePlacement(randomPlacement);
+    }
 
     const moveTile = (system, place) => {
         if (!_.find(tilePlacement, { system })) {
@@ -67,7 +123,9 @@ const MapBuilder = () => {
                     <MapContainer
                         tilePlacement={tilePlacement}
                         moveTile={moveTile}
-                        config={MAP_CONFIG[mapOption]}
+                        config={config}
+                        homeSystems={homeSystems}
+                        displayType={tileDisplayType}
                     />
                     <TileDisplay
                         systems={_.chain(tilePlacement)
@@ -82,13 +140,42 @@ const MapBuilder = () => {
                 <div className="form-inline mb-1">
                     <label className="my-auto mr-1" htmlFor="map-option-select">Map setup</label>
                     <select
-                        className="custom-select"
+                        className="custom-select mr-1"
                         id="map-option-select"
                         onChange={(e) => { setMapOption(e.target.value); }}
                         value={mapOption}
                     >
                         {_.values(MAP_OPTION).map(key => <option value={key} key={key}>{_.get(MAP_CONFIG, `${key}.name`)}</option>)}
                     </select>
+                    
+                    <div className="form-check form-check-inline">
+                        <input className="form-check-input"
+                            type="radio"
+                            name="tile-display-type"
+                            id={`tile-display-type-${TILE_DISPLAY_TYPE.SVG}`}
+                            value={TILE_DISPLAY_TYPE.SVG}
+                            checked={tileDisplayType === TILE_DISPLAY_TYPE.SVG}
+                            onChange={(e) => { setTileDisplayType(e.target.value); }}
+                        />
+                        <label className="form-check-label" htmlFor={`tile-display-type-${TILE_DISPLAY_TYPE.SVG}`}>
+                            Lo-fi
+                        </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input className="form-check-input"
+                            type="radio"
+                            name="tile-display-type"
+                            id={`tile-display-type-${TILE_DISPLAY_TYPE.IMAGE}`}
+                            value={TILE_DISPLAY_TYPE.IMAGE}
+                            checked={tileDisplayType === TILE_DISPLAY_TYPE.IMAGE}
+                            onChange={(e) => { setTileDisplayType(e.target.value); }}
+                        />
+                        <label className="form-check-label" htmlFor={`tile-display-type-${TILE_DISPLAY_TYPE.IMAGE}`}>
+                            Full colour
+                        </label>
+                    </div>
+                    
+                    <button className="btn btn-outline-dark" onClick={setRandomMap}>Randomise</button>
                 </div>
             </div>
             <div className="stat-tables">
