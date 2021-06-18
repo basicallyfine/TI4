@@ -216,7 +216,7 @@ const MAP_CONFIG = {
 const TILE_DISPLAY_TYPE = {
     SVG: 'svg',
     IMAGE: 'image',
-}
+};
 
 export {
     TILE_PLACEMENT,

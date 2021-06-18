@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDrop } from 'react-dnd';
 import _ from 'lodash';
 
 import { URL } from '../../lib/constants';
@@ -19,11 +20,22 @@ const placeWrapperStyle = ({ place }) => {
     return style;
 }
 
-const MapPlace = ({ place, system = null, playerHome = null, contentType, ...props }) => (
-    <div className="map-place-wrapper" key={place} style={placeWrapperStyle({ place })} >
-        {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} />}
-        {system && <SystemTile system={system} contentType={contentType} />}
-    </div>
-);
+const MapPlace = ({ place, system = null, playerHome = null, contentType, ...props }) => {
+    const [{ isOver, canDrop }, dropRef] = useDrop({
+        accept: 'TILE',
+        drop: (...stuff) => { console.log('DROP', stuff); },
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }),
+    });
+
+    return (
+        <div className="map-place-wrapper" key={place} style={placeWrapperStyle({ place })} ref={dropRef}>
+            {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} />}
+            {system && <SystemTile system={system} contentType={contentType} />}
+        </div>
+    );
+};
 
 export default MapPlace;

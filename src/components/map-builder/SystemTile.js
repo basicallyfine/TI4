@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDrag } from 'react-dnd';
 import _ from 'lodash';
 
 import {
@@ -24,9 +25,17 @@ const SystemTileContent = ({ number, type }) => {
 }
 
 const SystemTile = ({ system, style = {}, contentType }) => {
+    const [collected, dragRef] = useDrag(
+      () => ({
+        type: 'TILE',
+        item: { system }
+      }),
+      []
+    );
+
     // style.backgroundImage = placeBackground({ system });
     return (
-      <div className={`system-tile content-${contentType}`} style={style}>
+      <div className={`system-tile content-${contentType}`} style={style} ref={dragRef}>
         <SystemTileContent
           number={system}
           type={contentType}
