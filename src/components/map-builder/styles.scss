@@ -31,6 +31,8 @@ $BLUE: #0099ff;
 $ORANGE: #ff9900;
 $GREEN: #00CC00;
 
+$dnd-opacity: 0.5;
+
 #map-builder {
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -57,6 +59,15 @@ $GREEN: #00CC00;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+        }
+
+        &.can-drop {
+            .system-tile {
+                opacity: $dnd-opacity;
+            }
+        }
+        &.no-drop {
+            cursor: no-drop;
         }
     }
 
@@ -86,6 +97,8 @@ $GREEN: #00CC00;
         height: hex-height($tile-width-relative);
 
         font-size: $tile-font-size-relative;
+
+        overflow: visible;
 
         .system-image {
           position: absolute;
@@ -138,6 +151,10 @@ $GREEN: #00CC00;
                 top: 50%;
                 line-height: 0;
             }
+        }
+
+        &.is-dragging {
+            opacity: $dnd-opacity;
         }
     }
 

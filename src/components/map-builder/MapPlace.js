@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import _ from 'lodash';
 
@@ -20,20 +20,27 @@ const placeWrapperStyle = ({ place }) => {
     return style;
 }
 
-const MapPlace = ({ place, system = null, playerHome = null, contentType, ...props }) => {
+const MapPlace = ({ place, system = null, playerHome = null, contentType, moveTile, fixed, ...props }) => {
     const [{ isOver, canDrop }, dropRef] = useDrop({
         accept: 'TILE',
-        drop: (...stuff) => { console.log('DROP', stuff); },
+        drop: ({ system }) => { moveTile(system, place) },
+        canDrop: () => !fixed,
         collect: (monitor) => ({
             isOver: monitor.isOver(),
             canDrop: monitor.canDrop(),
-        }),
+        })
     });
+    
+    const classes = ['map-place-wrapper'];
+    if (isOver) {
+        classes.push(canDrop ? 'can-drop' : 'no-drop');
+    }
+
 
     return (
-        <div className="map-place-wrapper" key={place} style={placeWrapperStyle({ place })} ref={dropRef}>
+        <div className={classes.join(' ')} key={place} style={placeWrapperStyle({ place })} ref={dropRef}>
             {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} />}
-            {system && <SystemTile system={system} contentType={contentType} />}
+            {system && <SystemTile system={system} contentType={contentType} fixed={fixed} />}
         </div>
     );
 };

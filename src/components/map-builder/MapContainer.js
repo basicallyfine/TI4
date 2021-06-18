@@ -25,6 +25,7 @@ const MapContainer = ({
                         playerHome={_.get(homeSystem, 'player') || null}
                         fixed={!!(homeSystem || place === TILE_PLACEMENT.MAP_00)}
                         contentType={displayType}
+                        moveTile={moveTile}
                     />
                 );
             })}

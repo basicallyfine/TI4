@@ -24,18 +24,28 @@ const SystemTileContent = ({ number, type }) => {
   );
 }
 
-const SystemTile = ({ system, style = {}, contentType }) => {
+const SystemTile = ({ system, style = {}, contentType, ...props }) => {
     const [collected, dragRef] = useDrag(
       () => ({
         type: 'TILE',
-        item: { system }
+        item: { system },
+        canDrag: () => !props.fixed,
+        collect: (monitor) => ({
+          isDragging: monitor.isDragging()
+        }),
       }),
       []
     );
 
+    const classes = ['system-tile'];
+    if (contentType) classes.push(`content-${contentType}`);
+    if (collected.isDragging) {
+      classes.push('is-dragging');
+    }
+
     // style.backgroundImage = placeBackground({ system });
     return (
-      <div className={`system-tile content-${contentType}`} style={style} ref={dragRef}>
+      <div className={classes.join(' ')} style={style} ref={dragRef}>
         <SystemTileContent
           number={system}
           type={contentType}
