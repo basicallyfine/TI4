@@ -15,6 +15,7 @@ import {
 
 import MapContainer from './MapContainer';
 import TileDisplay from './TileDisplay';
+import StatsTable from './StatsTable';
 
 import './styles.css';
 
@@ -162,9 +163,7 @@ const MapBuilder = () => {
                 </div>
             </div>
             <div className="stat-tables">
-                <table className="table">
-                    <thead><tr><th>TABLE STUFF</th></tr></thead>
-                </table>
+                <StatsTable tilePlacement={tilePlacement} mapConfig={config} />
             </div>
         </div>
     );
