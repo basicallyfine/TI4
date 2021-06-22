@@ -39,8 +39,8 @@ const MapPlace = ({ place, system = null, playerHome = null, contentType, moveTi
 
     return (
         <div className={classes.join(' ')} key={place} style={placeWrapperStyle({ place })} ref={dropRef}>
-            {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} />}
-            {system && <SystemTile system={system} contentType={contentType} fixed={fixed} />}
+            {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} place={place} />}
+            {system && <SystemTile system={system} contentType={contentType} fixed={fixed} place={place} />}
         </div>
     );
 };

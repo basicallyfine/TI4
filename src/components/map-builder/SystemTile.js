@@ -16,7 +16,7 @@ const SystemTileContent = ({ number, type }) => {
   if (!system) return null;
 
   if (type === TILE_DISPLAY_TYPE.IMAGE) {
-    return <img src={`${SYSTEM_PNG_URL}${number}.png`} alt={`System ${number}`} className="system-image" />;
+    return <img src={`${SYSTEM_PNG_URL}${number}.png`} alt={`System ${number}`} className="system-image" draggable={false} />;
   }
 
   return (
@@ -24,17 +24,17 @@ const SystemTileContent = ({ number, type }) => {
   );
 }
 
-const SystemTile = ({ system, style = {}, contentType, ...props }) => {
+const SystemTile = ({ system, style = {}, contentType, fixed, ...props }) => {
     const [collected, dragRef] = useDrag(
       () => ({
         type: 'TILE',
         item: { system },
-        canDrag: () => !props.fixed,
+        canDrag: () => !fixed,
         collect: (monitor) => ({
           isDragging: monitor.isDragging()
         }),
       }),
-      []
+      [system, fixed, props.place]
     );
 
     const classes = ['system-tile'];

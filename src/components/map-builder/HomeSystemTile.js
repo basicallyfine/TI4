@@ -8,7 +8,7 @@ import SystemTileSVG from './SystemTileSVG';
 const SystemTileContent = ({ type }) => {
   if (type === TILE_DISPLAY_TYPE.IMAGE) {
     // TODO (maybe)
-    return <img src={`${SYSTEM_PNG_URL}HS.png`} alt="Home system" className="system-image" />;
+    return <img src={`${SYSTEM_PNG_URL}HS.png`} alt="Home system" className="system-image" draggable={false} />;
   }
 
   return <SystemTileSVG />;

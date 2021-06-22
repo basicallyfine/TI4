@@ -37,7 +37,7 @@ const MapBuilder = () => {
     const [homeSystems, setHomeSystems] = useState([]);
     const [availablePlaces, setAvailablePlaces] = useState([]);
 
-    const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.SVG)
+    const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.IMAGE)
 
     // useEffect(() => {
     // }, [JSON.stringify(tilePlacement)])
@@ -107,7 +107,7 @@ const MapBuilder = () => {
         if (/^MAP_/.test(place)) {
             const existingTile = _.find(newPlacements, { place });
             if (existingTile) {
-                existingTile.place = TILE_PLACEMENT.TABLE;
+                existingTile.place = _.find(newPlacements, { system }).place;
             }
         }
 
@@ -147,33 +147,16 @@ const MapBuilder = () => {
                     >
                         {_.values(MAP_OPTION).map(key => <option value={key} key={key}>{_.get(MAP_CONFIG, `${key}.name`)}</option>)}
                     </select>
-                    
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input"
-                            type="radio"
-                            name="tile-display-type"
-                            id={`tile-display-type-${TILE_DISPLAY_TYPE.SVG}`}
-                            value={TILE_DISPLAY_TYPE.SVG}
-                            checked={tileDisplayType === TILE_DISPLAY_TYPE.SVG}
-                            onChange={(e) => { setTileDisplayType(e.target.value); }}
-                        />
-                        <label className="form-check-label" htmlFor={`tile-display-type-${TILE_DISPLAY_TYPE.SVG}`}>
-                            Lo-fi
-                        </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input"
-                            type="radio"
-                            name="tile-display-type"
-                            id={`tile-display-type-${TILE_DISPLAY_TYPE.IMAGE}`}
-                            value={TILE_DISPLAY_TYPE.IMAGE}
-                            checked={tileDisplayType === TILE_DISPLAY_TYPE.IMAGE}
-                            onChange={(e) => { setTileDisplayType(e.target.value); }}
-                        />
-                        <label className="form-check-label" htmlFor={`tile-display-type-${TILE_DISPLAY_TYPE.IMAGE}`}>
-                            Full colour
-                        </label>
-                    </div>
+
+                    <select
+                        className="custom-select mr-1"
+                        id="map-option-select"
+                        onChange={(e) => { setTileDisplayType(e.target.value); }}
+                        value={tileDisplayType}
+                    >
+                        <option value={TILE_DISPLAY_TYPE.IMAGE}>Full colour</option>
+                        <option value={TILE_DISPLAY_TYPE.SVG}>Lo-fi</option>
+                    </select>
                     
                     <button className="btn btn-outline-dark" onClick={setRandomMap}>Randomise</button>
                 </div>
