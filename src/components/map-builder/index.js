@@ -26,7 +26,7 @@ const defaultTilePlacement = _.chain(SYSTEMS)
         case 18:
             return { system: number, place: TILE_PLACEMENT.MAP_00 };
         default:
-            return { system: number, place: TILE_PLACEMENT.BOX };
+            return { system: number, place: TILE_PLACEMENT.TABLE };
     }
 })
 .sortBy('system')
@@ -81,7 +81,7 @@ const MapBuilder = () => {
         const randomPlacement = _.cloneDeep(defaultTilePlacement);
 
         _.chain(randomPlacement)
-        .filter({ place: TILE_PLACEMENT.BOX })
+        .filter({ place: TILE_PLACEMENT.TABLE })
         .shuffle()
         .slice(0, availablePlaces.length)
         .value()
@@ -134,6 +134,8 @@ const MapBuilder = () => {
                             .map('system')
                             .value()
                         }
+                        moveTile={moveTile}
+                        displayType={tileDisplayType}
                     />
                 </DndProvider>
             </div>
