@@ -20,7 +20,16 @@ const placeWrapperStyle = ({ place }) => {
     return style;
 }
 
-const MapPlace = ({ place, system = null, playerHome = null, contentType, moveTile, fixed, ...props }) => {
+const MapPlace = ({
+    place,
+    system = null,
+    playerHome = null,
+    contentType,
+    moveTile,
+    fixed,
+    toggleFixed,
+    ...props
+}) => {
     const [{ isOver, canDrop }, dropRef] = useDrop({
         accept: 'TILE',
         drop: ({ system }) => { moveTile(system, place) },
@@ -40,7 +49,15 @@ const MapPlace = ({ place, system = null, playerHome = null, contentType, moveTi
     return (
         <div className={classes.join(' ')} key={place} style={placeWrapperStyle({ place })} ref={dropRef}>
             {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} place={place} />}
-            {system && <SystemTile system={system} contentType={contentType} fixed={fixed} place={place} />}
+            {system && (
+                <SystemTile
+                    system={system}
+                    contentType={contentType}
+                    fixed={fixed}
+                    place={place}
+                    toggleFixed={toggleFixed}
+                />
+            )}
             <span className="marker-dot" />
         </div>
     );

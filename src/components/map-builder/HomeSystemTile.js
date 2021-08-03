@@ -16,7 +16,7 @@ const SystemTileContent = ({ type, player }) => {
 
 const HomeSystemTile = ({ player, style = {}, contentType }) => {
     return (
-      <div className={`system-tile home-system content-${contentType}`} style={style}>
+      <div className={`system-tile locked home-system content-${contentType}`} style={style}>
         <SystemTileContent type={contentType} player={player} />
         <span className="player-number">{player}</span>
       </div>

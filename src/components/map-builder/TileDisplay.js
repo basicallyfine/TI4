@@ -24,6 +24,7 @@ const TileDisplay = ({
 
     return (
         <div className="tile-display-container" ref={dropRef}>
+            <div style={{ width: '100%' }}>{systems.length}</div>
             {systems.map(system => <SystemTile key={system} system={system} contentType={displayType} />)}
         </div>
     );

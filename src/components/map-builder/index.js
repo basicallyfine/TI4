@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import _ from 'lodash';
+import _, { indexOf } from 'lodash';
 
 
 import { DndProvider } from 'react-dnd';
@@ -11,6 +11,7 @@ import {
     MAP_CONFIG,
     MAP_OPTION,
     TILE_DISPLAY_TYPE,
+    MAP_PLACES,
 } from './map-constants';
 
 import MapContainer from './MapContainer';
@@ -37,6 +38,7 @@ const MapBuilder = () => {
     const [mapOption, setMapOption] = useState(MAP_OPTION.THREE_PLAYER);
     const [homeSystems, setHomeSystems] = useState([]);
     const [availablePlaces, setAvailablePlaces] = useState([]);
+    const [lockedPlaces, setLockedPlaces] = useState([TILE_PLACEMENT.MAP_00]);
 
     const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.IMAGE)
 
@@ -52,18 +54,25 @@ const MapBuilder = () => {
             .map((player) => ({ player: player.label, place: _.get(player, 'position.hs') }))
             .value()
         );
-        setAvailablePlaces(
-            _.chain(config)
+        const mapPlaces = _.chain(config)
             .get('players', [])
             .reduce((systems, player) => {
                 return systems.concat(player.position.adjacent, player.position.slice, player.position.equidistant)
             }, [])
             .uniq()
             .sortBy()
-            .value()
-        );
+            .value();
+
+        setAvailablePlaces(mapPlaces);
 
         // TODO: send back tiles on unavailable spaces
+        const unavailablePlaces = _.without(MAP_PLACES, TILE_PLACEMENT.MAP_00, ...mapPlaces);
+        // for (const unavailablePlaces)
+        
+        setLockedPlaces((prevState) => _.filter(prevState, place => (
+            (place === TILE_PLACEMENT.MAP_00)
+            || (mapPlaces.indexOf(place) >= 0)
+        )));
 
     }, [mapOption]);
 
@@ -76,22 +85,40 @@ const MapBuilder = () => {
         });
     }, [availablePlaces.join(',')])
 
-    // for testing
     const setRandomMap = () => {
         const randomPlacement = _.cloneDeep(defaultTilePlacement);
+
+        const unlockedPlaces = _.without(availablePlaces, ...lockedPlaces);
 
         _.chain(randomPlacement)
         .filter({ place: TILE_PLACEMENT.TABLE })
         .shuffle()
-        .slice(0, availablePlaces.length)
+        .slice(0, unlockedPlaces.length)
         .value()
         .forEach(({ system }, i) => {
-            _.find(randomPlacement, { system }).place = availablePlaces[i];
+            _.find(randomPlacement, { system }).place = unlockedPlaces[i];
         });
 
-        console.log(randomPlacement);
+        console.log({ availablePlaces, lockedPlaces, unlockedPlaces, randomPlacement });
 
         setTilePlacement(randomPlacement);
+    }
+
+    const resetMap = () => {
+        const resetPlacement = _.cloneDeep(tilePlacement);
+        resetPlacement.forEach(({ system, place }, i) => {
+            if (lockedPlaces.indexOf(place) >= 0) return;
+            const defaultPlacement = _.find(defaultTilePlacement, { system });
+            _.find(resetPlacement, { system }).place = defaultPlacement.place;
+
+            // if (defaultPlacement) {
+            //     moveTile(system, defaultPlacement.place);
+            // } else {
+            //     console.error(`Couldn’t find default place for system ${system}`);
+            // }
+        });
+
+        setTilePlacement(resetPlacement);
     }
 
     const moveTile = (system, place) => {
@@ -117,6 +144,22 @@ const MapBuilder = () => {
         setTilePlacement(newPlacements);
     }
 
+    // toggle by default
+    const setLockedPlace = (place, lock = undefined) => {
+        let setLock = lock;
+        if (typeof lock !== 'boolean') { // toggle
+            setLock = lockedPlaces.indexOf(place) === -1;
+        }
+
+        const newLockedPlaces = setLock
+            ? _.chain(lockedPlaces).clone().concat(place).uniq().value()
+            : _.without(lockedPlaces, place);
+
+        setLockedPlaces(newLockedPlaces);
+
+        console.log({ place, lock, setLock, newLockedPlaces });
+    }
+
     return (
         <div id="map-builder" className="container-fluid">
             <div className="build-area">
@@ -127,6 +170,8 @@ const MapBuilder = () => {
                         config={config}
                         homeSystems={homeSystems}
                         displayType={tileDisplayType}
+                        lockedPlaces={lockedPlaces}
+                        setLockedPlace={setLockedPlace}
                     />
                     <TileDisplay
                         systems={_.chain(tilePlacement)
@@ -141,9 +186,9 @@ const MapBuilder = () => {
             </div>
             <div className="config-options">
                 <div className="form-inline mb-1">
-                    <label className="my-auto mr-1" htmlFor="map-option-select">Map setup</label>
+                    <label className="my-auto" htmlFor="map-option-select">Map setup</label>
                     <select
-                        className="custom-select mr-1"
+                        className="custom-select ml-1"
                         id="map-option-select"
                         onChange={(e) => { setMapOption(e.target.value); }}
                         value={mapOption}
@@ -152,7 +197,7 @@ const MapBuilder = () => {
                     </select>
 
                     <select
-                        className="custom-select mr-1"
+                        className="custom-select ml-1"
                         id="map-option-select"
                         onChange={(e) => { setTileDisplayType(e.target.value); }}
                         value={tileDisplayType}
@@ -161,7 +206,8 @@ const MapBuilder = () => {
                         <option value={TILE_DISPLAY_TYPE.SVG}>Lo-fi</option>
                     </select>
                     
-                    <button className="btn btn-outline-dark" onClick={setRandomMap}>Randomise</button>
+                    <button className="btn btn-outline-dark ml-1" onClick={setRandomMap}>Randomise</button>
+                    <button className="btn btn-outline-dark ml-1" onClick={resetMap}>Clear</button>
                 </div>
             </div>
             <div className="stat-tables">

@@ -24,7 +24,7 @@ const SystemTileContent = ({ number, type }) => {
   );
 }
 
-const SystemTile = ({ system, style = {}, contentType, fixed, ...props }) => {
+const SystemTile = ({ system, style = {}, contentType, fixed, toggleFixed, ...props }) => {
     const [collected, dragRef] = useDrag(
       () => ({
         type: 'TILE',
@@ -43,9 +43,18 @@ const SystemTile = ({ system, style = {}, contentType, fixed, ...props }) => {
       classes.push('is-dragging');
     }
 
+    if (fixed) {
+      classes.push('locked');
+    }
+
     // style.backgroundImage = placeBackground({ system });
     return (
-      <div className={classes.join(' ')} style={style} ref={dragRef}>
+      <div
+        className={classes.join(' ')}
+        style={style} ref={dragRef}
+        onDoubleClick={toggleFixed || null}
+        role="button"
+      >
         <SystemTileContent
           number={system}
           type={contentType}

@@ -31,7 +31,12 @@ $BLUE: #0099ff;
 $ORANGE: #ff9900;
 $GREEN: #00CC00;
 
-$dnd-opacity: 0.5;
+$dnd-opacity: 0.4;
+
+body.dragging,
+body.dragging * {
+    cursor: grabbing !important
+}
 
 #map-builder {
     padding-top: 1rem;
@@ -68,7 +73,7 @@ $dnd-opacity: 0.5;
             }
         }
         &.no-drop {
-            cursor: no-drop;
+            cursor: not-allowed;
         }
 
         .marker-dot {
@@ -129,6 +134,8 @@ $dnd-opacity: 0.5;
 
         overflow: visible;
 
+        cursor: grab;
+
         .system-image {
           position: absolute;
           top: 0;
@@ -184,6 +191,10 @@ $dnd-opacity: 0.5;
 
         &.is-dragging {
             opacity: $dnd-opacity;
+        }
+
+        &.locked {
+            cursor: not-allowed;
         }
     }
 
