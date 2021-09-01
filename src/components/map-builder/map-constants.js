@@ -214,6 +214,7 @@ const MAP_CONFIG = {
 };
 
 const TILE_DISPLAY_TYPE = {
+    TEXT: 'text',
     IMAGE: 'image',
     SVG: 'svg',
 };

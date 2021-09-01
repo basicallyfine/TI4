@@ -6,6 +6,10 @@ import { SYSTEM_PNG_URL, TILE_DISPLAY_TYPE } from './map-constants';
 import SystemTileSVG from './SystemTileSVG';
 
 const SystemTileContent = ({ type, player }) => {
+  if (type === TILE_DISPLAY_TYPE.TEXT) {
+    return null;
+  }
+
   if (type === TILE_DISPLAY_TYPE.IMAGE) {
     // TODO (maybe)
     return <img src={`${SYSTEM_PNG_URL}HS-${player}.png`} alt="Home system" className="system-image" draggable={false} />;
@@ -18,7 +22,7 @@ const HomeSystemTile = ({ player, style = {}, contentType }) => {
     return (
       <div className={`system-tile locked home-system content-${contentType}`} style={style}>
         <SystemTileContent type={contentType} player={player} />
-        <span className="player-number">{player}</span>
+        <span className="tile-label">{player}</span>
       </div>
     );
 };

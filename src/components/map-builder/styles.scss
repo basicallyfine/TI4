@@ -171,21 +171,23 @@ body.dragging * {
           }
         }
 
+        .tile-label {
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 50%;
+            line-height: 0;
+            left: 0;
+        }
+
         &.home-system {
             &.content-image {
                 color: $body-bg;
-                .player-number {
+                .tile-label {
                     text-shadow: 0 0 1em #e9ecef, 0 0 0.6em #e9ecef, 0 0 0.3em #e9ecef, 0 0 0.2em #e9ecef;
                 }
-            }
-            .player-number {
-                font-weight: bold;
-                letter-spacing: 0.1em;
-                position: absolute;
-                width: 100%;
-                text-align: center;
-                top: 50%;
-                line-height: 0;
             }
         }
 

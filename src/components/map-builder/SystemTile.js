@@ -15,6 +15,10 @@ const SystemTileContent = ({ number, type }) => {
 
   if (!system) return null;
 
+  if (type === TILE_DISPLAY_TYPE.TEXT) {
+    return <span className="tile-label">{number}</span>;
+  }
+
   if (type === TILE_DISPLAY_TYPE.IMAGE) {
     return <img src={`${SYSTEM_PNG_URL}${number}.png`} alt={`System ${number}`} className="system-image" draggable={false} />;
   }
