@@ -1,8 +1,6 @@
 import { URL } from '../../lib/constants';
 
-const TILE_PLACEMENT = {
-    BOX: 'BOX',
-    TABLE: 'TABLE',
+const MAP_PLACES = {
     MAP_00: 'MAP_00',
     MAP_01: 'MAP_01',
     MAP_02: 'MAP_02',
@@ -41,46 +39,6 @@ const TILE_PLACEMENT = {
     MAP_35: 'MAP_35',
     MAP_36: 'MAP_36'
 };
-
-const MAP_PLACES = [
-    'MAP_00',
-    'MAP_01',
-    'MAP_02',
-    'MAP_03',
-    'MAP_04',
-    'MAP_05',
-    'MAP_06',
-    'MAP_07',
-    'MAP_08',
-    'MAP_09',
-    'MAP_10',
-    'MAP_11',
-    'MAP_12',
-    'MAP_13',
-    'MAP_14',
-    'MAP_15',
-    'MAP_16',
-    'MAP_17',
-    'MAP_18',
-    'MAP_19',
-    'MAP_20',
-    'MAP_21',
-    'MAP_22',
-    'MAP_23',
-    'MAP_24',
-    'MAP_25',
-    'MAP_26',
-    'MAP_27',
-    'MAP_28',
-    'MAP_29',
-    'MAP_30',
-    'MAP_31',
-    'MAP_32',
-    'MAP_33',
-    'MAP_34',
-    'MAP_35',
-    'MAP_36'
-];
 
 const MAP_PLACE_POSITION = {
     MAP_00: { left: '50.0%', top: '50.0%', zIndex: 199 },
@@ -127,6 +85,7 @@ const SYSTEM_PNG_URL = `${URL.ASSETS_BUCKET}ti4/map/systems/png/`;
 const MAP_OPTION = {
     THREE_PLAYER: 'THREE_PLAYER',
     FOUR_PLAYER: 'FOUR_PLAYER',
+    SIX_PLAYER: 'SIX_PLAYER',
 };
 
 const MAP_CONFIG = {
@@ -140,28 +99,28 @@ const MAP_CONFIG = {
             {
                 label: 'A',
                 position: {
-                    hs: TILE_PLACEMENT.MAP_34,
-                    adjacent: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_17, TILE_PLACEMENT.MAP_33],
-                    slice: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_17, TILE_PLACEMENT.MAP_33, TILE_PLACEMENT.MAP_18, TILE_PLACEMENT.MAP_06, TILE_PLACEMENT.MAP_16],
-                    equidistant: [TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_01, TILE_PLACEMENT.MAP_05, TILE_PLACEMENT.MAP_15]
+                    hs: MAP_PLACES.MAP_34,
+                    adjacent: [MAP_PLACES.MAP_35, MAP_PLACES.MAP_17, MAP_PLACES.MAP_33],
+                    slice: [MAP_PLACES.MAP_35, MAP_PLACES.MAP_17, MAP_PLACES.MAP_33, MAP_PLACES.MAP_18, MAP_PLACES.MAP_06, MAP_PLACES.MAP_16],
+                    equidistant: [MAP_PLACES.MAP_07, MAP_PLACES.MAP_01, MAP_PLACES.MAP_05, MAP_PLACES.MAP_15]
                 }
             },
             {
                 label: 'B',
                 position: {
-                    hs: TILE_PLACEMENT.MAP_22,
-                    adjacent: [TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_23],
-                    slice: [TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_23, TILE_PLACEMENT.MAP_08, TILE_PLACEMENT.MAP_02, TILE_PLACEMENT.MAP_10],
-                    equidistant: [TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_01, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11]
+                    hs: MAP_PLACES.MAP_22,
+                    adjacent: [MAP_PLACES.MAP_21, MAP_PLACES.MAP_09, MAP_PLACES.MAP_23],
+                    slice: [MAP_PLACES.MAP_21, MAP_PLACES.MAP_09, MAP_PLACES.MAP_23, MAP_PLACES.MAP_08, MAP_PLACES.MAP_02, MAP_PLACES.MAP_10],
+                    equidistant: [MAP_PLACES.MAP_07, MAP_PLACES.MAP_01, MAP_PLACES.MAP_03, MAP_PLACES.MAP_11]
                 }
             },
             {
                 label: 'C',
                 position: {
-                    hs: TILE_PLACEMENT.MAP_28,
-                    adjacent: [TILE_PLACEMENT.MAP_29, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_27],
-                    slice: [TILE_PLACEMENT.MAP_29, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_27, TILE_PLACEMENT.MAP_14, TILE_PLACEMENT.MAP_04, TILE_PLACEMENT.MAP_12],
-                    equidistant: [TILE_PLACEMENT.MAP_05, TILE_PLACEMENT.MAP_15, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11]
+                    hs: MAP_PLACES.MAP_28,
+                    adjacent: [MAP_PLACES.MAP_29, MAP_PLACES.MAP_13, MAP_PLACES.MAP_27],
+                    slice: [MAP_PLACES.MAP_29, MAP_PLACES.MAP_13, MAP_PLACES.MAP_27, MAP_PLACES.MAP_14, MAP_PLACES.MAP_04, MAP_PLACES.MAP_12],
+                    equidistant: [MAP_PLACES.MAP_05, MAP_PLACES.MAP_15, MAP_PLACES.MAP_03, MAP_PLACES.MAP_11]
                 }
             },
         ],
@@ -176,40 +135,103 @@ const MAP_CONFIG = {
             {
                 label: 'A',
                 position: {
-                    hs: TILE_PLACEMENT.MAP_36,
-                    adjacent: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_18, TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_19],
-                    slice: [TILE_PLACEMENT.MAP_35, TILE_PLACEMENT.MAP_18, TILE_PLACEMENT.MAP_07, TILE_PLACEMENT.MAP_19, TILE_PLACEMENT.MAP_20, TILE_PLACEMENT.MAP_01],
-                    equidistant: [TILE_PLACEMENT.MAP_08, TILE_PLACEMENT.MAP_34, TILE_PLACEMENT.MAP_17, TILE_PLACEMENT.MAP_06]
+                    hs: MAP_PLACES.MAP_36,
+                    adjacent: [MAP_PLACES.MAP_35, MAP_PLACES.MAP_18, MAP_PLACES.MAP_07, MAP_PLACES.MAP_19],
+                    slice: [MAP_PLACES.MAP_35, MAP_PLACES.MAP_18, MAP_PLACES.MAP_07, MAP_PLACES.MAP_19, MAP_PLACES.MAP_20, MAP_PLACES.MAP_01],
+                    equidistant: [MAP_PLACES.MAP_08, MAP_PLACES.MAP_34, MAP_PLACES.MAP_17, MAP_PLACES.MAP_06]
                 }
             },
             {
                 label: 'B',
                 position: {
-                    hs: TILE_PLACEMENT.MAP_23,
-                    adjacent: [TILE_PLACEMENT.MAP_22, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_10, TILE_PLACEMENT.MAP_24],
-                    slice: [TILE_PLACEMENT.MAP_22, TILE_PLACEMENT.MAP_09, TILE_PLACEMENT.MAP_10, TILE_PLACEMENT.MAP_24, TILE_PLACEMENT.MAP_21, TILE_PLACEMENT.MAP_02],
-                    equidistant: [TILE_PLACEMENT.MAP_08, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11, TILE_PLACEMENT.MAP_25]
+                    hs: MAP_PLACES.MAP_23,
+                    adjacent: [MAP_PLACES.MAP_22, MAP_PLACES.MAP_09, MAP_PLACES.MAP_10, MAP_PLACES.MAP_24],
+                    slice: [MAP_PLACES.MAP_22, MAP_PLACES.MAP_09, MAP_PLACES.MAP_10, MAP_PLACES.MAP_24, MAP_PLACES.MAP_21, MAP_PLACES.MAP_02],
+                    equidistant: [MAP_PLACES.MAP_08, MAP_PLACES.MAP_03, MAP_PLACES.MAP_11, MAP_PLACES.MAP_25]
                 }
             },
             {
                 label: 'C',
                 position: {
-                    hs: TILE_PLACEMENT.MAP_27,
-                    adjacent: [TILE_PLACEMENT.MAP_28, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_12, TILE_PLACEMENT.MAP_26],
-                    slice: [TILE_PLACEMENT.MAP_28, TILE_PLACEMENT.MAP_13, TILE_PLACEMENT.MAP_12, TILE_PLACEMENT.MAP_26, TILE_PLACEMENT.MAP_29, TILE_PLACEMENT.MAP_04],
-                    equidistant: [TILE_PLACEMENT.MAP_14, TILE_PLACEMENT.MAP_03, TILE_PLACEMENT.MAP_11, TILE_PLACEMENT.MAP_25]
+                    hs: MAP_PLACES.MAP_27,
+                    adjacent: [MAP_PLACES.MAP_28, MAP_PLACES.MAP_13, MAP_PLACES.MAP_12, MAP_PLACES.MAP_26],
+                    slice: [MAP_PLACES.MAP_28, MAP_PLACES.MAP_13, MAP_PLACES.MAP_12, MAP_PLACES.MAP_26, MAP_PLACES.MAP_29, MAP_PLACES.MAP_04],
+                    equidistant: [MAP_PLACES.MAP_14, MAP_PLACES.MAP_03, MAP_PLACES.MAP_11, MAP_PLACES.MAP_25]
                 }
             },
             {
                 label: 'D',
                 position: {
-                    hs: TILE_PLACEMENT.MAP_32,
-                    adjacent: [TILE_PLACEMENT.MAP_33, TILE_PLACEMENT.MAP_16, TILE_PLACEMENT.MAP_15, TILE_PLACEMENT.MAP_31],
-                    slice: [TILE_PLACEMENT.MAP_33, TILE_PLACEMENT.MAP_16, TILE_PLACEMENT.MAP_15, TILE_PLACEMENT.MAP_31, TILE_PLACEMENT.MAP_05, TILE_PLACEMENT.MAP_30],
-                    equidistant: [TILE_PLACEMENT.MAP_14, TILE_PLACEMENT.MAP_34, TILE_PLACEMENT.MAP_17, TILE_PLACEMENT.MAP_06]
+                    hs: MAP_PLACES.MAP_32,
+                    adjacent: [MAP_PLACES.MAP_33, MAP_PLACES.MAP_16, MAP_PLACES.MAP_15, MAP_PLACES.MAP_31],
+                    slice: [MAP_PLACES.MAP_33, MAP_PLACES.MAP_16, MAP_PLACES.MAP_15, MAP_PLACES.MAP_31, MAP_PLACES.MAP_05, MAP_PLACES.MAP_30],
+                    equidistant: [MAP_PLACES.MAP_14, MAP_PLACES.MAP_34, MAP_PLACES.MAP_17, MAP_PLACES.MAP_06]
                 }
             },
-        ],
+        ]
+    },
+    [MAP_OPTION.SIX_PLAYER]: {
+        name: 'Six player',
+        systems: {
+            blue: 18,
+            red: 12,
+        },
+        players: [
+            {
+                label: 'A',
+                position: {
+                    hs: null,
+                    adjacent: [],
+                    slice: [],
+                    equidistant: []
+                }
+            },
+            {
+                label: 'B',
+                position: {
+                    hs: null,
+                    adjacent: [],
+                    slice: [],
+                    equidistant: []
+                }
+            },
+            {
+                label: 'C',
+                position: {
+                    hs: null,
+                    adjacent: [],
+                    slice: [],
+                    equidistant: []
+                }
+            },
+            {
+                label: 'D',
+                position: {
+                    hs: null,
+                    adjacent: [],
+                    slice: [],
+                    equidistant: []
+                }
+            },
+            {
+                label: 'E',
+                position: {
+                    hs: null,
+                    adjacent: [],
+                    slice: [],
+                    equidistant: []
+                }
+            },
+            {
+                label: 'F',
+                position: {
+                    hs: null,
+                    adjacent: [],
+                    slice: [],
+                    equidistant: []
+                }
+            },
+        ]
     }
 };
 
@@ -220,7 +242,6 @@ const TILE_DISPLAY_TYPE = {
 };
 
 export {
-    TILE_PLACEMENT,
     MAP_PLACES,
     MAP_PLACE_POSITION,
     SYSTEM_PNG_URL,

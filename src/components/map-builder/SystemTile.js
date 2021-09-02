@@ -28,17 +28,17 @@ const SystemTileContent = ({ number, type }) => {
   );
 }
 
-const SystemTile = ({ system, style = {}, contentType, fixed, toggleFixed, ...props }) => {
+const SystemTile = ({ system, style = {}, contentType, locked, toggleLocked, ...props }) => {
     const [collected, dragRef] = useDrag(
       () => ({
         type: 'TILE',
         item: { system },
-        canDrag: () => !fixed,
+        canDrag: () => !locked,
         collect: (monitor) => ({
           isDragging: monitor.isDragging()
         }),
       }),
-      [system, fixed, props.place]
+      [system, locked, props.place]
     );
 
     const classes = ['system-tile'];
@@ -47,7 +47,7 @@ const SystemTile = ({ system, style = {}, contentType, fixed, toggleFixed, ...pr
       classes.push('is-dragging');
     }
 
-    if (fixed) {
+    if (locked) {
       classes.push('locked');
     }
 
@@ -56,7 +56,7 @@ const SystemTile = ({ system, style = {}, contentType, fixed, toggleFixed, ...pr
       <div
         className={classes.join(' ')}
         style={style} ref={dragRef}
-        onDoubleClick={toggleFixed || null}
+        onDoubleClick={toggleLocked || null}
         role="button"
       >
         <SystemTileContent

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import _ from 'lodash';
 
-import { TILE_PLACEMENT } from './map-constants';
+import { MAP_PLACES } from './map-constants';
 
 import SystemTile from './SystemTile';
 
@@ -14,7 +14,7 @@ const TileDisplay = ({
 }) => {
     const [{ isOver, canDrop }, dropRef] = useDrop({
         accept: 'TILE',
-        drop: ({ system }) => { moveTile(system, TILE_PLACEMENT.TABLE) },
+        drop: ({ system }) => { moveTile(system, MAP_PLACES.TABLE) },
         // canDrop: () => true,
         collect: (monitor) => ({
             isOver: monitor.isOver(),

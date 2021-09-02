@@ -26,14 +26,14 @@ const MapPlace = ({
     playerHome = null,
     contentType,
     moveTile,
-    fixed,
-    toggleFixed,
+    locked,
+    unavailable,
     ...props
 }) => {
     const [{ isOver, canDrop }, dropRef] = useDrop({
         accept: 'TILE',
         drop: ({ system }) => { moveTile(system, place) },
-        canDrop: () => !fixed,
+        canDrop: () => !(locked || unavailable),
         collect: (monitor) => ({
             isOver: monitor.isOver(),
             canDrop: monitor.canDrop(),
@@ -44,6 +44,12 @@ const MapPlace = ({
     if (isOver) {
         classes.push(canDrop ? 'can-drop' : 'no-drop');
     }
+    if (locked) {
+        classes.push('locked');
+    }
+    if (unavailable) {
+        classes.push('unavailable');
+    }
 
 
     return (
@@ -51,14 +57,14 @@ const MapPlace = ({
             {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} place={place} />}
             {system && (
                 <SystemTile
+                    place={place}
                     system={system}
                     contentType={contentType}
-                    fixed={fixed}
-                    place={place}
-                    toggleFixed={toggleFixed}
+                    locked={locked}
+                    unavailable={unavailable}
                 />
             )}
-            <span className="marker-dot" />
+            {!unavailable && <span className="marker-dot" />}
         </div>
     );
 };
