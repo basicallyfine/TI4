@@ -189,6 +189,11 @@ body.dragging * {
                     text-shadow: 0 0 1em #e9ecef, 0 0 0.6em #e9ecef, 0 0 0.3em #e9ecef, 0 0 0.2em #e9ecef;
                 }
             }
+            &.content-text {
+                .tile-label {
+                    text-decoration: underline;
+                }
+            }
         }
 
         &.is-dragging {
