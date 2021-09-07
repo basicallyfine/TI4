@@ -48,21 +48,48 @@ const defaultMapPlaceData = (mapConfig) => {
 const MapBuilder = () => {
     const [mapOption, setMapOption] = useState(MAP_OPTION.FOUR_PLAYER);
     const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.TEXT);
-    const [mapPlaceData, setMapPlaceData] = useState(defaultMapPlaceData(MAP_CONFIG[mapOption]));
+    const [mapPlaceData, setMapPlaceData] = useState({});
 
-    const moveTile = (system, place) => {
-        console.log({ system, place });
+    useEffect(() => {
+        console.log(mapOption);
+        const defaultData = defaultMapPlaceData(MAP_CONFIG[mapOption]);
 
-        setMapPlaceData((prevState) => {
-            // TODO: swap the places of the system and the one that was there (or null placement)
+        _.chain(mapPlaceData)
+        .entries()
+        .value()
+        .forEach(([place, { system, locked }]) => {
+            if (!(system || locked)) return;
+            if (defaultData[place].unavailable || defaultData[place].locked) return;
 
-            const update = { [place]: { ...prevState[place], system } };
-
-            console.log(update);
-
-            return { ...prevState, ...update };
+            defaultData[place].system = system;
+            defaultData[place].locked = locked;
         });
+
+        setMapPlaceData(defaultData);
+    }, [mapOption]);
+
+    const moveTiles = (tiles) => {
+        if (mapPlaceData.locked || mapPlaceData.unavailable) {
+            console.log('Place is locked');
+            return;
+        };
+        
+        const newState = _.clone(mapPlaceData);
+        tiles.forEach(({ system, place }) => {
+            const existingSystem = _.get(mapPlaceData, `${place}.system`);
+            const prevPlace = _.findKey(mapPlaceData, { system });
+
+            if (prevPlace) {
+                newState[prevPlace].system = existingSystem || null;
+            }
+            if (newState[place]) {
+                newState[place].system = system;
+            }
+        });
+        setMapPlaceData(newState);
     };
+
+    const moveTile = (system, place) => moveTiles([{ system, place }]);
 
     return (
         <div id="map-builder" className="container-fluid">
