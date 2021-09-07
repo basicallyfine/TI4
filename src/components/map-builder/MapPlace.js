@@ -28,6 +28,7 @@ const MapPlace = ({
     moveTile,
     locked,
     unavailable,
+    toggleLockedPlace,
     ...props
 }) => {
     const [{ isOver, canDrop }, dropRef] = useDrop({
@@ -53,7 +54,14 @@ const MapPlace = ({
 
 
     return (
-        <div className={classes.join(' ')} key={place} style={placeWrapperStyle({ place })} ref={dropRef}>
+        <div
+            key={place}
+            className={classes.join(' ')}
+            style={placeWrapperStyle({ place })}
+            ref={dropRef}
+            role="button"
+            onDoubleClick={() => { toggleLockedPlace(place); }}
+        >
             {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} place={place} />}
             {system && (
                 <SystemTile

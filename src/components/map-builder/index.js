@@ -51,22 +51,20 @@ const MapBuilder = () => {
     const [mapPlaceData, setMapPlaceData] = useState({});
 
     useEffect(() => {
-        console.log(mapOption);
-        const defaultData = defaultMapPlaceData(MAP_CONFIG[mapOption]);
-
-        _.chain(mapPlaceData)
-        .entries()
-        .value()
-        .forEach(([place, { system, locked }]) => {
-            if (!(system || locked)) return;
-            if (defaultData[place].unavailable || defaultData[place].locked) return;
-
-            defaultData[place].system = system;
-            defaultData[place].locked = locked;
-        });
-
-        setMapPlaceData(defaultData);
+        resetMapConfig(MAP_CONFIG[mapOption]);
     }, [mapOption]);
+
+    const unassignedSystems = _.chain(SYSTEMS)
+        .map('number')
+        .without(
+            ..._.chain(mapPlaceData)
+            .values()
+            .filter('system')
+            .map('system')
+            .value()
+        )
+        .sort()
+        .value();
 
     const moveTiles = (tiles) => {
         if (mapPlaceData.locked || mapPlaceData.unavailable) {
@@ -91,6 +89,60 @@ const MapBuilder = () => {
 
     const moveTile = (system, place) => moveTiles([{ system, place }]);
 
+    const toggleLockedPlace = (place) => {
+        setMapPlaceData((prevState) => {
+            const newPlaceData = _.clone(prevState[place]);
+            newPlaceData.locked = !newPlaceData.locked;
+            return { ...prevState, ...{ [place]: newPlaceData } };
+        });
+    };
+
+    const resetMapConfig = (config = MAP_CONFIG[mapOption]) => {
+        const defaultData = defaultMapPlaceData(config);
+
+        _.chain(mapPlaceData)
+        .entries()
+        .value()
+        .forEach(([place, { system, locked }]) => {
+            if (!(system || locked)) return;
+            if (defaultData[place].unavailable || defaultData[place].locked) return;
+
+            defaultData[place].system = system;
+            defaultData[place].locked = locked;
+        });
+
+        setMapPlaceData(defaultData);
+    };
+    const clearMap = () => {
+        moveTiles(
+            _.chain(mapPlaceData)
+            .pickBy(data => data.system && !data.locked && !data.unavailable)
+            .values()
+            .map(({ system }) => ({ system, place: null }))
+            .value()
+        )
+    };
+    const setRandomMap = () => {
+        const randomSystems = _.chain(SYSTEMS)
+            .map('number')
+            .without(
+                ..._.chain(mapPlaceData)
+                .values()
+                .filter(data => data.locked || data.unavailable)
+                .map('system')
+                .value()
+            )
+            .shuffle()
+            .value();
+
+        moveTiles(_.chain(mapPlaceData)
+            .pickBy(data => !data.locked && !data.unavailable)
+            .keys()
+            .map((place, i) => ({ place, system: randomSystems[i] || null }))
+            .value()
+        );
+    };
+
     return (
         <div id="map-builder" className="container-fluid">
             <div className="build-area">
@@ -99,24 +151,10 @@ const MapBuilder = () => {
                         mapPlaceData={mapPlaceData}
                         displayType={tileDisplayType}
                         moveTile={moveTile}
-                        // config={config}
-                        // homeSystems={homeSystems}
-                        // lockedPlaces={lockedPlaces}
-                        // setLockedPlace={setLockedPlace}
+                        toggleLockedPlace={toggleLockedPlace}
                     />
                     <TileDisplay
-                        systems={_.chain(SYSTEMS)
-                            .map('number')
-                            .without(
-                                ..._.chain(mapPlaceData)
-                                .values()
-                                .filter('system')
-                                .map('system')
-                                .value()
-                            )
-                            .sort()
-                            .value()
-                        }
+                        systems={unassignedSystems}
                         moveTile={moveTile}
                         displayType={tileDisplayType}
                     />
@@ -143,6 +181,9 @@ const MapBuilder = () => {
                         <option value={TILE_DISPLAY_TYPE.IMAGE}>Full colour</option>
                         <option value={TILE_DISPLAY_TYPE.SVG}>Lo-fi</option>
                     </select>
+
+                    <button className="btn btn-outline-dark ml-1" onClick={setRandomMap}>Randomise</button>
+                    <button className="btn btn-outline-dark ml-1" onClick={clearMap}>Clear</button>
                 </div>
             </div>
             <div className="stat-tables">

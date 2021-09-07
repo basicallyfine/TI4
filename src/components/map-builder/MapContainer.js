@@ -8,6 +8,7 @@ const MapContainer = ({
     displayType,
     moveTile,
     className = '',
+    toggleLockedPlace,
     ...props
 }) => {
     return (
@@ -23,6 +24,7 @@ const MapContainer = ({
                         unavailable={unavailable}
                         contentType={displayType}
                         moveTile={moveTile}
+                        toggleLockedPlace={toggleLockedPlace}
                     />
                 );
             })}
