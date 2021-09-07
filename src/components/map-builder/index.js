@@ -187,7 +187,7 @@ const MapBuilder = () => {
                 </div>
             </div>
             <div className="stat-tables">
-                {/* <StatsTable tilePlacement={tilePlacement} mapConfig={config} /> */}
+                <StatsTable mapPlaceData={mapPlaceData} mapConfig={MAP_CONFIG[mapOption]} />
             </div>
         </div>
     );

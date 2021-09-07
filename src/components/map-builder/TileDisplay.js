@@ -14,7 +14,7 @@ const TileDisplay = ({
 }) => {
     const [{ isOver, canDrop }, dropRef] = useDrop({
         accept: 'TILE',
-        drop: ({ system }) => { moveTile(system, MAP_PLACES.TABLE) },
+        drop: ({ system }) => { moveTile(system, null) },
         // canDrop: () => true,
         collect: (monitor) => ({
             isOver: monitor.isOver(),
