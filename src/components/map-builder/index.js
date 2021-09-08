@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
+import utils from '../../lib/utils';
 import { SYSTEMS } from '../../lib/constants';
 import {
     MAP_PLACES,
@@ -19,7 +20,12 @@ import StatsTable from './StatsTable';
 
 import './styles.css';
 
-// TODO: import from url params
+const STORAGE_KEYS = {
+    MAP_DATA: 'map_data',
+    MAP_OPTION: 'map_option',
+};
+
+
 const defaultMapPlaceData = (mapConfig) => {
     const placeData = _.mapValues(MAP_PLACES, (v, k) => {
         switch (k) {
@@ -45,14 +51,75 @@ const defaultMapPlaceData = (mapConfig) => {
     return placeData;
 }
 
+const getMapString = (data) => {
+    const string = _.chain(data)
+        .toPairs()
+        .filter(([place]) => (place || '').match(/^MAP_/))
+        .sortBy(0)
+        .map(([place, data]) => (data.system || '0').toString(10))
+        .value()
+        .join(' ');
+    
+    return string.replace(/[\s0]+$/, '');
+};
+
+const parseMapString = (string) => {
+    const systems = _.chain(string).split(' ').filter().map(_.parseInt).value();
+    return _.chain(MAP_PLACES)
+        .toPairs()
+        .sortBy(0)
+        .fromPairs()
+        .mapValues((data, place) => ({ system: _.get(systems, parseInt(place.substr(-2), 10)) || null }))
+        .value();
+};
+
+const cleanMapData = (data) => {
+    const usedSystems = [];
+    return _.chain(data)
+    .toPairs()
+    .sortBy(0)
+    .fromPairs()
+    .mapValues((place) => {
+        if (place.system && usedSystems.indexOf(place.system) >= 0) {
+            place.system = null;
+        } else {
+            usedSystems.push(place.system);
+        }
+        if (!place.system) delete place.system;
+        if (!place.locked) delete place.locked;
+        if (!place.unavailable) delete place.unavailable;
+        return place;
+    })
+    .value();
+}
+
 const MapBuilder = () => {
-    const [mapOption, setMapOption] = useState(MAP_OPTION.FOUR_PLAYER);
+    let initialMapOption;
+    // TODO: pull from URL if set
+    if (!initialMapOption) initialMapOption = window.localStorage.getItem(STORAGE_KEYS.MAP_OPTION);
+
+    let initialMapPlaceData;
+    // TODO: pull from URL (map string) if set
+    if (!initialMapPlaceData) initialMapPlaceData = utils.parseJSON(window.localStorage.getItem(STORAGE_KEYS.MAP_DATA));
+
+    const [mapOption, setMapOption] = useState(initialMapOption || MAP_OPTION.FOUR_PLAYER);
     const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.TEXT);
-    const [mapPlaceData, setMapPlaceData] = useState({});
+    const [mapPlaceData, setMapPlaceData] = useState(initialMapPlaceData || {});
+    const [mapString, setMapString] = useState('');
 
     useEffect(() => {
         resetMapConfig(MAP_CONFIG[mapOption]);
+        window.localStorage.setItem(STORAGE_KEYS.MAP_OPTION, mapOption);
     }, [mapOption]);
+
+    useEffect(() => {
+        setMapString(getMapString(mapPlaceData));
+        window.localStorage.setItem(STORAGE_KEYS.MAP_DATA, JSON.stringify(cleanMapData(mapPlaceData)));
+    }, [mapPlaceData]);
+
+    // useEffect(() => {
+        
+    // }, [mapString]);
 
     const unassignedSystems = _.chain(SYSTEMS)
         .map('number')
