@@ -18,6 +18,7 @@
         "object-hash": "^2.0.3",
         "querystring": "^0.2.0",
         "react": "^17.0.2",
+        "react-copy-to-clipboard": "^5.0.4",
         "react-dnd": "^14.0.2",
         "react-dnd-html5-backend": "^14.0.0",
         "react-dom": "^17.0.2",

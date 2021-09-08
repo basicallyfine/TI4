@@ -85,6 +85,19 @@
         }
     }
 
+    .modal-header {
+        align-items: center;
+        .close {
+            font-weight: 300;
+            vertical-align: middle;
+            span {
+                vertical-align: middle;
+                font-size: 2rem;
+                line-height: 1em;
+            }
+        }
+    }
+
     .floating-close-button {
         position: absolute;
         top: $modal-header-padding-y;

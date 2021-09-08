@@ -17,6 +17,7 @@ import {
 import MapContainer from './MapContainer';
 import TileDisplay from './TileDisplay';
 import StatsTable from './StatsTable';
+import MapStringModal from './MapStringModal';
 
 import './styles.css';
 
@@ -106,6 +107,7 @@ const MapBuilder = () => {
     const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.TEXT);
     const [mapPlaceData, setMapPlaceData] = useState(initialMapPlaceData || {});
     const [mapString, setMapString] = useState('');
+    const [mapStringDialog, setMapStringDialog] = useState(true);
 
     useEffect(() => {
         resetMapConfig(MAP_CONFIG[mapOption]);
@@ -219,6 +221,7 @@ const MapBuilder = () => {
                         displayType={tileDisplayType}
                         moveTile={moveTile}
                         toggleLockedPlace={toggleLockedPlace}
+                        style={{ opacity: 0 }}
                     />
                     <TileDisplay
                         systems={unassignedSystems}
@@ -251,11 +254,22 @@ const MapBuilder = () => {
 
                     <button className="btn btn-outline-dark ml-1" onClick={setRandomMap}>Randomise</button>
                     <button className="btn btn-outline-dark ml-1" onClick={clearMap}>Clear</button>
+                    <button className="btn btn-outline-dark ml-1" onClick={() => { setMapStringDialog(true); }}>Map string</button>
                 </div>
             </div>
             <div className="stat-tables">
                 <StatsTable mapPlaceData={mapPlaceData} mapConfig={MAP_CONFIG[mapOption]} />
             </div>
+
+            <MapStringModal
+                show={!!mapStringDialog}
+                onClose={() => { setMapStringDialog(false); }}
+                onChange={() => {
+                    // TODO: parse & apply new map string
+                    alert('TODO');
+                }}
+                value={mapString}
+            />
         </div>
     );
 };
