@@ -61,7 +61,7 @@ const getMapString = (data) => {
         .value()
         .join(' ');
     
-    return string.replace(/[\s0]+$/, '');
+    return string.replace(/(\s+0*)+$/, '');
 };
 
 const parseMapString = (string) => {
@@ -69,8 +69,8 @@ const parseMapString = (string) => {
     return _.chain(MAP_PLACES)
         .toPairs()
         .sortBy(0)
-        .fromPairs()
-        .mapValues((data, place) => ({ system: _.get(systems, parseInt(place.substr(-2), 10)) || null }))
+        .map(([place]) => ({ place, system: _.get(systems, parseInt(place.substr(-2), 10)) || null }))
+        .filter(({ place, system }) => place && system)
         .value();
 };
 
@@ -107,7 +107,7 @@ const MapBuilder = () => {
     const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.TEXT);
     const [mapPlaceData, setMapPlaceData] = useState(initialMapPlaceData || {});
     const [mapString, setMapString] = useState('');
-    const [mapStringDialog, setMapStringDialog] = useState(true);
+    const [mapStringDialog, setMapStringDialog] = useState(false);
 
     useEffect(() => {
         resetMapConfig(MAP_CONFIG[mapOption]);
@@ -115,12 +115,13 @@ const MapBuilder = () => {
     }, [mapOption]);
 
     useEffect(() => {
+        console.log(mapPlaceData);
         setMapString(getMapString(mapPlaceData));
         window.localStorage.setItem(STORAGE_KEYS.MAP_DATA, JSON.stringify(cleanMapData(mapPlaceData)));
     }, [mapPlaceData]);
 
     // useEffect(() => {
-        
+    //     console.log({ mapString });
     // }, [mapString]);
 
     const unassignedSystems = _.chain(SYSTEMS)
@@ -140,9 +141,19 @@ const MapBuilder = () => {
             console.log('Place is locked');
             return;
         };
+
+        const alreadyMoved = [];
         
         const newState = _.clone(mapPlaceData);
         tiles.forEach(({ system, place }) => {
+            if (place) {
+                if (alreadyMoved.indexOf(system) >= 0) return;
+                if (newState[place]) {
+                    if (newState[place].unavailable) return;
+                    if (newState[place].locked) return;
+                }
+            }
+            if (!_.find(SYSTEMS, { system })) return;
             const existingSystem = _.get(mapPlaceData, `${place}.system`);
             const prevPlace = _.findKey(mapPlaceData, { system });
 
@@ -152,8 +163,12 @@ const MapBuilder = () => {
             if (newState[place]) {
                 newState[place].system = system;
             }
+
+            if (place) {
+                alreadyMoved.push(system);
+            }
         });
-        setMapPlaceData(newState);
+        setMapPlaceData(cleanMapData(newState));
     };
 
     const moveTile = (system, place) => moveTiles([{ system, place }]);
@@ -182,16 +197,14 @@ const MapBuilder = () => {
 
         setMapPlaceData(defaultData);
     };
-    const clearMap = () => {
-        moveTiles(
-            _.chain(mapPlaceData)
-            .pickBy(data => data.system && !data.locked && !data.unavailable)
-            .values()
-            .map(({ system }) => ({ system, place: null }))
-            .value()
-        )
-    };
-    const setRandomMap = () => {
+
+    const emptyMap = () => _.chain(mapPlaceData)
+        .pickBy(data => data.system && !data.locked && !data.unavailable)
+        .values()
+        .map(({ system }) => ({ system, place: null }))
+        .value()
+
+    const shuffledMap = () => {
         const randomSystems = _.chain(SYSTEMS)
             .map('number')
             .without(
@@ -204,13 +217,18 @@ const MapBuilder = () => {
             .shuffle()
             .value();
 
-        moveTiles(_.chain(mapPlaceData)
+        return _.chain(mapPlaceData)
             .pickBy(data => !data.locked && !data.unavailable)
             .keys()
             .map((place, i) => ({ place, system: randomSystems[i] || null }))
-            .value()
-        );
+            .value();
     };
+
+    const setMapFromString = (string) => {
+        const empty = emptyMap();
+        const fromString = parseMapString(string);
+        moveTiles([...empty, ...fromString]);
+    }
 
     return (
         <div id="map-builder" className="container-fluid">
@@ -221,7 +239,7 @@ const MapBuilder = () => {
                         displayType={tileDisplayType}
                         moveTile={moveTile}
                         toggleLockedPlace={toggleLockedPlace}
-                        style={{ opacity: 0 }}
+                        // style={{ opacity: 0 }}
                     />
                     <TileDisplay
                         systems={unassignedSystems}
@@ -252,8 +270,8 @@ const MapBuilder = () => {
                         <option value={TILE_DISPLAY_TYPE.SVG}>Lo-fi</option>
                     </select>
 
-                    <button className="btn btn-outline-dark ml-1" onClick={setRandomMap}>Randomise</button>
-                    <button className="btn btn-outline-dark ml-1" onClick={clearMap}>Clear</button>
+                    <button className="btn btn-outline-dark ml-1" onClick={() => { moveTiles(shuffledMap()); }}>Randomise</button>
+                    <button className="btn btn-outline-dark ml-1" onClick={() => { moveTiles(emptyMap()); }}>Clear</button>
                     <button className="btn btn-outline-dark ml-1" onClick={() => { setMapStringDialog(true); }}>Map string</button>
                 </div>
             </div>
@@ -264,9 +282,8 @@ const MapBuilder = () => {
             <MapStringModal
                 show={!!mapStringDialog}
                 onClose={() => { setMapStringDialog(false); }}
-                onChange={() => {
-                    // TODO: parse & apply new map string
-                    alert('TODO');
+                onChange={(value) => {
+                    setMapFromString(value);
                 }}
                 value={mapString}
             />

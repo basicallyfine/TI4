@@ -7,8 +7,15 @@ const MapStringModal = ({ show, onChange, onClose, ...props }) => {
     const [value, setValue] = useState(props.value);
     
     useEffect(() => {
-        setValue(props.value);
-    }, [props.value])
+        if (show) {
+            setValue(props.value);
+        }
+    }, [props.value, show]);
+
+    const cleanupString = (initialValue = value) => {
+        const clean = (initialValue || '').replace(/[^\d\s]|^\s+/g, '').replace(/\s+/g, ' ');
+        return clean;
+    }
 
     return (
         <Modal
@@ -24,15 +31,16 @@ const MapStringModal = ({ show, onChange, onClose, ...props }) => {
                 <textarea
                     className="form-control"
                     onChange={(e) => {
-                        setValue((e.target.value || '').replace(/[^\d\s]|^\s+/g, '').replace(/\s+/g, ' '))
+                        setValue(e.target.value || '')
                     }}
                     value={value || ''}
+                    onBlur={(e) => { setValue(cleanupString(e.target.value)); }}
                     // style={{ borderBottomRightRadius: 0, borderBottomLeftRadius: 0 }}
                 />
             </Modal.Body>
             <Modal.Footer>
                 <button className="btn btn-outline-dark ml-1" onClick={() => {
-                    if (onChange) onChange(value);
+                    if (onChange) onChange(cleanupString(value));
                     if (onClose) onClose();
                 }}>Save</button>
                 <CopyToClipboard text={value}>
