@@ -275,7 +275,11 @@ const MapBuilder = () => {
                 </div>
             </div>
             <div className="stat-tables">
-                <StatsTable mapPlaceData={mapPlaceData} mapConfig={MAP_CONFIG[mapOption]} />
+                <StatsTable
+                    _memo={[mapString, mapOption]} // Just for the memo comparison - only use strings
+                    mapPlaceData={mapPlaceData}
+                    mapConfig={MAP_CONFIG[mapOption]}
+                />
             </div>
 
             <MapStringModal

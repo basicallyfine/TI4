@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import _ from 'lodash';
 
 import FontFaceObserver from 'fontfaceobserver';
@@ -463,4 +463,4 @@ const SystemTileContents = ({ system }) => (
   </Stage>
 );
 
-export default SystemTileContents;
+export default memo(SystemTileContents, (prevProps, nextProps) => _.isEqual(_.get(prevProps, 'system.number'), _.get(nextProps, 'system.number')));

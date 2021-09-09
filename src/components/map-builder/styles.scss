@@ -205,8 +205,16 @@ body.dragging * {
         }
     }
 
-    .stat-tables {
-        width: 100%;
+    .map-stats-table {
+        width: unset;
+        tr {
+            &.row-group:not(.row-group-first) td {
+                padding-top: $table-cell-padding-sm;
+            }
+            &.row-group:not(.row-group-last) td {
+                padding-bottom: $table-cell-padding-sm;
+            }
+        }
     }
 
     @media only screen and (min-width: $tile-absolute-breakpoint) {
