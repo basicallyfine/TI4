@@ -115,7 +115,6 @@ const MapBuilder = () => {
     }, [mapOption]);
 
     useEffect(() => {
-        console.log(mapPlaceData);
         setMapString(getMapString(mapPlaceData));
         window.localStorage.setItem(STORAGE_KEYS.MAP_DATA, JSON.stringify(cleanMapData(mapPlaceData)));
     }, [mapPlaceData]);
@@ -153,7 +152,7 @@ const MapBuilder = () => {
                     if (newState[place].locked) return;
                 }
             }
-            if (!_.find(SYSTEMS, { system })) return;
+            if (!_.find(SYSTEMS, { number: system })) return;
             const existingSystem = _.get(mapPlaceData, `${place}.system`);
             const prevPlace = _.findKey(mapPlaceData, { system });
 
