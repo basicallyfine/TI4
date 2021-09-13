@@ -83,8 +83,8 @@ const MAP_PLACE_POSITION = {
 const SYSTEM_PNG_URL = `${URL.ASSETS_BUCKET}ti4/map/systems/png/`;
 
 const MAP_OPTION = {
-    THREE_PLAYER: 'THREE_PLAYER',
-    FOUR_PLAYER: 'FOUR_PLAYER',
+    THREE_PLAYER: 'P3',
+    FOUR_PLAYER: 'P4',
     // SIX_PLAYER: 'SIX_PLAYER',
 };
 

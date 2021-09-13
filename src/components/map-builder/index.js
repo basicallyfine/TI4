@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import _ from 'lodash';
 
 
@@ -65,7 +66,13 @@ const getMapString = (data) => {
 };
 
 const parseMapString = (string) => {
-    const systems = _.chain(string).split(' ').filter().map(_.parseInt).value();
+    const systems = _.chain(string)
+        .replace(/^\D+|\D+$/g, '')
+        .split(/\D+/)
+        .filter()
+        .map(_.parseInt)
+        .value();
+
     return _.chain(MAP_PLACES)
         .toPairs()
         .sortBy(0)
@@ -94,18 +101,42 @@ const cleanMapData = (data) => {
     .value();
 }
 
-const MapBuilder = () => {
-    let initialMapOption;
-    // TODO: pull from URL if set
-    if (!initialMapOption) initialMapOption = window.localStorage.getItem(STORAGE_KEYS.MAP_OPTION);
+const useInitialMapState = () => {
+    const location = useLocation();
+    const query = new URLSearchParams(`?${location.hash.replace(/^[?#]+/, '')}`);
 
-    let initialMapPlaceData;
-    // TODO: pull from URL (map string) if set
-    if (!initialMapPlaceData) initialMapPlaceData = utils.parseJSON(window.localStorage.getItem(STORAGE_KEYS.MAP_DATA));
+    console.log({ location, query });
+
+    const mapOption = () => {
+        const option = query.get('o') || window.localStorage.getItem(STORAGE_KEYS.MAP_OPTION);
+        return _.get(MAP_CONFIG, option) ? option : null;
+    };
+    const mapPlaceData = () => {
+        if (query.get('s')) {
+            const data = {};
+            parseMapString(query.get('s')).forEach(({ place, system }) => {
+                data[place] = { system };
+            });
+            return data;
+        }
+
+        return utils.parseJSON(window.localStorage.getItem(STORAGE_KEYS.MAP_DATA));
+    }
+
+    return { initialMapOption: mapOption(), initialMapPlaceData: mapPlaceData() }; 
+}
+
+const MapBuilder = () => {
+    const location = useLocation();
+    const history = useHistory();
+
+    const { initialMapOption, initialMapPlaceData } = useInitialMapState();
+
+    console.log({ initialMapOption, initialMapPlaceData });
 
     const [mapOption, setMapOption] = useState(initialMapOption || MAP_OPTION.FOUR_PLAYER);
-    const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.TEXT);
     const [mapPlaceData, setMapPlaceData] = useState(initialMapPlaceData || {});
+    const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.TEXT);
     const [mapString, setMapString] = useState('');
     const [mapStringDialog, setMapStringDialog] = useState(false);
 
@@ -122,6 +153,12 @@ const MapBuilder = () => {
     // useEffect(() => {
     //     console.log({ mapString });
     // }, [mapString]);
+
+    useLayoutEffect(() => {
+        if (location.hash) {
+            history.replace({ hash: null });
+        }
+    });
 
     const unassignedSystems = _.chain(SYSTEMS)
         .map('number')
@@ -278,7 +315,7 @@ const MapBuilder = () => {
                 <StatsTable
                     _memo={[mapString, mapOption]} // Just for the memo comparison - only use strings
                     mapPlaceData={mapPlaceData}
-                    mapConfig={MAP_CONFIG[mapOption]}
+                    mapConfig={MAP_CONFIG[mapOption] || {}}
                 />
             </div>
 
