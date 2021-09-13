@@ -11,15 +11,17 @@ import './styles/app.css';
 
 const history = createBrowserHistory();
 
+const BASE_PATH = '';
+
 const Routes = () => {
   return (
     <>
       <div id="app-wrapper">
         <Router history={history}>
             <Switch>
-              <Route path="/TI4/dice" component={DiceTable} />
-              <Route path="/TI4/map-builder" component={MapBuilder} />
-              <Route path="/" component={() => <Redirect to="/TI4/dice" />} />
+              <Route path={`${BASE_PATH}/dice`} component={DiceTable} />
+              <Route path={`${BASE_PATH}/map-builder`} component={MapBuilder} />
+              <Route path="/" component={() => <Redirect to={`${BASE_PATH}/dice`} />} />
             </Switch>
         </Router>
       </div>

@@ -2,7 +2,7 @@
     "name": "ti4-reference",
     "version": "0.0.1",
     "private": true,
-    "homepage": "/TI4/",
+    "homepage": "/",
     "dependencies": {
         "@nivo/bar": "^0.62.0",
         "@nivo/line": "^0.62.0",
