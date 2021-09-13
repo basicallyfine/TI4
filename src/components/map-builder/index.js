@@ -136,7 +136,7 @@ const MapBuilder = () => {
 
     const [mapOption, setMapOption] = useState(initialMapOption || MAP_OPTION.FOUR_PLAYER);
     const [mapPlaceData, setMapPlaceData] = useState(initialMapPlaceData || {});
-    const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.TEXT);
+    const [tileDisplayType, setTileDisplayType] = useState(TILE_DISPLAY_TYPE.IMAGE);
     const [mapString, setMapString] = useState('');
     const [mapStringDialog, setMapStringDialog] = useState(false);
 
