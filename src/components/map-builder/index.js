@@ -105,8 +105,6 @@ const useInitialMapState = () => {
     const location = useLocation();
     const query = new URLSearchParams(`?${location.hash.replace(/^[?#]+/, '')}`);
 
-    console.log({ location, query });
-
     const mapOption = () => {
         const option = query.get('o') || window.localStorage.getItem(STORAGE_KEYS.MAP_OPTION);
         return _.get(MAP_CONFIG, option) ? option : null;
@@ -131,8 +129,6 @@ const MapBuilder = () => {
     const history = useHistory();
 
     const { initialMapOption, initialMapPlaceData } = useInitialMapState();
-
-    console.log({ initialMapOption, initialMapPlaceData });
 
     const [mapOption, setMapOption] = useState(initialMapOption || MAP_OPTION.FOUR_PLAYER);
     const [mapPlaceData, setMapPlaceData] = useState(initialMapPlaceData || {});
