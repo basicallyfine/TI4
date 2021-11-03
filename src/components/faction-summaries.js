@@ -41,6 +41,7 @@ const consolidateURLCodes = (input) => {
     const indexClusters = codes.reduce((reducer, code) => {
         const lastSubArray = reducer[reducer.length - 1];
         const codeIndex = _.findIndex(FACTIONS, { code });
+        if (codeIndex < 0) return reducer;
         
         if(!lastSubArray || lastSubArray[lastSubArray.length - 1] !== codeIndex - 1) {
           reducer.push([]);
@@ -75,8 +76,7 @@ const FactionSummaries = ({ match, history }) => {
         const selectedFactions = FACTIONS.filter(({ code }) => codes.indexOf(code) >= 0);
 
         return (
-            <div className="container faction-summary summary-results my-2">
-                <h2>Faction summary sheets</h2>
+            <div className="container faction-summary summary-results my-1">
                 <ul className="faction-summary-images">
                     {selectedFactions.map(({ code, name }) => (
                         <li key={code}>
