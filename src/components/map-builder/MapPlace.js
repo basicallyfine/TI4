@@ -7,6 +7,7 @@ import { MAP_PLACE_POSITION } from './map-constants';
 
 import SystemTile from './SystemTile';
 import HomeSystemTile from './HomeSystemTile';
+import HyperlaneTile from './HyperlaneTile';
 
 const placeWrapperStyle = ({ place }) => {
     const position = _.get(MAP_PLACE_POSITION, place);
@@ -24,6 +25,7 @@ const MapPlace = ({
     place,
     system = null,
     playerHome = null,
+    hyperlane = null,
     contentType,
     moveTile,
     locked,
@@ -63,6 +65,13 @@ const MapPlace = ({
             onDoubleClick={() => { toggleLockedPlace(place); }}
         >
             {playerHome && <HomeSystemTile player={playerHome} contentType={contentType} place={place} />}
+            {hyperlane && (
+                <HyperlaneTile
+                    hyperlane={hyperlane} /* future use to set the type & rotation */
+                    contentType={contentType}
+                    place={place}
+                />
+            )}
             {system && (
                 <SystemTile
                     place={place}

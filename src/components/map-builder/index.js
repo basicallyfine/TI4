@@ -50,6 +50,13 @@ const defaultMapPlaceData = (mapConfig) => {
         })
     });
 
+    if (mapConfig.hyperlanes) {
+        mapConfig.hyperlanes.forEach((position) => {
+            placeData[position].unavailable = true;
+            placeData[position].hyperlane = true;
+        });
+    }
+
     return placeData;
 }
 

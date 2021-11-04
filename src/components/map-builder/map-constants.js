@@ -223,7 +223,8 @@ const MAP_CONFIG = {
                     equidistant: [MAP_PLACES.MAP_13,MAP_PLACES.MAP_16]
                 }
             },
-        ]
+        ],
+        hyperlanes: [MAP_PLACES.MAP_04,MAP_PLACES.MAP_12,MAP_PLACES.MAP_27,MAP_PLACES.MAP_28,MAP_PLACES.MAP_29,MAP_PLACES.MAP_14]
     },
     [MAP_OPTION.SIX_PLAYER]: {
         name: 'Six player',

@@ -13,7 +13,7 @@ const MapContainer = ({
 }) => {
     return (
         <div className={`map-container ${className}`} {...props}>
-            {_.toPairs(mapPlaceData).map(([place, { system, hs, locked, unavailable }]) => {
+            {_.toPairs(mapPlaceData).map(([place, { system, hs, locked, unavailable, hyperlane }]) => {
                 return (
                     <MapPlace
                         key={place}
@@ -25,6 +25,7 @@ const MapContainer = ({
                         contentType={displayType}
                         moveTile={moveTile}
                         toggleLockedPlace={toggleLockedPlace}
+                        hyperlane={hyperlane}
                     />
                 );
             })}
