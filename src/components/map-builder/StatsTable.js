@@ -13,6 +13,7 @@ const summariseSystems = (systems) => {
     summary.planets = planets.length;
     summary.resources = _.sumBy(planets, 'resources');
     summary.influence = _.sumBy(planets, 'influence');
+    summary.totalValue = _.sumBy(planets, 'resources') + _.sumBy(planets, 'influence');
     summary.efficientValue = _.sumBy(planets, ({ resources, influence }) => _.max([resources, influence]));
     summary.tech = _.sumBy(planets, ({ tech }) => tech ? 1 : 0);
     summary.legendary = _.sumBy(planets, ({ legendary }) => legendary ? 1 : 0);
@@ -86,12 +87,13 @@ const StatsTable = ({ mapPlaceData, mapConfig}) => {
                 ))}
             </div>
             <div className="table-responsive">
-                <table className="table map-stats-table">
+                <table className="table map-stats-table table-sm">
                     <thead><tr>
                         <th colSpan="2"></th>
                         <th className="vertical"><span>Planets</span></th>
                         <th className="vertical"><span>Resources</span></th>
                         <th className="vertical"><span>Influence</span></th>
+                        <th className="vertical"><span>Total value</span></th>
                         <th className="vertical"><span>Efficient value</span></th>
                         <th className="vertical"><span>Legendary planets</span></th>
                         <th className="vertical"><span>Tech specialties</span></th>
@@ -112,24 +114,26 @@ const StatsTable = ({ mapPlaceData, mapConfig}) => {
                                             [
                                                 'row-group',
                                                 (systemGroupIdx === 0 ? 'row-group-first' : ''),
+                                                (systemGroupIdx === 1 ? 'row-group-second' : ''),
                                                 (systemGroupIdx === (includedSystems.length - 1) ? 'row-group-last' : ''),
                                             ].join(' ')
                                         }
                                     >
-                                        {systemGroupIdx === 0 && <td rowSpan={includedSystems.length}>{player.label}</td>}
-                                        <td>{systemGroup}</td>
-                                        <td className="text-center">{player.systems[systemGroup].planets || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].resources || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].influence || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].efficientValue || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].legendary || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].tech || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].traits[PLANET_TRAIT.BLUE] || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].traits[PLANET_TRAIT.GREEN] || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].traits[PLANET_TRAIT.RED] || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].anomalies || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].wormhole || 0}</td>
-                                        <td className="text-center">{player.systems[systemGroup].nonPlanet || 0}</td>
+                                        {systemGroupIdx === 0 && <td rowSpan={includedSystems.length} className="player-label">{player.label}</td>}
+                                        <td className="system-group-label">{systemGroup}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].planets || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].resources || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].influence || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].totalValue || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].efficientValue || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].legendary || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].tech || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].traits[PLANET_TRAIT.BLUE] || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].traits[PLANET_TRAIT.GREEN] || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].traits[PLANET_TRAIT.RED] || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].anomalies || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].wormhole || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].nonPlanet || 0}</td>
                                     </tr>
                                 ))}
                             </Fragment>

@@ -207,12 +207,50 @@ body.dragging * {
 
     .map-stats-table {
         width: unset;
+        $border-standard: $table-border-width solid rgba(255,255,255,0.2);
+        $border-heavy: ($table-border-width * 1) solid rgba(255,255,255,0.5);
+
+        td, th {
+            padding-top: $table-cell-padding;
+            padding-bottom: $table-cell-padding;
+        }
         tr {
             &.row-group:not(.row-group-first) td {
                 padding-top: $table-cell-padding-sm;
             }
             &.row-group:not(.row-group-last) td {
                 padding-bottom: $table-cell-padding-sm;
+            }
+            &.row-group.row-group-second td {
+                background-color: rgba(255,255,255,0.1);
+            }
+        }
+        thead {
+            th { border-bottom: $border-heavy; }
+        }
+        tbody {
+            td.player-label {
+                border-left: $border-heavy;
+                padding-left: $table-cell-padding;
+            }
+            td.system-group-label {
+                border-right: $border-heavy;
+                padding-right: $table-cell-padding;
+            }
+            tr.row-group-first td {
+                border-top: $border-heavy;
+            }
+            tr.row-group-last td, tr.row-group-first td:first-child {
+                border-bottom: $border-heavy;
+            }
+            td.stat-value {
+                border: $border-standard;
+                &:last-child {
+                    border-right: $border-heavy;
+                }
+            }
+            .system-group-label{
+                border-right: $border-heavy;
             }
         }
     }
