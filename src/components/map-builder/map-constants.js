@@ -85,7 +85,8 @@ const SYSTEM_PNG_URL = `${URL.ASSETS_BUCKET}ti4/map/systems/png/`;
 const MAP_OPTION = {
     THREE_PLAYER: 'P3',
     FOUR_PLAYER: 'P4',
-    // SIX_PLAYER: 'SIX_PLAYER',
+    FIVE_PLAYER_HYPERLANES: 'P5H',
+    SIX_PLAYER: 'P6',
 };
 
 const MAP_CONFIG = {
@@ -170,6 +171,60 @@ const MAP_CONFIG = {
             },
         ]
     },
+    [MAP_OPTION.FIVE_PLAYER_HYPERLANES]: {
+        name: 'Five player (Hyperlanes)',
+        systems: {
+            blue: 15,
+            red: 10,
+        },
+        players: [
+            {
+                label: 'A',
+                position: {
+                    hs: MAP_PLACES.MAP_34,
+                    adjacent: [MAP_PLACES.MAP_35,MAP_PLACES.MAP_17,MAP_PLACES.MAP_33],
+                    slice: [MAP_PLACES.MAP_35,MAP_PLACES.MAP_17,MAP_PLACES.MAP_33,MAP_PLACES.MAP_06],
+                    equidistant: [MAP_PLACES.MAP_18,MAP_PLACES.MAP_16]
+                }
+            },
+            {
+                label: 'B',
+                position: {
+                    hs: MAP_PLACES.MAP_19,
+                    adjacent: [MAP_PLACES.MAP_36,MAP_PLACES.MAP_07,MAP_PLACES.MAP_20],
+                    slice: [MAP_PLACES.MAP_36,MAP_PLACES.MAP_07,MAP_PLACES.MAP_20,MAP_PLACES.MAP_01],
+                    equidistant: [MAP_PLACES.MAP_18,MAP_PLACES.MAP_08]
+                }
+            },
+            {
+                label: 'C',
+                position: {
+                    hs: MAP_PLACES.MAP_22,
+                    adjacent: [MAP_PLACES.MAP_21,MAP_PLACES.MAP_09,MAP_PLACES.MAP_23],
+                    slice: [MAP_PLACES.MAP_21,MAP_PLACES.MAP_09,MAP_PLACES.MAP_23,MAP_PLACES.MAP_02],
+                    equidistant: [MAP_PLACES.MAP_08,MAP_PLACES.MAP_10]
+                }
+            },
+            {
+                label: 'D',
+                position: {
+                    hs: MAP_PLACES.MAP_25,
+                    adjacent: [MAP_PLACES.MAP_24,MAP_PLACES.MAP_11,MAP_PLACES.MAP_26],
+                    slice: [MAP_PLACES.MAP_24,MAP_PLACES.MAP_11,MAP_PLACES.MAP_26,MAP_PLACES.MAP_03],
+                    equidistant: [MAP_PLACES.MAP_10,MAP_PLACES.MAP_13]
+                }
+            },
+            {
+                label: 'E',
+                position: {
+                    hs: MAP_PLACES.MAP_31,
+                    adjacent: [MAP_PLACES.MAP_32,MAP_PLACES.MAP_15,MAP_PLACES.MAP_30],
+                    slice: [MAP_PLACES.MAP_32,MAP_PLACES.MAP_15,MAP_PLACES.MAP_30,MAP_PLACES.MAP_05],
+                    equidistant: [MAP_PLACES.MAP_13,MAP_PLACES.MAP_16]
+                }
+            },
+        ]
+    },
     [MAP_OPTION.SIX_PLAYER]: {
         name: 'Six player',
         systems: {
@@ -180,55 +235,55 @@ const MAP_CONFIG = {
             {
                 label: 'A',
                 position: {
-                    hs: null,
-                    adjacent: [],
-                    slice: [],
-                    equidistant: []
+                    hs: MAP_PLACES.MAP_34,
+                    adjacent: [MAP_PLACES.MAP_35,MAP_PLACES.MAP_17,MAP_PLACES.MAP_33],
+                    slice: [MAP_PLACES.MAP_35,MAP_PLACES.MAP_17,MAP_PLACES.MAP_33,MAP_PLACES.MAP_06],
+                    equidistant: [MAP_PLACES.MAP_18,MAP_PLACES.MAP_16]
                 }
             },
             {
                 label: 'B',
                 position: {
-                    hs: null,
-                    adjacent: [],
-                    slice: [],
-                    equidistant: []
+                    hs: MAP_PLACES.MAP_19,
+                    adjacent: [MAP_PLACES.MAP_36,MAP_PLACES.MAP_07,MAP_PLACES.MAP_20],
+                    slice: [MAP_PLACES.MAP_36,MAP_PLACES.MAP_07,MAP_PLACES.MAP_20,MAP_PLACES.MAP_01],
+                    equidistant: [MAP_PLACES.MAP_18,MAP_PLACES.MAP_08]
                 }
             },
             {
                 label: 'C',
                 position: {
-                    hs: null,
-                    adjacent: [],
-                    slice: [],
-                    equidistant: []
+                    hs: MAP_PLACES.MAP_22,
+                    adjacent: [MAP_PLACES.MAP_21,MAP_PLACES.MAP_09,MAP_PLACES.MAP_23],
+                    slice: [MAP_PLACES.MAP_21,MAP_PLACES.MAP_09,MAP_PLACES.MAP_23,MAP_PLACES.MAP_02],
+                    equidistant: [MAP_PLACES.MAP_08,MAP_PLACES.MAP_10]
                 }
             },
             {
                 label: 'D',
                 position: {
-                    hs: null,
-                    adjacent: [],
-                    slice: [],
-                    equidistant: []
+                    hs: MAP_PLACES.MAP_25,
+                    adjacent: [MAP_PLACES.MAP_24,MAP_PLACES.MAP_11,MAP_PLACES.MAP_26],
+                    slice: [MAP_PLACES.MAP_24,MAP_PLACES.MAP_11,MAP_PLACES.MAP_26,MAP_PLACES.MAP_03],
+                    equidistant: [MAP_PLACES.MAP_10,MAP_PLACES.MAP_12]
                 }
             },
             {
                 label: 'E',
                 position: {
-                    hs: null,
-                    adjacent: [],
-                    slice: [],
-                    equidistant: []
+                    hs: MAP_PLACES.MAP_28,
+                    adjacent: [MAP_PLACES.MAP_29,MAP_PLACES.MAP_13,MAP_PLACES.MAP_27],
+                    slice: [MAP_PLACES.MAP_29,MAP_PLACES.MAP_13,MAP_PLACES.MAP_27,MAP_PLACES.MAP_04],
+                    equidistant: [MAP_PLACES.MAP_12,MAP_PLACES.MAP_14]
                 }
             },
             {
                 label: 'F',
                 position: {
-                    hs: null,
-                    adjacent: [],
-                    slice: [],
-                    equidistant: []
+                    hs: MAP_PLACES.MAP_31,
+                    adjacent: [MAP_PLACES.MAP_32,MAP_PLACES.MAP_15,MAP_PLACES.MAP_30],
+                    slice: [MAP_PLACES.MAP_32,MAP_PLACES.MAP_15,MAP_PLACES.MAP_30,MAP_PLACES.MAP_05],
+                    equidistant: [MAP_PLACES.MAP_14,MAP_PLACES.MAP_16]
                 }
             },
         ]
