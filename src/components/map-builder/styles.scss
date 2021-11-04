@@ -256,50 +256,38 @@ body.dragging * {
     }
 
     @media only screen and (min-width: $tile-absolute-breakpoint) {
-        .map-container {
-            width: map-width($tile-width);
-            height: map-height(hex-height($tile-width));
-        }
-        .map-place-wrapper {
-            width: $place-wrapper;
-            height: $place-wrapper;
-        }
-        .system-tile {
-            width: $tile-width;
-            height: hex-height($tile-width);
-            font-size: $tile-font-size;
+        .build-area.responsive {
+            .map-container {
+                width: map-width($tile-width);
+                height: map-height(hex-height($tile-width));
+            }
+            .map-place-wrapper {
+                width: $place-wrapper;
+                height: $place-wrapper;
+            }
+            .system-tile {
+                width: $tile-width;
+                height: hex-height($tile-width);
+                font-size: $tile-font-size;
+            }
         }
     }
 
     @media only screen and (min-width: $tile-display-layout-breakpoint) {
-        .map-container {
-            margin-right: 0;
-        }
-        .tile-display-container {
-            height: map-height(hex-height($tile-width));
-            width: auto;
-            flex-grow: 1;
-            flex-basis: 0;
-            margin-right: auto;
-            margin-left: $tile-display-margin-left;
-            overflow-y: auto;
-            text-align: center;
-
-            // max-width: $tile-width + $tile-display-spacing + ($tile-display-padding * 2);
-
-            // flex-grow: 1;
-            // width: auto;
-
-            // flex-wrap: nowrap;
-            // width: auto;
-            // min-width: $tile-display-width;
-            // max-width: ($tile-display-width + $tile-display-spacing) * 2;
-            // flex-grow: 1;
-            // overflow-y: auto;
-            // justify-content: flex-start;
-            // .system-tile {
-            //     margin: ($tile-display-spacing / 2) auto;
-            // }
+        .build-area.responsive {
+            .map-container {
+                margin-right: 0;
+            }
+            .tile-display-container {
+                height: map-height(hex-height($tile-width));
+                width: auto;
+                flex-grow: 1;
+                flex-basis: 0;
+                margin-right: auto;
+                margin-left: $tile-display-margin-left;
+                overflow-y: auto;
+                text-align: center;
+            }
         }
     }
 

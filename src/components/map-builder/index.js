@@ -271,7 +271,7 @@ const MapBuilder = () => {
 
     return (
         <div id="map-builder" className="container-fluid">
-            <div className="build-area">
+            <div className="build-area responsive">
                 <DndProvider backend={HTML5Backend}>
                     <MapContainer
                         mapPlaceData={mapPlaceData}
