@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 
-import { FACTIONS } from '../lib/constants';
+import { URL, FACTIONS } from '../lib/constants';
 
 import '../styles/components/faction-summaries.css';
 
@@ -72,7 +72,7 @@ const consolidateURLCodes = (input) => {
 const FactionSummaries = ({ match, history, location }) => {
     const [selectedCodes, setSelectedCodes] = useState('');
     useEffect(() => {
-        if (window.location.href.match(/\?$/)) {
+        if (window.location.href.match(/\?$/) || location.search) {
             history.replace(location.pathname);
         }
         if (window.sessionStorage.getItem('selectedFactionCodes')) {
@@ -94,7 +94,7 @@ const FactionSummaries = ({ match, history, location }) => {
                     {selectedFactions.map(({ code, name }) => (
                         <li key={code}>
                             <img
-                                src={`${process.env.PUBLIC_URL}/faction-summaries/${code}.jpg`}
+                                src={`${URL.ASSETS_BUCKET}ti4/faction-summaries/${code}.jpg`}
                                 alt={`${name} summary`}
                             />
                         </li>
@@ -124,39 +124,42 @@ const FactionSummaries = ({ match, history, location }) => {
                     // history.push(match.path.replace(':codes?', pathParam));
                 }}
             >
-                {FACTIONS.map(({ code, name }) => (
+                {FACTIONS.map(({ code, name }, i) => (
                     <div className="form-check" key={code}>
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value={code}
-                            id={`checkbox-${code}`}
-                            checked={(selectedCodes.indexOf(code) >= 0 || false)}
-                            onChange={(e) => {
-                                if (e.target.checked) {
-                                    setSelectedCodes(
-                                        prevCodes => _.chain(prevCodes)
-                                            .split('')
-                                            .concat(code)
-                                            .uniq()
-                                            .value()
-                                            .join('')
-                                    )
-                                } else {
-                                    setSelectedCodes(
-                                        prevCodes => _.chain(prevCodes)
-                                            .split('')
-                                            .without(code)
-                                            .uniq()
-                                            .value()
-                                            .join('')
-                                    )
-                                }
-                            }}
-                        />
                         <label className="form-check-label" htmlFor={`checkbox-${code}`}>
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                // value={code}
+                                value=""
+                                name={code}
+                                id={`checkbox-${code}`}
+                                checked={(selectedCodes.indexOf(code) >= 0 || false)}
+                                onChange={(e) => {
+                                    if (e.target.checked) {
+                                        setSelectedCodes(
+                                            prevCodes => _.chain(prevCodes)
+                                                .split('')
+                                                .concat(code)
+                                                .uniq()
+                                                .value()
+                                                .join('')
+                                        )
+                                    } else {
+                                        setSelectedCodes(
+                                            prevCodes => _.chain(prevCodes)
+                                                .split('')
+                                                .without(code)
+                                                .uniq()
+                                                .value()
+                                                .join('')
+                                        )
+                                    }
+                                }}
+                            />
                             {name}
                         </label>
+                        <a href={`${URL.ASSETS_BUCKET}ti4/faction-summaries/${code}.jpg`} className="faction-link" target="_blank">→</a>
                     </div>
                 ))}
                 <div className="mt-2 mb-3">
