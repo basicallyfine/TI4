@@ -88,7 +88,7 @@ const FactionSummaries = ({ match, history, location }) => {
     const imageTypes = [
         'overview', 
         'summary', 
-        // 'sheet-front',
+        'sheet-front',
         // 'sheet-back',
     ];
 
@@ -97,22 +97,22 @@ const FactionSummaries = ({ match, history, location }) => {
 
         return (
             <div className="faction-summary summary-results">
-                <ul className="faction-summary-images">
+                <div className={`faction-summary-images ${codes.length === 1 ? 'single-faction' : 'mdivtiple-factions'}`}>
                     {selectedFactions.map(({ code, name, image_name }) => (
-                        <li key={code} className={`faction-row row-size-${imageTypes.length}`}>
+                        <div key={code} className={`faction-row row-size-${imageTypes.length}`}>
                             {imageTypes.map((imageType) => (
-                                <span
+                                <img
                                     className="image-cell"
                                     key={imageType}
-                                    // src={}
+                                    src={`${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg`}
                                     // src={`https://via.placeholder.com/320x${_.random(250,300)}`}
-                                    style={{ backgroundImage: `url(${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg)` }}
-                                    // alt={`${name} summary`}
+                                    // style={{ backgroundImage: `url(${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg)` }}
+                                    alt={`${name} summary`}
                                 />
                             ))}
-                        </li>
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
         );
     }
