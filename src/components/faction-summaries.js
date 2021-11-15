@@ -85,18 +85,31 @@ const FactionSummaries = ({ match, history, location }) => {
         window.sessionStorage.setItem('selectedFactionCodes', selectedCodes);
     }, [selectedCodes]);
 
+    const imageTypes = [
+        'overview', 
+        'summary', 
+        // 'sheet-front',
+        // 'sheet-back',
+    ];
+
     if (_.size(codes) > 0) {
         const selectedFactions = FACTIONS.filter(({ code }) => codes.indexOf(code) >= 0);
 
         return (
             <div className="container faction-summary summary-results my-1">
                 <ul className="faction-summary-images">
-                    {selectedFactions.map(({ code, name }) => (
-                        <li key={code}>
-                            <img
-                                src={`${URL.ASSETS_BUCKET}ti4/faction-summaries/${code}.jpg`}
-                                alt={`${name} summary`}
-                            />
+                    {selectedFactions.map(({ code, name, image_name }) => (
+                        <li key={code} className={`faction-row row-size-${imageTypes.length}`}>
+                            {imageTypes.map((imageType) => (
+                                <img
+                                    className="image-cell"
+                                    key={imageType}
+                                    src={`${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg`}
+                                    // src={`https://via.placeholder.com/320x${_.random(250,300)}`}
+                                    // style={{ backgroundImage: `https://via.placeholder.com/320x${_.random(250,300)}` }}
+                                    alt={`${name} summary`}
+                                />
+                            ))}
                         </li>
                     ))}
                 </ul>
