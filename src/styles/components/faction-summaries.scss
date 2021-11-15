@@ -8,7 +8,7 @@
             max-width: map-get($container-max-widths, sm);
         }
         &.summary-results {
-            max-width: 1600px;
+            // max-width: 1200px;
         }
     }
 
@@ -31,7 +31,10 @@
             align-items: center;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            overscroll-behavior: none;
+            // overscroll-behavior: none;
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
             // @for $size from 2 through 8 {
             //     &.row-size-#{$size} {
@@ -45,10 +48,13 @@
         .image-cell {
             display: block;
             width: 100%;
-            height: auto;
+            height: 70vw;
+            max-height: 100vh;
             flex-shrink: 0;
             scroll-snap-align: start;
             margin-right: $spacer;
+            background: 50% 50% no-repeat;
+            background-size: contain;
             &:last-child {
                 margin-right: 0;
             }

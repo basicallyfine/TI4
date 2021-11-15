@@ -96,18 +96,18 @@ const FactionSummaries = ({ match, history, location }) => {
         const selectedFactions = FACTIONS.filter(({ code }) => codes.indexOf(code) >= 0);
 
         return (
-            <div className="container faction-summary summary-results my-1">
+            <div className="faction-summary summary-results">
                 <ul className="faction-summary-images">
                     {selectedFactions.map(({ code, name, image_name }) => (
                         <li key={code} className={`faction-row row-size-${imageTypes.length}`}>
                             {imageTypes.map((imageType) => (
-                                <img
+                                <span
                                     className="image-cell"
                                     key={imageType}
-                                    src={`${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg`}
+                                    // src={}
                                     // src={`https://via.placeholder.com/320x${_.random(250,300)}`}
-                                    // style={{ backgroundImage: `https://via.placeholder.com/320x${_.random(250,300)}` }}
-                                    alt={`${name} summary`}
+                                    style={{ backgroundImage: `url(${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg)` }}
+                                    // alt={`${name} summary`}
                                 />
                             ))}
                         </li>
@@ -172,7 +172,11 @@ const FactionSummaries = ({ match, history, location }) => {
                             />
                             {name}
                         </label>
-                        <a href={`${URL.ASSETS_BUCKET}ti4/faction-summaries/${code}.jpg`} className="faction-link" target="_blank">→</a>
+                        <a
+                            href={match.path.replace(':codes?', code)}
+                            className="faction-link"
+                            target="_blank"
+                        >→</a>
                     </div>
                 ))}
                 <div className="mt-2 mb-3">
