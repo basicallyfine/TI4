@@ -7,7 +7,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import utils from '../../lib/utils';
-import { SYSTEMS } from '../../lib/constants';
+import SYSTEMS from '../../lib/data/systems';
 import {
     MAP_PLACES,
     MAP_CONFIG,

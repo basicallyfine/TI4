@@ -2,9 +2,7 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import _ from 'lodash';
 
-import {
-  SYSTEMS,
-} from '../../lib/constants';
+import SYSTEMS from '../../lib/data/systems';
 import { SYSTEM_PNG_URL, TILE_DISPLAY_TYPE } from './map-constants';
 
 import SystemTileSVG from './SystemTileSVG';

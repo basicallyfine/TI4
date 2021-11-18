@@ -1,7 +1,8 @@
 import React, { useState, memo, Fragment } from 'react';
 import _ from 'lodash';
 
-import { SYSTEMS, PLANET_TRAIT, WORMHOLE } from '../../lib/constants';
+import { PLANET_TRAIT, WORMHOLE } from '../../lib/constants';
+import SYSTEMS from '../../lib/data/systems'
 
 const summariseSystems = (systems) => {
     const summary = {

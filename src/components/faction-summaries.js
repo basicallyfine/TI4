@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 
-import { URL, FACTIONS } from '../lib/constants';
+import { URL } from '../lib/constants';
+import FACTIONS from '../lib/data/factions';
 
 import '../styles/components/faction-summaries.css';
 
