@@ -690,7 +690,6 @@ const UNITS = [
 		combat: '7',
 		text: `After this unit is destroyed, gain 1 commodity or convert 1 of your commodities to a trade good. Then, place the unit on this card. At the start of your next turn, place each unit that is on this card on a planet you control in your home system.`,
 	},
-
 	{
 		name: 'Letani Behemoth',
 		unit: UNIT_NAME.MECH,
@@ -947,8 +946,49 @@ const UNITS = [
 		sustain_damage: true,
         deploy: 'After you use your STALL TACTICS faction ability, you may place 1 mech on a planet you control.',
 	},
-    
-    // PDS
+	{
+		name: 'PDS',
+		unit: UNIT_NAME.PDS,
+		type: UNIT_TYPE.STRUCTURE,
+		planetary_shield: true,
+		space_cannon: 6,
+	},
+	{
+		name: 'PDS II',
+		unit: UNIT_NAME.PDS,
+		type: UNIT_TYPE.STRUCTURE,
+		upgrade: true,
+		req: [TECH_COLOR.YELLOW, TECH_COLOR.RED],
+		planetary_shield: true,
+		space_cannon: 5,
+		text: 'You may use this unit’s SPACE CANNON against ships that are adjacent to this unit’s system.'
+	},
+	{
+		name: 'Hel-Titan I',
+		unit: UNIT_NAME.PDS,
+		type: UNIT_TYPE.STRUCTURE,
+		faction: FACTION.TITANS_OF_UL,
+		combat: 7,
+		planetary_shield: true,
+		sustain_damage: true,
+		space_cannon: 6,
+		production: 1,
+		text: 'This unit is treated as both a structure and a ground force. It cannot be transported.'
+	},
+	{
+		name: 'Hel-Titan II',
+		unit: UNIT_NAME.PDS,
+		type: UNIT_TYPE.STRUCTURE,
+		faction: FACTION.TITANS_OF_UL,
+		upgrade: true,
+		req: [TECH_COLOR.YELLOW, TECH_COLOR.RED],
+		combat: 6,
+		planetary_shield: true,
+		sustain_damage: true,
+		space_cannon: 5,
+		production: 1,
+		text: 'This unit is treated as both a structure and a ground force. It cannot be transported.\n\nYou may use this unit’s SPACE CANNON against ships that are adjacent to this unit’s system.'
+	},
     // SPACE_DOCK
 ];
 
