@@ -21,6 +21,7 @@ import StatsTable from './StatsTable';
 import MapStringModal from './MapStringModal';
 
 import './styles.css';
+import { SYSTEM_TILE_BACK } from '../../lib/constants';
 
 const STORAGE_KEYS = {
     MAP_DATA: 'map_data',
@@ -244,7 +245,8 @@ const MapBuilder = () => {
         .value()
 
     const shuffledMap = () => {
-        const randomSystems = _.chain(SYSTEMS)
+        const blueSystems = _.chain(SYSTEMS)
+            .filter({ back: SYSTEM_TILE_BACK.BLUE })
             .map('number')
             .without(
                 ..._.chain(mapPlaceData)
@@ -254,12 +256,33 @@ const MapBuilder = () => {
                 .value()
             )
             .shuffle()
-            .value();
+            .value()
+            .slice(0, _.get(MAP_CONFIG, `${mapOption}.systems.blue`) || SYSTEMS.length);
+
+        const redSystems = _.chain(SYSTEMS)
+            .filter({ back: SYSTEM_TILE_BACK.RED })
+            .map('number')
+            .without(
+                ..._.chain(mapPlaceData)
+                .values()
+                .filter(data => data.locked || data.unavailable)
+                .map('system')
+                .value()
+            )
+            .shuffle()
+            .value()
+            .slice(0, _.get(MAP_CONFIG, `${mapOption}.systems.red`) || SYSTEMS.length);
+
+
+        const shuffledSystems = _.shuffle([
+            ...blueSystems,
+            ...redSystems,
+        ]);
 
         return _.chain(mapPlaceData)
             .pickBy(data => !data.locked && !data.unavailable)
             .keys()
-            .map((place, i) => ({ place, system: randomSystems[i] || null }))
+            .map((place, i) => ({ place, system: shuffledSystems[i] || null }))
             .value();
     };
 

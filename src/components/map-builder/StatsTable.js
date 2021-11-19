@@ -133,7 +133,7 @@ const StatsTable = ({ mapPlaceData, mapConfig}) => {
                                         <td className="stat-value text-center">{player.systems[systemGroup].traits[PLANET_TRAIT.GREEN] || 0}</td>
                                         <td className="stat-value text-center">{player.systems[systemGroup].traits[PLANET_TRAIT.RED] || 0}</td>
                                         <td className="stat-value text-center">{player.systems[systemGroup].anomalies || 0}</td>
-                                        <td className="stat-value text-center">{player.systems[systemGroup].wormhole || 0}</td>
+                                        <td className="stat-value text-center">{player.systems[systemGroup].wormholes || 0}</td>
                                         <td className="stat-value text-center">{player.systems[systemGroup].nonPlanet || 0}</td>
                                     </tr>
                                 ))}
