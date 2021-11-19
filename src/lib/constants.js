@@ -80,7 +80,7 @@ const WORMHOLE = {
     B: 'β Wormhole'
 };
 
-const UNIT_TYPE = {
+const UNIT_NAME = {
     CARRIER: 'CARRIER',
     CRUISER: 'CRUISER',
     DESTROYER: 'DESTROYER',
@@ -94,6 +94,12 @@ const UNIT_TYPE = {
     MECH: 'MECH',
 };
 
+const UNIT_TYPE = {
+    SHIP: 'SHIP',
+    GROUND_FORCE: 'GROUND_FORCE',
+    STRUCTURE: 'STRUCTURE',
+};
+
 export {
     URL,
     GAME_COLOURS,
@@ -103,5 +109,6 @@ export {
     PLANET_TRAIT,
     ANOMALY,
     WORMHOLE,
+    UNIT_NAME,
     UNIT_TYPE,
 };
