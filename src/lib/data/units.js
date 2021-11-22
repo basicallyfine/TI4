@@ -989,7 +989,78 @@ const UNITS = [
 		production: 1,
 		text: 'This unit is treated as both a structure and a ground force. It cannot be transported.\n\nYou may use this unit’s SPACE CANNON against ships that are adjacent to this unit’s system.'
 	},
-    // SPACE_DOCK
+	{
+		name: 'Space Dock',
+		unit: UNIT_NAME.SPACE_DOCK,
+		type: UNIT_TYPE.STRUCTURE,
+		production: 'X',
+		text: `This unit's PRODUCTION value is equal to 2 more that the resource value of this planet.\n\nUp to 3 fighters in this system do not count against your ships' capacity.`
+	},
+	{
+		name: 'Space Dock II',
+		unit: UNIT_NAME.SPACE_DOCK,
+		type: UNIT_TYPE.STRUCTURE,
+		upgrade: true,
+		req: [TECH_COLOR.YELLOW, TECH_COLOR.YELLOW],
+		production: 'X',
+		text: `This unit's PRODUCTION value is equal to 4 more that the resource value of this planet.\n\nUp to 3 fighters in this system do not count against your ships' capacity.`
+	},
+	{
+		name: 'Space Dock',
+		unit: UNIT_NAME.SPACE_DOCK,
+		type: UNIT_TYPE.STRUCTURE,
+		production: 'X',
+		text: `This unit's PRODUCTION value is equal to 2 more that the resource value of this planet.\n\nUp to 3 fighters in this system do not count against your ships' capacity.`
+	},
+	{
+		name: 'Space Dock II',
+		unit: UNIT_NAME.SPACE_DOCK,
+		type: UNIT_TYPE.STRUCTURE,
+		upgrade: true,
+		req: [TECH_COLOR.YELLOW, TECH_COLOR.YELLOW],
+		production: 'X',
+		text: `This unit's PRODUCTION value is equal to 4 more that the resource value of this planet.\n\nUp to 3 fighters in this system do not count against your ships' capacity.`
+	},
+	{
+		name: 'Floating Factory',
+		unit: UNIT_NAME.SPACE_DOCK,
+		type: UNIT_TYPE.STRUCTURE,
+		faction: FACTION.CLAN_OF_SAAR,
+		move: '1',
+		capacity: '4',
+		production: '5',
+		text: `This unit is placed in the space area instead of on a planet.\n\nThis unit can move and retreat as if it were a ship.`
+	},
+	{
+		name: 'Floating Factory II',
+		unit: UNIT_NAME.SPACE_DOCK,
+		type: UNIT_TYPE.STRUCTURE,
+		faction: FACTION.CLAN_OF_SAAR,
+		upgrade: true,
+		req: [TECH_COLOR.YELLOW, TECH_COLOR.YELLOW],
+		move: '2',
+		capacity: '5',
+		production: '7',
+		text: `This unit is placed in the space area instead of on a planet.\n\nThis unit can move and retreat as if it were a ship.`
+	},
+	{
+		name: 'Dimensional Tear',
+		unit: UNIT_NAME.SPACE_DOCK,
+		type: UNIT_TYPE.STRUCTURE,
+		faction: FACTION.VUILRAITH_CABAL,
+		production: '5',
+		text: `This system is a gravity rift; your ships do not roll for this gravity rift.\nPlace a dimensional tear token beneath this unit as a reminder.\n\nUp to 6 fighters in this system do not count against your ships' capacity.`
+	},
+	{
+		name: 'Dimensional Tear II',
+		unit: UNIT_NAME.SPACE_DOCK,
+		type: UNIT_TYPE.STRUCTURE,
+		faction: FACTION.VUILRAITH_CABAL,
+		upgrade: true,
+		req: [TECH_COLOR.YELLOW, TECH_COLOR.YELLOW],
+		production: '7',
+		text: `This system is a gravity rift; your ships do not roll for this gravity rift.\nPlace a dimensional tear token beneath this unit as a reminder.\n\nUp to 12 fighters in this system do not count against your ships' capacity.`
+	},
 ];
 
 export { UNITS };
