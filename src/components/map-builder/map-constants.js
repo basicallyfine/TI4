@@ -89,6 +89,12 @@ const MAP_OPTION = {
     SIX_PLAYER: 'P6',
 };
 
+const MAP_SYSTEM_GROUPS = {
+    ADJACENT: 'Adjacent',
+    SLICE: 'Slice',
+    EQUIDISTANT: 'Equidistant',
+};
+
 const MAP_CONFIG = {
     [MAP_OPTION.THREE_PLAYER]: {
         name: 'Three player',
@@ -302,6 +308,7 @@ export {
     MAP_PLACE_POSITION,
     SYSTEM_PNG_URL,
     MAP_OPTION,
+    MAP_SYSTEM_GROUPS,
     MAP_CONFIG,
     TILE_DISPLAY_TYPE,
 }

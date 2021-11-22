@@ -21,7 +21,7 @@ const Routes = () => {
         <Router history={history}>
             <Switch>
               <Route path={`${BASE_PATH}/dice`} component={DiceTable} />
-              <Route path={`${BASE_PATH}/map-builder`} component={MapBuilder} />
+              <Route path={`${BASE_PATH}/map-builder/:page?`} component={MapBuilder} />
               <Route path={`${BASE_PATH}/factions/:codes?`} component={FactionSummaries} />
               <Route path="/" component={() => <Redirect to={`${BASE_PATH}/dice`} />} />
             </Switch>

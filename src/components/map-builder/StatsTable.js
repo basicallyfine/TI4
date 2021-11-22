@@ -1,47 +1,16 @@
 import React, { useState, memo, Fragment } from 'react';
 import _ from 'lodash';
 
-import { PLANET_TRAIT, WORMHOLE } from '../../lib/constants';
-import SYSTEMS from '../../lib/data/systems'
+import { MAP_SYSTEM_GROUPS } from './map-constants';
+import mapUtils from './map-utils';
 
-const summariseSystems = (systems) => {
-    const summary = {
-        tiles: systems.length
-    };
+import { PLANET_TRAIT } from '../../lib/constants';
 
-    const planets = _.chain(systems).map('planets').flatten().value();
-    
-    summary.planets = planets.length;
-    summary.resources = _.sumBy(planets, 'resources');
-    summary.influence = _.sumBy(planets, 'influence');
-    summary.totalValue = _.sumBy(planets, 'resources') + _.sumBy(planets, 'influence');
-    summary.efficientValue = _.sumBy(planets, ({ resources, influence }) => _.max([resources, influence]));
-    summary.tech = _.sumBy(planets, ({ tech }) => tech ? 1 : 0);
-    summary.legendary = _.sumBy(planets, ({ legendary }) => legendary ? 1 : 0);
-    summary.traits = {
-        [PLANET_TRAIT.BLUE]: _.sumBy(planets, ({ trait }) => trait === PLANET_TRAIT.BLUE ? 1 : 0),
-        [PLANET_TRAIT.GREEN]: _.sumBy(planets, ({ trait }) => trait === PLANET_TRAIT.GREEN ? 1 : 0),
-        [PLANET_TRAIT.RED]: _.sumBy(planets, ({ trait }) => trait === PLANET_TRAIT.RED ? 1 : 0),
-    };
-
-    summary.anomalies = _.sumBy(systems, ({ anomaly }) => anomaly ? 1 : 0);
-    summary.wormholes = _.sumBy(systems, ({ wormhole }) => wormhole ? 1 : 0);
-    summary.nonPlanet = _.sumBy(systems, ({ planets = [] }) => planets.length === 0 ? 1 : 0);
-
-    return summary;
-};
-
-const SYSTEM_GROUPS = {
-    ADJACENT: 'Adjacent',
-    SLICE: 'Slice',
-    EQUIDISTANT: 'Equidistant',
-};
-
-const StatsTable = ({ mapPlaceData, mapConfig}) => {
-    const [includedSystems, setIncludedSystems] = useState([SYSTEM_GROUPS.SLICE]);
+const StatsTable = ({ mapPlaceData, mapConfig }) => {
+    const [includedSystems, setIncludedSystems] = useState([MAP_SYSTEM_GROUPS.SLICE]);
 
     const setIncludedSystemGroup = (group, checked) => {
-        setIncludedSystems((prevGroups) => _.chain(SYSTEM_GROUPS)
+        setIncludedSystems((prevGroups) => _.chain(MAP_SYSTEM_GROUPS)
             .values()
             .filter((includedGroup) => {
                 if (includedGroup === group) return checked;
@@ -51,27 +20,12 @@ const StatsTable = ({ mapPlaceData, mapConfig}) => {
         );
     };
 
-    const players = mapConfig.players.map((player) => {
-        player.systems = _.mapValues({
-            [SYSTEM_GROUPS.ADJACENT]: player.position.adjacent,
-            [SYSTEM_GROUPS.SLICE]: _.uniq([...player.position.adjacent, ...player.position.slice]),
-            [SYSTEM_GROUPS.EQUIDISTANT]: _.uniq([...player.position.adjacent, ...player.position.slice, ...player.position.equidistant]),
-        }, (places) => {
-            const systems = _.uniq(places)
-            .map((place) => {
-                const system = _.find(SYSTEMS, { number: _.get(mapPlaceData, `${place}.system`) });
-                return system;
-            })
-            .filter(system => system);
-            return summariseSystems(systems);
-        })
-        return player;
-    });
+    const players = mapUtils.playerSystems({ mapPlaceData, mapConfig });
 
     return (
         <div className="map-stats-wrapper">
             <div>
-                {_.toPairs(SYSTEM_GROUPS).map(([key, group]) => (
+                {_.toPairs(MAP_SYSTEM_GROUPS).map(([key, group]) => (
                     <div className="form-check form-check-inline" key={group}>
                         <input
                             className="form-check-input"

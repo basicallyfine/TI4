@@ -132,11 +132,13 @@ const useInitialMapState = () => {
     return { initialMapOption: mapOption(), initialMapPlaceData: mapPlaceData() }; 
 }
 
-const MapBuilder = () => {
+const MapBuilder = ({ match }) => {
     const location = useLocation();
     const history = useHistory();
 
     const { initialMapOption, initialMapPlaceData } = useInitialMapState();
+
+    console.log({ initialMapOption, initialMapPlaceData });
 
     const [mapOption, setMapOption] = useState(initialMapOption || MAP_OPTION.FOUR_PLAYER);
     const [mapPlaceData, setMapPlaceData] = useState(initialMapPlaceData || {});
@@ -292,69 +294,74 @@ const MapBuilder = () => {
         moveTiles([...empty, ...fromString]);
     }
 
-    return (
-        <div id="map-builder" className="container-fluid">
-            <div className="build-area responsive">
-                <DndProvider backend={HTML5Backend}>
-                    <MapContainer
-                        mapPlaceData={mapPlaceData}
-                        displayType={tileDisplayType}
-                        moveTile={moveTile}
-                        toggleLockedPlace={toggleLockedPlace}
-                        // style={{ opacity: 0 }}
+    switch (_.get(match, 'params.page')) {
+        case 'bulk':
+            return 'BULK';
+        default:
+            return (
+                <div id="map-builder" className="container-fluid">
+                    <div className="build-area responsive">
+                        <DndProvider backend={HTML5Backend}>
+                            <MapContainer
+                                mapPlaceData={mapPlaceData}
+                                displayType={tileDisplayType}
+                                moveTile={moveTile}
+                                toggleLockedPlace={toggleLockedPlace}
+                                // style={{ opacity: 0 }}
+                            />
+                            <TileDisplay
+                                systems={unassignedSystems}
+                                moveTile={moveTile}
+                                displayType={tileDisplayType}
+                            />
+                        </DndProvider>
+                    </div>
+                    <div className="config-options">
+                        <div className="form-inline mb-1">
+                            <label className="my-auto" htmlFor="map-option-select">Map setup</label>
+                            <select
+                                className="custom-select ml-1"
+                                id="map-option-select"
+                                onChange={(e) => { setMapOption(e.target.value); }}
+                                value={mapOption}
+                            >
+                                {_.values(MAP_OPTION).map(key => <option value={key} key={key}>{_.get(MAP_CONFIG, `${key}.name`)}</option>)}
+                            </select>
+        
+                            <select
+                                className="custom-select ml-1"
+                                id="map-option-select"
+                                onChange={(e) => { setTileDisplayType(e.target.value); }}
+                                value={tileDisplayType}
+                            >
+                                <option value={TILE_DISPLAY_TYPE.IMAGE}>Full colour</option>
+                                <option value={TILE_DISPLAY_TYPE.SVG}>Lo-fi</option>
+                            </select>
+        
+                            <button className="btn btn-outline-dark ml-1" onClick={() => { moveTiles(shuffledMap()); }}>Randomise</button>
+                            <button className="btn btn-outline-dark ml-1" onClick={() => { moveTiles(emptyMap()); }}>Clear</button>
+                            <button className="btn btn-outline-dark ml-1" onClick={() => { setMapStringDialog(true); }}>Map string</button>
+                        </div>
+                    </div>
+                    <div className="stat-tables">
+                        <StatsTable
+                            _memo={[mapString, mapOption]} // Just for the memo comparison - only use strings
+                            mapPlaceData={mapPlaceData}
+                            mapConfig={MAP_CONFIG[mapOption] || {}}
+                        />
+                    </div>
+        
+                    <MapStringModal
+                        show={!!mapStringDialog}
+                        onClose={() => { setMapStringDialog(false); }}
+                        onChange={(value) => {
+                            setMapFromString(value);
+                        }}
+                        value={mapString}
                     />
-                    <TileDisplay
-                        systems={unassignedSystems}
-                        moveTile={moveTile}
-                        displayType={tileDisplayType}
-                    />
-                </DndProvider>
-            </div>
-            <div className="config-options">
-                <div className="form-inline mb-1">
-                    <label className="my-auto" htmlFor="map-option-select">Map setup</label>
-                    <select
-                        className="custom-select ml-1"
-                        id="map-option-select"
-                        onChange={(e) => { setMapOption(e.target.value); }}
-                        value={mapOption}
-                    >
-                        {_.values(MAP_OPTION).map(key => <option value={key} key={key}>{_.get(MAP_CONFIG, `${key}.name`)}</option>)}
-                    </select>
-
-                    <select
-                        className="custom-select ml-1"
-                        id="map-option-select"
-                        onChange={(e) => { setTileDisplayType(e.target.value); }}
-                        value={tileDisplayType}
-                    >
-                        <option value={TILE_DISPLAY_TYPE.IMAGE}>Full colour</option>
-                        <option value={TILE_DISPLAY_TYPE.SVG}>Lo-fi</option>
-                    </select>
-
-                    <button className="btn btn-outline-dark ml-1" onClick={() => { moveTiles(shuffledMap()); }}>Randomise</button>
-                    <button className="btn btn-outline-dark ml-1" onClick={() => { moveTiles(emptyMap()); }}>Clear</button>
-                    <button className="btn btn-outline-dark ml-1" onClick={() => { setMapStringDialog(true); }}>Map string</button>
                 </div>
-            </div>
-            <div className="stat-tables">
-                <StatsTable
-                    _memo={[mapString, mapOption]} // Just for the memo comparison - only use strings
-                    mapPlaceData={mapPlaceData}
-                    mapConfig={MAP_CONFIG[mapOption] || {}}
-                />
-            </div>
-
-            <MapStringModal
-                show={!!mapStringDialog}
-                onClose={() => { setMapStringDialog(false); }}
-                onChange={(value) => {
-                    setMapFromString(value);
-                }}
-                value={mapString}
-            />
-        </div>
-    );
+            );
+    }
 };
 
 export default MapBuilder;
