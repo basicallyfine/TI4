@@ -108,7 +108,7 @@ const FactionSummaries = ({ match, history, location }) => {
                                     src={`${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg`}
                                     // src={`https://via.placeholder.com/320x${_.random(250,300)}`}
                                     // style={{ backgroundImage: `url(${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg)` }}
-                                    alt={`${name} summary`}
+                                    alt={name}
                                 />
                             ))}
                         </div>
@@ -138,48 +138,52 @@ const FactionSummaries = ({ match, history, location }) => {
                     // history.push(match.path.replace(':codes?', pathParam));
                 }}
             >
-                {FACTIONS.map(({ code, name }, i) => (
-                    <div className="form-check" key={code}>
-                        <label className="form-check-label" htmlFor={`checkbox-${code}`}>
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                // value={code}
-                                value=""
-                                name={code}
-                                id={`checkbox-${code}`}
-                                checked={(selectedCodes.indexOf(code) >= 0 || false)}
-                                onChange={(e) => {
-                                    if (e.target.checked) {
-                                        setSelectedCodes(
-                                            prevCodes => _.chain(prevCodes)
-                                                .split('')
-                                                .concat(code)
-                                                .uniq()
-                                                .value()
-                                                .join('')
-                                        )
-                                    } else {
-                                        setSelectedCodes(
-                                            prevCodes => _.chain(prevCodes)
-                                                .split('')
-                                                .without(code)
-                                                .uniq()
-                                                .value()
-                                                .join('')
-                                        )
-                                    }
-                                }}
-                            />
-                            {name}
-                        </label>
-                        <a
-                            href={match.path.replace(':codes?', code)}
-                            className="faction-link"
-                            target="_blank"
-                        >→</a>
-                    </div>
-                ))}
+                {_.chain(FACTIONS)
+                    .sortBy(({ name }) => name.toLowerCase().replace(/^the\s/i, ''))
+                    .map(({ code, name }, i) => (
+                        <div className="form-check" key={code}>
+                            <label className="form-check-label" htmlFor={`checkbox-${code}`}>
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    // value={code}
+                                    value=""
+                                    name={code}
+                                    id={`checkbox-${code}`}
+                                    checked={(selectedCodes.indexOf(code) >= 0 || false)}
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setSelectedCodes(
+                                                prevCodes => _.chain(prevCodes)
+                                                    .split('')
+                                                    .concat(code)
+                                                    .uniq()
+                                                    .value()
+                                                    .join('')
+                                            )
+                                        } else {
+                                            setSelectedCodes(
+                                                prevCodes => _.chain(prevCodes)
+                                                    .split('')
+                                                    .without(code)
+                                                    .uniq()
+                                                    .value()
+                                                    .join('')
+                                            )
+                                        }
+                                    }}
+                                />
+                                {name}
+                            </label>
+                            <a
+                                href={match.path.replace(':codes?', code)}
+                                className="faction-link"
+                                target="_blank"
+                            >→</a>
+                        </div>
+                    ))
+                    .value()
+                }
                 <div className="mt-2 mb-3">
                     <button
                         className="btn btn-primary mr-1"

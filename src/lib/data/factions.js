@@ -174,6 +174,14 @@ const FACTIONS = [
         image_name: 'yssaril',
         complexity: 1,
     },
+    {
+        key: 'COUNCIL_KELERES',
+        name: 'The Council Keleres',
+        code: 'O',
+        pok: true,
+        image_name: 'keleres',
+        complexity: 2,
+    },
 ];
 
 export default FACTIONS;
