@@ -94,7 +94,10 @@ const FactionSummaries = ({ match, history, location }) => {
     ];
 
     if (_.size(codes) > 0) {
-        const selectedFactions = FACTIONS.filter(({ code }) => codes.indexOf(code) >= 0);
+        const selectedFactions = _.chain(FACTIONS)
+            .filter(({ code }) => codes.indexOf(code) >= 0)
+            .sortBy(({ name }) => name.toLowerCase().replace(/^the\s/i, ''))
+            .value()
 
         return (
             <div className="faction-summary summary-results">
