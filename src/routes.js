@@ -27,7 +27,7 @@ const Routes = () => {
               <Route path={`${BASE_PATH}/list-systems`} component={ListSystems} />
               <Route path={`${BASE_PATH}/factions/:codes?`} component={FactionSummaries} />
               <Route path={`${BASE_PATH}/bid-draft`} component={BidDraftCombinator} />
-              <Route path="/" component={() => <Redirect to={`${BASE_PATH}/dice`} />} />
+              <Route path="/" component={() => <Redirect to={`${BASE_PATH}/factions`} />} />
             </Switch>
         </Router>
       </div>
