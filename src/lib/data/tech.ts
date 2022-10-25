@@ -1,6 +1,14 @@
 import { TECH_COLOR, FACTION } from "../constants";
 
-const TECH = [
+export type Tech = {
+  name: string;
+  text: string;
+  req: TECH_COLOR[];
+  type: TECH_COLOR;
+  faction?: FACTION;
+}
+
+const TECH: Tech[] = [
   {
     name: "Antimass Deflectors",
     text: "Your ships can move into and through asteroid fields\nWhen other players’ units use SPACE CANNON against your units, apply -1 to the result of each die roll",
