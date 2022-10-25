@@ -8,8 +8,8 @@ import { calculator } from "../lib/rolling-calculator";
 
 // import "swiper/swiper.scss";
 // import "swiper/components/effect-cube/effect-cube.scss";
-import "swiper/swiper-bundle.css";
-import "../styles/components/rolling-calculator.css";
+import "swiper/swiper-bundle.scss";
+import "../styles/components/rolling-calculator.scss";
 
 class Calculator extends Component {
   constructor() {

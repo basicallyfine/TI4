@@ -10,7 +10,7 @@ import ListSystems from './components/list-systems';
 import FactionSummaries from './components/faction-summaries';
 import BidDraftCombinator from './components/bid-draft-combinator';
 
-import './styles/app.css';
+import './styles/app.scss';
 
 const history = createBrowserHistory();
 

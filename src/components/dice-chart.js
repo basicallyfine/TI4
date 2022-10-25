@@ -7,7 +7,7 @@ import { ResponsiveLine } from '@nivo/line';
 import { calculator } from '../lib/rolling-calculator';
 import { GAME_COLOURS } from '../lib/constants';
 
-import "../styles/components/dice-chart.css";
+import "../styles/components/dice-chart.scss";
 
 const RESULT_MODE = {
     AT_LEAST: 'AT_LEAST',

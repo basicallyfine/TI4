@@ -1,60 +1,62 @@
 {
-    "name": "ti4-reference",
-    "version": "0.0.1",
-    "private": true,
-    "homepage": "/",
-    "dependencies": {
-        "@nivo/bar": "^0.62.0",
-        "@nivo/line": "^0.62.0",
-        "@testing-library/jest-dom": "^4.2.4",
-        "@testing-library/react": "^9.3.2",
-        "@testing-library/user-event": "^7.1.2",
-        "bootstrap": "^4.5.0",
-        "fontfaceobserver": "^2.1.0",
-        "history": "4.9.0",
-        "konva": "^8.0.4",
-        "lodash": "^4.17.15",
-        "node-sass": "6.0.0",
-        "object-hash": "^2.0.3",
-        "querystring": "^0.2.0",
-        "react": "^17.0.2",
-        "react-copy-to-clipboard": "^5.0.4",
-        "react-dnd": "^14.0.2",
-        "react-dnd-html5-backend": "^14.0.0",
-        "react-dom": "^17.0.2",
-        "react-icons": "^3.11.0",
-        "react-konva": "^17.0.2-4",
-        "react-router": "^5.2.0",
-        "react-router-dom": "^5.2.0",
-        "react-scripts": "4.0.3",
-        "swiper": "^6.1.2"
-    },
-    "scripts": {
-        "build-css": "node-sass src/ -o src/",
-        "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
-        "start-js": "PORT=3001 react-scripts start",
-        "start": "npm-run-all -p watch-css start-js",
-        "build": "npm run build-css && react-scripts build",
-        "deploy": "git subtree push --prefix build origin gh-pages",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {
-        "npm-run-all": "^4.1.5"
-    }
+  "name": "ti4_ts",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@nivo/bar": "^0.80.0",
+    "@nivo/core": "^0.80.0",
+    "@nivo/line": "^0.80.0",
+    "bootstrap": "^5.2.2",
+    "fontfaceobserver": "^2.3.0",
+    "history": "4.9.0",
+    "konva": "^8.3.13",
+    "lodash": "^4.17.21",
+    "node-sass": "^7.0.3",
+    "object-hash": "^3.0.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-dnd": "^14.0.2",
+    "react-dnd-html5-backend": "^14.0.0",
+    "react-icons": "^4.6.0",
+    "react-konva": "^18.2.3",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "swiper": "^8.4.4",
+
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.0",
+    "@types/react": "^18.0.22",
+    "@types/react-dom": "^18.0.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.8.4",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

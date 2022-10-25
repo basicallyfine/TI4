@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
 
-import './styles/modal.css';
+import './styles/modal.scss';
 
 class Modal extends Component {
     constructor() {
