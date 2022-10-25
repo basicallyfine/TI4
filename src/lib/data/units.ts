@@ -5,7 +5,30 @@ import {
     TECH_COLOR,
 } from '../constants';
 
-const UNITS = [
+export type Unit = {
+	name: string;
+	unit: UNIT_NAME;
+	type: UNIT_TYPE;
+	cost?: string;
+	combat?: string;
+	move?: string;
+	capacity?: string;
+	upgrade?: boolean;
+	req?: TECH_COLOR[];
+	faction?: FACTION;
+	bombardment?: string;
+	afb?: string;
+	production?: string;
+	space_cannon?: string;
+	
+	sustain_damage?: boolean;
+	planetary_shield?: boolean;
+
+	text?: string;
+	deploy?: string;
+}
+
+const UNITS: Unit[] = [
 	{
 		name: 'Carrier',
 		unit: UNIT_NAME.CARRIER,
@@ -56,7 +79,6 @@ const UNITS = [
 		cost: '2',
 		combat: '7',
 		move: '2',
-		capacity: null,
 	},
 	{
 		name: 'Cruiser II',
@@ -99,7 +121,6 @@ const UNITS = [
 		cost: '1',
 		combat: '9',
 		move: '2',
-		capacity: null,
 		afb: '9x2',
 	},
 	{
@@ -111,7 +132,6 @@ const UNITS = [
 		cost: '1',
 		combat: '8',
 		move: '2',
-		capacity: null,
 		afb: '6x3',
 	},
 	{
@@ -222,10 +242,8 @@ const UNITS = [
 		name: 'Fighter',
 		unit: UNIT_NAME.FIGHTER,
 		type: UNIT_TYPE.SHIP,
-		cost: 0.5,
+		cost: '0.5',
 		combat: '9',
-		move: null,
-		capacity: null,
 	},
 	{
 		name: 'Fighter II',
@@ -233,10 +251,9 @@ const UNITS = [
 		type: UNIT_TYPE.SHIP,
 		upgrade: true,
 		req: [TECH_COLOR.GREEN, TECH_COLOR.BLUE],
-		cost: 0.5,
+		cost: '0.5',
 		combat: '8',
 		move: '2',
-		capacity: null,
 		text: `This unit may move without being transported.\n\nFighters in excess of your ships' capacity count against your fleet pool`,
 	},
 	{
@@ -244,10 +261,8 @@ const UNITS = [
 		unit: UNIT_NAME.FIGHTER,
 		type: UNIT_TYPE.SHIP,
 		faction: FACTION.NAALU_COLLECTIVE,
-		cost: 0.5,
+		cost: '0.5',
 		combat: '8',
-		move: null,
-		capacity: null,
 	},
 	{
 		name: 'Hybrid Crystal Fighter II',
@@ -256,7 +271,7 @@ const UNITS = [
 		faction: FACTION.NAALU_COLLECTIVE,
 		upgrade: true,
 		req: [TECH_COLOR.GREEN, TECH_COLOR.BLUE],
-		cost: 0.5,
+		cost: '0.5',
 		combat: '7',
 		move: '2',
 		text: `This unit may move without being transported.\n\nEach fighter in excess of your ships' capacity counts as 1/2 of a ship against your fleet pool.`,
@@ -951,7 +966,7 @@ const UNITS = [
 		unit: UNIT_NAME.PDS,
 		type: UNIT_TYPE.STRUCTURE,
 		planetary_shield: true,
-		space_cannon: 6,
+		space_cannon: '6',
 	},
 	{
 		name: 'PDS II',
@@ -960,7 +975,7 @@ const UNITS = [
 		upgrade: true,
 		req: [TECH_COLOR.YELLOW, TECH_COLOR.RED],
 		planetary_shield: true,
-		space_cannon: 5,
+		space_cannon: '5',
 		text: 'You may use this unit’s SPACE CANNON against ships that are adjacent to this unit’s system.'
 	},
 	{
@@ -968,11 +983,11 @@ const UNITS = [
 		unit: UNIT_NAME.PDS,
 		type: UNIT_TYPE.STRUCTURE,
 		faction: FACTION.TITANS_OF_UL,
-		combat: 7,
+		combat: '7',
 		planetary_shield: true,
 		sustain_damage: true,
-		space_cannon: 6,
-		production: 1,
+		space_cannon: '6',
+		production: '1',
 		text: 'This unit is treated as both a structure and a ground force. It cannot be transported.'
 	},
 	{
@@ -982,11 +997,11 @@ const UNITS = [
 		faction: FACTION.TITANS_OF_UL,
 		upgrade: true,
 		req: [TECH_COLOR.YELLOW, TECH_COLOR.RED],
-		combat: 6,
+		combat: '6',
 		planetary_shield: true,
 		sustain_damage: true,
-		space_cannon: 5,
-		production: 1,
+		space_cannon: '5',
+		production: '1',
 		text: 'This unit is treated as both a structure and a ground force. It cannot be transported.\n\nYou may use this unit’s SPACE CANNON against ships that are adjacent to this unit’s system.'
 	},
 	{

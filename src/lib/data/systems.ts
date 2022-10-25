@@ -4,7 +4,9 @@ import {
     TECH_COLOR,
     ANOMALY,
     WORMHOLE,
+    FACTION,
 } from '../constants';
+import FACTIONS from './factions';
 
 export type Planet = {
     name: string;
@@ -23,6 +25,7 @@ export type System = {
     planets: Planet[];
     anomaly?: ANOMALY;
     wormhole?: WORMHOLE;
+    faction?: FACTION;
 };
 
 const SYSTEMS: System[] = [
@@ -437,7 +440,211 @@ const SYSTEMS: System[] = [
         planets: [
             { name: 'Sem-Lore', trait: PLANET_TRAIT.BLUE, tech: TECH_COLOR.YELLOW, legendary: false, resources: 3, influence: 2 }
         ],
-    }
+    },
+    {
+        number: 5,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.ARBOREC,
+        planets: [
+            { name: 'Nestphar', resources: 3, influence: 2 }
+        ]
+    },
+    {
+        number: 9900,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.ARGENT_FLIGHT,
+        planets: [
+            { name: 'Valk', resources: 2, influence: 0 },
+            { name: 'Avar', resources: 1, influence: 1 },
+            { name: 'Ylir', resources: 0, influence: 2 },
+        ]
+    },
+    {
+        number: 9901,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.BARONY_OF_LETNEV,
+        planets: [
+            { name: 'Arc Prime', resources: 4, influence: 0 },
+            { name: 'Wren Terra', resources: 2, influence: 1 },
+        ]
+    },
+    {
+        number: 9902,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.CLAN_OF_SAAR,
+        planets: [
+            { name: 'Lisis II', resources: 1, influence: 0 },
+            { name: 'Ragh', resources: 2, influence: 1 },
+        ]
+    },
+    {
+        number: 9903,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.EMBERS_OF_MUAAT,
+        planets: [
+            { name: 'Muaat', resources: 4, influence: 1 },
+        ]
+    },
+    {
+        number: 9904,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.EMIRATES_OF_HACAN,
+        planets: [
+            { name: 'Hercant', resources: 1, influence: 1 },
+            { name: 'Arretze', resources: 2, influence: 0 },
+            { name: 'Kamdorn', resources: 0, influence: 1 },
+        ]
+    },
+    {
+        number: 9905,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.EMPYREAN,
+        planets: [
+            { name: 'The Dark', resources: 3, influence: 4 },
+        ]
+    },
+    {
+        number: 9906,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.FEDERATION_OF_SOL,
+        planets: [
+            { name: 'Jord', resources: 4, influence: 2 },
+        ]
+    },
+    {
+        number: 9907,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.GHOSTS_OF_CREUSS,
+        planets: [
+            { name: 'Creuss', resources: 4, influence: 2 },
+        ]
+    },
+    {
+        number: 9908,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.L1Z1X_MINDNET,
+        planets: [
+            { name: '[0.0.0]', resources: 5, influence: 0 },
+        ]
+    },
+    {
+        number: 9909,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.MAHACT_GENE_SORCERERS,
+        planets: [
+            { name: 'Ixth', resources: 3, influence: 5 },
+        ]
+    },
+    {
+        number: 9910,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.MENTAK_COALITION,
+        planets: [
+            { name: 'Moll Primus', resources: 4, influence: 1 },
+        ]
+    },
+    {
+        number: 9911,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.NAALU_COLLECTIVE,
+        planets: [
+            { name: 'Druaa', resources: 3, influence: 1 },
+            { name: 'Maaluuk', resources: 0, influence: 2 },
+        ]
+    },
+    {
+        number: 9912,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.NAAZ_ROKHA_ALLIANCE,
+        planets: [
+            { name: 'Naazir', resources: 2, influence: 1 },
+            { name: 'Rokha', resources: 1, influence: 2 },
+        ]
+    },
+    {
+        number: 9913,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.NEKRO_VIRUS,
+        planets: [
+            { name: 'Mordai II', resources: 4, influence: 0 },
+        ]
+    },
+    {
+        number: 9914,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.NOMAD,
+        planets: [
+            { name: 'Arcturus', resources: 4, influence: 4 },
+        ]
+    },
+    {
+        number: 9915,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.SARDAKK_NORR,
+        planets: [
+            { name: 'Tren’Lak', resources: 1, influence: 0 },
+            { name: 'Quinarra', resources: 3, influence: 1 },
+        ]
+    },
+    {
+        number: 9916,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.TITANS_OF_UL,
+        planets: [
+            { name: 'Elysium', resources: 4, influence: 1 },
+        ]
+    },
+    {
+        number: 9917,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.UNIVERSITIES_OF_JOL_NAR,
+        planets: [
+            { name: 'Jol', resources: 1, influence: 2 },
+            { name: 'Nar', resources: 2, influence: 3 },
+        ]
+    },
+    {
+        number: 9918,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.VUILRAITH_CABAL,
+        planets: [
+            { name: 'Acheron', resources: 4, influence: 0 },
+        
+        ]},
+    {
+        number: 9919,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.WINNU,
+        planets: [
+            { name: 'Winnu', resources: 3, influence: 4 },
+        ]
+    },
+    {
+        number: 9920,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.XXCHA_KINGDOM,
+        planets: [
+            { name: 'Archon Ren', resources: 2, influence: 3 },
+            { name: 'Archon Tau', resources: 1, influence: 1 },
+        ]
+    },
+    {
+        number: 9921,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.YIN_BROTHERHOOD,
+        planets: [
+            { name: 'Darien', resources: 4, influence: 4 },
+        ]
+    },
+    {
+        number: 9922,
+        back: SYSTEM_TILE_BACK.HS,
+        faction: FACTION.YSSARIL_TRIBES,
+        planets: [
+            { name: 'Retillion', resources: 2, influence: 3 },
+            { name: 'Shalloq', resources: 1, influence: 2 },
+        ]
+    },
 ];
 
 export default SYSTEMS;

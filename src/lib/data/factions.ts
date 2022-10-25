@@ -12,7 +12,6 @@ export type Faction = {
     pok?: boolean;
     image_name: string;
     complexity?: number;
-    hs?: System
 };
 
 const FACTIONS: Faction[] = [
@@ -22,13 +21,6 @@ const FACTIONS: Faction[] = [
         code: '0',
         image_name: 'arborec',
         complexity: 3,
-        hs: {
-            number: 5, // TODO
-            back: SYSTEM_TILE_BACK.HS,
-            planets: [
-                { name: 'Nestphar', resources: 3, influence: 2 }
-            ]
-        }
     },
     {
         key: FACTION.ARGENT_FLIGHT,
