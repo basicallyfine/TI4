@@ -20,7 +20,7 @@ import TileDisplay from './TileDisplay';
 import StatsTable from './StatsTable';
 import MapStringModal from './MapStringModal';
 
-import './styles.css';
+import './styles.scss';
 import { SYSTEM_TILE_BACK } from '../../lib/constants';
 
 const STORAGE_KEYS = {

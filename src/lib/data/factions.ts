@@ -1,13 +1,37 @@
-const FACTIONS = [
+import {
+    FACTION,
+    SYSTEM_TILE_BACK,
+} from '../constants';
+
+import type { System } from './systems';
+
+export type Faction = {
+    key: FACTION;
+    name: string;
+    code: string;
+    pok?: boolean;
+    image_name: string;
+    complexity?: number;
+    hs?: System
+};
+
+const FACTIONS: Faction[] = [
     {
-        key: 'ARBOREC',
+        key: FACTION.ARBOREC,
         name: 'The Arborec',
         code: '0',
         image_name: 'arborec',
         complexity: 3,
+        hs: {
+            number: 5, // TODO
+            back: SYSTEM_TILE_BACK.HS,
+            planets: [
+                { name: 'Nestphar', resources: 3, influence: 2 }
+            ]
+        }
     },
     {
-        key: 'ARGENT_FLIGHT',
+        key: FACTION.ARGENT_FLIGHT,
         name: 'The Argent Flight',
         code: '1',
         pok: true,
@@ -15,35 +39,35 @@ const FACTIONS = [
         complexity: 1,
     },
     {
-        key: 'BARONY_OF_LETNEV',
+        key: FACTION.BARONY_OF_LETNEV,
         name: 'The Barony of Letnev',
         code: '2',
         image_name: 'barony',
         complexity: 1,
     },
     {
-        key: 'CLAN_OF_SAAR',
+        key: FACTION.CLAN_OF_SAAR,
         name: 'The Clan of Saar',
         code: '3',
         image_name: 'saar',
         complexity: 2,
     },
     {
-        key: 'EMBERS_OF_MUAAT',
+        key: FACTION.EMBERS_OF_MUAAT,
         name: 'The Embers of Muaat',
         code: '4',
         image_name: 'muaat',
         complexity: 3,
     },
     {
-        key: 'EMIRATES_OF_HACAN',
+        key: FACTION.EMIRATES_OF_HACAN,
         name: 'The Emirates of Hacan',
         code: '5',
         image_name: 'hacan',
         complexity: 1,
     },
     {
-        key: 'EMPYREAN',
+        key: FACTION.EMPYREAN,
         name: 'The Empyrean',
         code: '6',
         pok: true,
@@ -51,28 +75,28 @@ const FACTIONS = [
         complexity: 1,
     },
     {
-        key: 'FEDERATION_OF_SOL',
+        key: FACTION.FEDERATION_OF_SOL,
         name: 'The Federation of Sol',
         code: '7',
         image_name: 'sol',
         complexity: 1,
     },
     {
-        key: 'GHOSTS_OF_CREUSS',
+        key: FACTION.GHOSTS_OF_CREUSS,
         name: 'The Ghosts of Creuss',
         code: '8',
         image_name: 'ghosts',
         complexity: 2,
     },
     {
-        key: 'L1Z1X_MINDNET',
+        key: FACTION.L1Z1X_MINDNET,
         name: 'The L1Z1X Mindnet',
         code: '9',
         image_name: 'l1',
         complexity: 1,
     },
     {
-        key: 'MAHACT_GENE_SORCERERS',
+        key: FACTION.MAHACT_GENE_SORCERERS,
         name: 'The Mahact Gene-Sorcerers',
         code: 'A',
         pok: true,
@@ -80,21 +104,21 @@ const FACTIONS = [
         complexity: 3,
     },
     {
-        key: 'MENTAK_COALITION',
+        key: FACTION.MENTAK_COALITION,
         name: 'The Mentak Coalition',
         code: 'B',
         image_name: 'mentak',
         complexity: 3,
     },
     {
-        key: 'NAALU_COLLECTIVE',
+        key: FACTION.NAALU_COLLECTIVE,
         name: 'The Naalu Collective',
         code: 'C',
         image_name: 'naalu',
         complexity: 2,
     },
     {
-        key: 'NAAZ_ROKHA_ALLIANCE',
+        key: FACTION.NAAZ_ROKHA_ALLIANCE,
         name: 'The Naaz-Rokha Alliance',
         code: 'D',
         pok: true,
@@ -102,14 +126,14 @@ const FACTIONS = [
         complexity: 1,
     },
     {
-        key: 'NEKRO_VIRUS',
+        key: FACTION.NEKRO_VIRUS,
         name: 'The Nekro Virus',
         code: 'E',
         image_name: 'nekro',
         complexity: 3,
     },
     {
-        key: 'NOMAD',
+        key: FACTION.NOMAD,
         name: 'The Nomad',
         code: 'F',
         pok: true,
@@ -117,14 +141,14 @@ const FACTIONS = [
         complexity: 1,
     },
     {
-        key: 'SARDAKK_NORR',
+        key: FACTION.SARDAKK_NORR,
         name: 'Sardakk N’orr',
         code: 'G',
         image_name: 'sardakk',
         complexity: 2,
     },
     {
-        key: 'TITANS_OF_UL',
+        key: FACTION.TITANS_OF_UL,
         name: 'The Titans of Ul',
         code: 'H',
         pok: true,
@@ -132,14 +156,14 @@ const FACTIONS = [
         complexity: 2,
     },
     {
-        key: 'UNIVERSITIES_OF_JOL_NAR',
+        key: FACTION.UNIVERSITIES_OF_JOL_NAR,
         name: 'The Universities of Jol-Nar',
         code: 'I',
         image_name: 'jol-nar',
         complexity: 1,
     },
     {
-        key: 'VUILRAITH_CABAL',
+        key: FACTION.VUILRAITH_CABAL,
         name: 'The Vuil’Raith Cabal',
         code: 'J',
         pok: true,
@@ -147,35 +171,35 @@ const FACTIONS = [
         complexity: 3,
     },
     {
-        key: 'WINNU',
+        key: FACTION.WINNU,
         name: 'The Winnu',
         code: 'K',
         image_name: 'winnu',
         complexity: 2,
     },
     {
-        key: 'XXCHA_KINGDOM',
+        key: FACTION.XXCHA_KINGDOM,
         name: 'The Xxcha Kingdom',
         code: 'L',
         image_name: 'xxcha',
         complexity: 1,
     },
     {
-        key: 'YIN_BROTHERHOOD',
+        key: FACTION.YIN_BROTHERHOOD,
         name: 'The Yin Brotherhood',
         code: 'M',
         image_name: 'yin',
         complexity: 1,
     },
     {
-        key: 'YSSARIL_TRIBES',
+        key: FACTION.YSSARIL_TRIBES,
         name: 'The Yssaril Tribes',
         code: 'N',
         image_name: 'yssaril',
         complexity: 1,
     },
     {
-        key: 'COUNCIL_KELERES',
+        key: FACTION.COUNCIL_KELERES,
         name: 'The Council Keleres',
         code: 'O',
         pok: true,

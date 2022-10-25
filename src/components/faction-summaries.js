@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { URL } from '../lib/constants';
 import FACTIONS from '../lib/data/factions';
 
-import '../styles/components/faction-summaries.css';
+import '../styles/components/faction-summaries.scss';
 
 const parseURLCodes = (param) => {
     const input = (param || '').toUpperCase().replace(/[^A-Z0-9-]/g, '');

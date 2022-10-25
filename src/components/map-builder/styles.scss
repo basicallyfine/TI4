@@ -211,15 +211,15 @@ body.dragging * {
         $border-heavy: ($table-border-width * 1) solid rgba(255,255,255,0.5);
 
         td, th {
-            padding-top: $table-cell-padding;
-            padding-bottom: $table-cell-padding;
+            padding-top: $table-cell-padding-y;
+            padding-bottom: $table-cell-padding-y;
         }
         tr {
             &.row-group:not(.row-group-first) td {
-                padding-top: $table-cell-padding-sm;
+                padding-top: $table-cell-padding-y-sm;
             }
             &.row-group:not(.row-group-last) td {
-                padding-bottom: $table-cell-padding-sm;
+                padding-bottom: $table-cell-padding-y-sm;
             }
             &.row-group.row-group-second td {
                 background-color: rgba(255,255,255,0.1);
@@ -231,11 +231,11 @@ body.dragging * {
         tbody {
             td.player-label {
                 border-left: $border-heavy;
-                padding-left: $table-cell-padding;
+                padding-left: $table-cell-padding-x;
             }
             td.system-group-label {
                 border-right: $border-heavy;
-                padding-right: $table-cell-padding;
+                padding-right: $table-cell-padding-x;
             }
             tr.row-group-first td {
                 border-top: $border-heavy;

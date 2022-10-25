@@ -6,7 +6,26 @@ import {
     WORMHOLE,
 } from '../constants';
 
-const SYSTEMS = [
+export type Planet = {
+    name: string;
+    trait?: PLANET_TRAIT | null,
+    tech?: TECH_COLOR | null,
+    legendary?: boolean;
+    resources: number;
+    influence: number;
+    mecatol?: true;
+};
+
+export type System = {
+    number: number;
+    back: SYSTEM_TILE_BACK;
+    pok?: boolean;
+    planets: Planet[];
+    anomaly?: ANOMALY;
+    wormhole?: WORMHOLE;
+};
+
+const SYSTEMS: System[] = [
     {
         number: 18,
         back: SYSTEM_TILE_BACK.SPECIAL,
@@ -21,7 +40,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Ang', trait: PLANET_TRAIT.GREEN, tech: TECH_COLOR.RED, legendary: false, resources: 2, influence: 0 }
         ],
-        _vm_tier: 3
     },
     {
         number: 22,
@@ -29,7 +47,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Tar’Mann', trait: PLANET_TRAIT.GREEN, tech: TECH_COLOR.GREEN, legendary: false, resources: 1, influence: 1 }
         ],
-        _vm_tier: 3
     },
     {
         number: 43,
@@ -45,7 +62,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Atlas', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 3, influence: 1 }
         ],
-        _vm_tier: 2
     },
     {
         number: 79,
@@ -61,7 +77,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Wellon', trait: PLANET_TRAIT.GREEN, tech: TECH_COLOR.YELLOW, legendary: false, resources: 1, influence: 2 }
         ],
-        _vm_tier: 3
     },
     {
         number: 34,
@@ -70,7 +85,6 @@ const SYSTEMS = [
             { name: 'Centauri', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 1, influence: 3 },
             { name: 'Gral', trait: PLANET_TRAIT.GREEN, tech: TECH_COLOR.BLUE, legendary: false, resources: 1, influence: 1 }
         ],
-        _vm_tier: 2
     },
     {
         number: 75,
@@ -81,7 +95,6 @@ const SYSTEMS = [
             { name: 'Abaddon', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 1, influence: 0 },
             { name: 'Loki', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 1, influence: 2 }
         ],
-        _vm_tier: 1
     },
     {
         number: 69,
@@ -91,7 +104,6 @@ const SYSTEMS = [
             { name: 'Accoen', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 2, influence: 3 },
             { name: 'Jeol Ir', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 2, influence: 3 }
         ],
-        _vm_tier: 1
     },
     {
         number: 20,
@@ -99,7 +111,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Vefut II', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 2, influence: 2 }
         ],
-        _vm_tier: 3
     },
     {
         number: 59,
@@ -108,7 +119,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Archon Vail', trait: PLANET_TRAIT.RED, tech: TECH_COLOR.BLUE, legendary: false, resources: 1, influence: 3 }
         ],
-        _vm_tier: 3
     },
     {
         number: 73,
@@ -118,7 +128,6 @@ const SYSTEMS = [
             { name: 'Cealdri', trait: PLANET_TRAIT.BLUE, tech: TECH_COLOR.YELLOW, legendary: false, resources: 0, influence: 2 },
             { name: 'Xanhact', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 0, influence: 1 }
         ],
-        _vm_tier: 3
     },
     {
         number: 66,
@@ -127,7 +136,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Hope’s End', trait: PLANET_TRAIT.RED, tech: null, legendary: true, resources: 3, influence: 0 }
         ],
-        _vm_tier: 2
     },
     {
         number: 70,
@@ -137,7 +145,6 @@ const SYSTEMS = [
             { name: 'Kraag', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 2, influence: 1 },
             { name: 'Siig', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 0, influence: 2 }
         ],
-        _vm_tier: 2
     },
     {
         number: 37,
@@ -146,7 +153,6 @@ const SYSTEMS = [
             { name: 'Arinam', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 1, influence: 2 },
             { name: 'Meer', trait: PLANET_TRAIT.RED, tech: TECH_COLOR.RED, legendary: false, resources: 0, influence: 4 }
         ],
-        _vm_tier: 1
     },
     {
         number: 27,
@@ -155,7 +161,6 @@ const SYSTEMS = [
             { name: 'New Albion', trait: PLANET_TRAIT.GREEN, tech: TECH_COLOR.GREEN, legendary: false, resources: 1, influence: 1 },
             { name: 'Starpoint', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 3, influence: 1 }
         ],
-        _vm_tier: 1
     },
     {
         number: 42,
@@ -188,7 +193,6 @@ const SYSTEMS = [
             { name: 'Rigel II', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 1, influence: 2 },
             { name: 'Rigel III', trait: PLANET_TRAIT.GREEN, tech: TECH_COLOR.GREEN, legendary: false, resources: 1, influence: 1 }
         ],
-        _vm_tier: 2
     },
     {
         number: 60,
@@ -197,7 +201,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Perimeter', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 2, influence: 1 }
         ],
-        _vm_tier: 3
     },
     {
         number: 24,
@@ -205,7 +208,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Mehar Xull', trait: PLANET_TRAIT.RED, tech: TECH_COLOR.RED, legendary: false, resources: 1, influence: 3 }
         ],
-        _vm_tier: 3
     },
     {
         number: 31,
@@ -214,7 +216,6 @@ const SYSTEMS = [
             { name: 'Lazar', trait: PLANET_TRAIT.GREEN, tech: TECH_COLOR.YELLOW, legendary: false, resources: 1, influence: 0 },
             { name: 'Sakulag', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 2, influence: 1 }
         ],
-        _vm_tier: 3
     },
     {
         number: 32,
@@ -223,7 +224,6 @@ const SYSTEMS = [
             { name: 'Dal Bootha', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 0, influence: 2 },
             { name: 'Xxehan', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 1, influence: 1 }
         ],
-        _vm_tier: 3
     },
     {
         number: 36,
@@ -232,7 +232,6 @@ const SYSTEMS = [
             { name: 'Arnor', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 2, influence: 1 },
             { name: 'Lor', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 1, influence: 2 }
         ],
-        _vm_tier: 3
     },
     {
         number: 71,
@@ -242,7 +241,6 @@ const SYSTEMS = [
             { name: 'Alio Prima', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 1, influence: 1 },
             { name: 'Ba’kal', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 3, influence: 2 }
         ],
-        _vm_tier: 2
     },
     {
         number: 80,
@@ -258,7 +256,6 @@ const SYSTEMS = [
             { name: 'Abyz', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 3, influence: 0 },
             { name: 'Fria', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 2, influence: 0 }
         ],
-        _vm_tier: 1
     },
     {
         number: 74,
@@ -268,7 +265,6 @@ const SYSTEMS = [
             { name: 'Vega Major', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 2, influence: 1 },
             { name: 'Vega Minor', trait: PLANET_TRAIT.BLUE, tech: TECH_COLOR.BLUE, legendary: false, resources: 1, influence: 2 }
         ],
-        _vm_tier: 2
     },
     {
         number: 63,
@@ -277,7 +273,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Vorhal', trait: PLANET_TRAIT.BLUE, tech: TECH_COLOR.GREEN, legendary: false, resources: 0, influence: 2 }
         ],
-        _vm_tier: 3
     },
     {
         number: 23,
@@ -285,7 +280,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Saudor', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 2, influence: 2 }
         ],
-        _vm_tier: 3
     },
     {
         number: 41,
@@ -301,7 +295,6 @@ const SYSTEMS = [
             { name: 'Lisis', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 2, influence: 2 },
             { name: 'Velnor', trait: PLANET_TRAIT.GREEN, tech: TECH_COLOR.RED, legendary: false, resources: 2, influence: 1 }
         ],
-        _vm_tier: 1
     },
     {
         number: 29,
@@ -310,7 +303,6 @@ const SYSTEMS = [
             { name: 'Qucen’n', trait: PLANET_TRAIT.GREEN, tech: null, legendary: false, resources: 1, influence: 2 },
             { name: 'Rarron', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 0, influence: 3 }
         ],
-        _vm_tier: 2
     },
     {
         number: 48,
@@ -324,7 +316,6 @@ const SYSTEMS = [
             { name: 'Tequ’ran', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 2, influence: 0 },
             { name: 'Torkan', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 0, influence: 3 }
         ],
-        _vm_tier: 1
     },
     {
         number: 47,
@@ -358,7 +349,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Thibah', trait: PLANET_TRAIT.GREEN, tech: TECH_COLOR.BLUE, legendary: false, resources: 1, influence: 1 }
         ],
-        _vm_tier: 3
     },
     {
         number: 26,
@@ -367,7 +357,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Lodor', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 3, influence: 1 }
         ],
-        _vm_tier: 2
     },
     {
         number: 44,
@@ -387,7 +376,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Primor', trait: PLANET_TRAIT.BLUE, tech: null, legendary: true, resources: 2, influence: 1 }
         ],
-        _vm_tier: 2
     },
     {
         number: 45,
@@ -402,7 +390,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Quann', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 2, influence: 1 }
         ],
-        _vm_tier: 3
     },
     {
         number: 77,
@@ -417,7 +404,6 @@ const SYSTEMS = [
             { name: 'Bereg', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 3, influence: 1 },
             { name: 'Lirta IV', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 2, influence: 3 }
         ],
-        _vm_tier: 1
     },
     {
         number: 30,
@@ -426,7 +412,6 @@ const SYSTEMS = [
             { name: 'Mellon', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 0, influence: 2 },
             { name: 'Zohbat', trait: PLANET_TRAIT.RED, tech: null, legendary: false, resources: 3, influence: 1 }
         ],
-        _vm_tier: 2
     },
     {
         number: 67,
@@ -444,7 +429,6 @@ const SYSTEMS = [
             { name: 'Corneeq', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 1, influence: 2 },
             { name: 'Resculon', trait: PLANET_TRAIT.BLUE, tech: null, legendary: false, resources: 2, influence: 0 }
         ],
-        _vm_tier: 2
     },
     {
         number: 62,
@@ -453,7 +437,6 @@ const SYSTEMS = [
         planets: [
             { name: 'Sem-Lore', trait: PLANET_TRAIT.BLUE, tech: TECH_COLOR.YELLOW, legendary: false, resources: 3, influence: 2 }
         ],
-        _vm_tier: 2
     }
 ];
 
