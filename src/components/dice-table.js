@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import _ from 'lodash';
 
-// import { Chart, curveLinear } from 'react-charts';
-import { ResponsiveLine } from '@nivo/line';
-
 import { calculator } from '../lib/rolling-calculator';
 import { GAME_COLOURS } from '../lib/constants';
 
@@ -52,42 +49,6 @@ function rowKey(seed) {
 //   .value()
 //   .join(',\u2009');
 const summariseDice = inputString => inputString.split('').sort().join('').replace(/([0-9])(?!\1+)/g, '$& ').replace(/[^\d]+$/, '');
-
-const ResultsChart = ({ data, colours = [], ...props } = {}) => (
-  <ResponsiveLine
-    data={data}
-    curve="linear"
-    animate={false}
-    // enablePoints={false}
-    lineWidth={2}
-    pointSize={5}
-    // pointSymbol={({ size, color }) => (
-    //     <svg width={size} height={size} viewBox="8 8 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    //         <path d="M0 13.261L5.23729 8L0 2.73904L2.79661 0L8 5.22756L13.2034 0L16 2.73904L10.7627 8L16 13.261L13.2034 16L8 10.7724L2.79661 16L0 13.261Z" fill={color} />
-    //     </svg>
-    // )}
-    // pointColor={{ from: 'seriesColor' }}
-    xScale={{
-      type: 'point',
-      min: 1,
-      max: 'auto',
-    }}
-    yScale={{
-      type: 'linear',
-      min: 0,
-      max: 1,
-    }}
-    axisLeft={{
-      format: '.0%'
-    }}
-    margin={{ top: 0, left: 0, bottom: 0, right: 0 }}
-    colors={colours}
-  // axisBottom={{
-  //     legend: 'linear scale',
-  //     // legendOffset: -12,
-  // }}
-  />
-);
 
 const DiceInput = ({ onUpdate, onRemove, value, colour }) => {
   return (
