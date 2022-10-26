@@ -9,6 +9,7 @@ import MapBuilder from './components/map-builder';
 import ListSystems from './components/list-systems';
 import FactionSummaries from './components/faction-summaries';
 import BidDraftCombinator from './components/bid-draft-combinator';
+import MiltyAssist from './components/milty-assist/milty-assist';
 
 import './styles/app.scss';
 
@@ -27,6 +28,7 @@ const Routes = () => {
               <Route path={`${BASE_PATH}/list-systems`} component={ListSystems} />
               <Route path={`${BASE_PATH}/factions/:codes?`} component={FactionSummaries} />
               <Route path={`${BASE_PATH}/bid-draft`} component={BidDraftCombinator} />
+              <Route path={`${BASE_PATH}/milty-helper`} component={MiltyAssist} />
               <Route path="/" component={() => <Redirect to={`${BASE_PATH}/factions`} />} />
             </Switch>
         </Router>

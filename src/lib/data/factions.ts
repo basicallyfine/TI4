@@ -1,9 +1,4 @@
-import {
-    FACTION,
-    SYSTEM_TILE_BACK,
-} from '../constants';
-
-import type { System } from './systems';
+import { FACTION } from '../constants';
 
 export type Faction = {
     key: FACTION;
