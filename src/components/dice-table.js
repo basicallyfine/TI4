@@ -12,11 +12,13 @@ const RESULT_MODE = {
 };
 
 const _calcs = {};
-function getCalculation(dice) {
-  if (!_calcs[dice]) {
-    _calcs[dice] = new calculator(...dice.split('')).calculate();
+function getCalculation(input) {
+  const dice = input.replace(/[^\d]/g, '');
+  if (!_calcs[input]) {
+    _calcs[input] = new calculator(...dice.split('')).reroll((/R$/i).test(input)).calculate();
   }
-  return _calcs[dice];
+  console.log(_calcs);
+  return _calcs[input];
 }
 
 function formatPercent(float) {
@@ -48,7 +50,7 @@ function rowKey(seed) {
 //   .map(([groupValue, group]) => group.length === 1 ? groupValue : `${groupValue}×${group.length}`)
 //   .value()
 //   .join(',\u2009');
-const summariseDice = inputString => inputString.split('').sort().join('').replace(/([0-9])(?!\1+)/g, '$& ').replace(/[^\d]+$/, '');
+const summariseDice = inputString => inputString.split('').sort().join('').replace(/([0-9])(?!\1+)/g, '$& ').replace(/[^\dR]+$/, '');
 
 const DiceInput = ({ onUpdate, onRemove, value, colour }) => {
   return (
@@ -92,7 +94,7 @@ const DiceTable = () => {
 
   const resultModeLabel = resultMode === RESULT_MODE.EXACT ? 'exactly' : 'at least';
 
-  const maxHits = _.chain(inputs).map('length').max().value();
+  const maxHits = _.chain(inputs).map(i => i.replace(/[^\d]/g, '').length).max().value();
   const valueRange = { min: Infinity, max: -Infinity };
   const headerCols = [];
 
@@ -145,7 +147,7 @@ const DiceTable = () => {
               autoFocus={index === focus}
               onChange={(e) => {
                 const updateInputs = _.clone(inputs);
-                updateInputs[index] = e.target.value.replace(/[^\d]/g, '');
+                updateInputs[index] = e.target.value.replace(/[^\dr]/gi, '').replace(/r(?=.)/gi, '').toUpperCase();
                 setInputs(updateInputs);
               }}
               onBlur={() => { setFocus(null); }}

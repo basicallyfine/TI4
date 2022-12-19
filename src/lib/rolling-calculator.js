@@ -91,6 +91,35 @@ class calculator {
             return dieValue;
         });
     }
+    p = {
+        1: 1,
+        2: 0.9,
+        3: 0.8,
+        4: 0.7,
+        5: 0.6,
+        6: 0.5,
+        7: 0.4,
+        8: 0.3,
+        9: 0.2,
+        10: 0.1,
+    };
+    reroll(reroll) {
+        if (reroll) {
+            this.p = {
+                1: 1,
+                2: 0.99,
+                3: 0.96,
+                4: 0.91,
+                5: 0.84,
+                6: 0.75,
+                7: 0.64,
+                8: 0.51,
+                9: 0.36,
+                10: 0.19,
+            };
+        }
+        return this;
+    }
     get results() {
         if (!this._results) {
             this.calculate();
@@ -141,8 +170,8 @@ class calculator {
             const outcomeP = this.dice.reduce((accumulator, hitValue, dieIndex) => {
                 const p =
                     outcome[dieIndex] === "1"
-                        ? (11 - hitValue) / 10
-                        : 1 - (11 - hitValue) / 10;
+                        ? this.p[hitValue]
+                        : 1 - this.p[hitValue];
                 return accumulator * p;
             }, 1);
 
