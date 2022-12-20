@@ -15,7 +15,7 @@ const _calcs = {};
 function getCalculation(input) {
   const dice = input.replace(/[^\d]/g, '');
   if (!_calcs[input]) {
-    _calcs[input] = new calculator(...dice.split('')).reroll((/R$/i).test(input)).calculate();
+    _calcs[input] = new calculator(...dice.split('')).reroll((/\*$/i).test(input)).calculate();
   }
   console.log(_calcs);
   return _calcs[input];
@@ -50,7 +50,7 @@ function rowKey(seed) {
 //   .map(([groupValue, group]) => group.length === 1 ? groupValue : `${groupValue}×${group.length}`)
 //   .value()
 //   .join(',\u2009');
-const summariseDice = inputString => inputString.split('').sort().join('').replace(/([0-9])(?!\1+)/g, '$& ').replace(/[^\dR]+$/, '');
+const summariseDice = inputString => _.sortBy(inputString.split(''), (v) => /^\d+$/.test(v) ? Number(v) : Infinity).join('').replace(/([0-9])(?!\1+)/g, '$& ').replace(/[^\d*]+$/, '');
 
 const DiceInput = ({ onUpdate, onRemove, value, colour }) => {
   return (
@@ -131,7 +131,7 @@ const DiceTable = () => {
           event.preventDefault();
           const focused = event.target.querySelector('input:focus');
           if (focused) focused.blur();
-          setInputs(inputs.filter(dice => !!dice.replace(/[^\d]/g, '')));
+          setInputs(inputs.filter(dice => !!dice.replace(/[^\d*]/g, '')));
         }}
         className="d-flex flex-wrap mt-2 mb-2"
       >
@@ -139,7 +139,7 @@ const DiceTable = () => {
           <div key={index} className="dice-input input-group input-group-sm flex-nowrap flex-grow-0 flex-shrink-1 mb-0-5 mr-0-5 w-auto">
             <input
               type="text"
-              inputMode="numeric"
+              inputMode="tel"
               className="form-control flex-grow-0 flex-shrink-0"
               value={dice}
               placeholder="..."
@@ -147,7 +147,7 @@ const DiceTable = () => {
               autoFocus={index === focus}
               onChange={(e) => {
                 const updateInputs = _.clone(inputs);
-                updateInputs[index] = e.target.value.replace(/[^\dr]/gi, '').replace(/r(?=.)/gi, '').toUpperCase();
+                updateInputs[index] = e.target.value.replace(/[^\d*]/gi, '').replace(/\*(?=.)/gi, '').toUpperCase();
                 setInputs(updateInputs);
               }}
               onBlur={() => { setFocus(null); }}
