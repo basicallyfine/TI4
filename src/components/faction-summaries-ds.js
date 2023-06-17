@@ -9,10 +9,6 @@ import "../styles/components/faction-summaries.scss";
 const parseURLCodes = (param) => {
   const input = (param || "").toUpperCase().replace(/[^A-Z0-9-]/g, "");
   if (!input) return [];
-  // if (input === 'ALL') return _.map(FACTIONS, 'code');
-  // if (input === 'POK') return _.chain(FACTIONS).filter('pok').map('code').value();
-  // if (input === 'BASE') return _.chain(FACTIONS).filter(faction => !faction.pok).map('code').value();
-
   const codes = _.map(FACTIONS, "code");
 
   return _.chain([...input.matchAll(/(\w-\w|\w(?!-))/g)])
@@ -38,9 +34,6 @@ const consolidateURLCodes = (input) => {
     .filter((i) => i >= 0)
     .sortBy()
     .value();
-  // if (codes.length === FACTIONS.length) return 'ALL';
-  // if (codes.join('') === _.chain(FACTIONS).filter('pok').map('code').value().join('')) return 'POK';
-  // if (codes.join('') === _.chain(FACTIONS).filter(faction => !faction.pok).map('code').value().join('')) return 'BASE';
 
   const indexClusters = codes.reduce((reducer, codeIndex) => {
     const lastSubArray = reducer[reducer.length - 1];
@@ -92,12 +85,7 @@ const DsFactionSummaries = ({ match, history, location }) => {
     window.sessionStorage.setItem("selectedFactionCodes", selectedCodes);
   }, [selectedCodes]);
 
-  const imageTypes = [
-    "REFERENCE",
-    // 'COMPONENTS',
-    "SHEET",
-    // 'sheet-back',
-  ];
+  const imageTypes = ["REFERENCE", "SHEET", "COMPONENTS"];
 
   if (_.size(codes) > 0) {
     const selectedFactions = _.chain(FACTIONS)
@@ -151,9 +139,6 @@ const DsFactionSummaries = ({ match, history, location }) => {
             e.preventDefault();
             setSelectedCodes("");
           }
-          // e.preventDefault();
-          // const pathParam = consolidateURLCodes(submitCodes);
-          // history.push(match.path.replace(':codes?', pathParam));
         }}
       >
         {_.chain(FACTIONS)
@@ -226,7 +211,13 @@ const DsFactionSummaries = ({ match, history, location }) => {
           </button>
         </div>
       </form>
-      <p>Discordant Stars content is from files shared on <a href="https://drive.google.com/drive/folders/1AipLLvGhyp2v--w2oeT7uQIovmH_HyVn">Google Drive</a> by the creators.</p>
+      <p>
+        Discordant Stars content is from files shared on{" "}
+        <a href="https://drive.google.com/drive/folders/1AipLLvGhyp2v--w2oeT7uQIovmH_HyVn">
+          Google Drive
+        </a>{" "}
+        by the creators.
+      </p>
     </div>
   );
 };
