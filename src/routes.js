@@ -11,6 +11,7 @@ import FactionSummaries from './components/faction-summaries';
 import DsFactionSummaries from './components/faction-summaries-ds';
 import BidDraftCombinator from './components/bid-draft-combinator';
 import Wallpaper from './components/wallpaper';
+import Async from './components/AsyncCommandRef';
 
 import './styles/app.scss';
 
@@ -31,6 +32,7 @@ const Routes = () => {
               <Route path={`${BASE_PATH}/factions-ds/:codes?`} component={DsFactionSummaries} />
               <Route path={`${BASE_PATH}/bid-draft`} component={BidDraftCombinator} />
               <Route path={`${BASE_PATH}/wallpaper`} component={Wallpaper} />
+              <Route path={`${BASE_PATH}/async`} component={Async} />
               <Route path="/" component={() => <Redirect to={`${BASE_PATH}/factions`} />} />
             </Switch>
         </Router>
