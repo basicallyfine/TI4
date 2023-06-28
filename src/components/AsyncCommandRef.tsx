@@ -51,9 +51,9 @@ const AsyncCommandRef = () => {
   return (
     <div className="container async-commands my-2">
       <h1>Async Commands</h1>
-      <p>First you need to create game and set active game you modifying.</p>
       <form
-        className="mb-2"
+        className="mb-2 pt-0-5 mt-n0-5 sticky-top"
+        style={{ backgroundColor: "rgba(0,0,0,0.35)" }}
         onSubmit={(e) => {
           e.preventDefault();
         }}
@@ -67,6 +67,10 @@ const AsyncCommandRef = () => {
             placeholder="Filter..."
             onChange={(e) => setSearchInput(e.target.value)}
             value={searchInput}
+            style={{
+              boxShadow:
+                "0 0 1rem var(--bs-body-bg), 0 0 0 2px var(--bs-body-bg)",
+            }}
             onKeyDownCapture={(key) => {
               if (["esc", "escape"].includes(key.code.toLowerCase())) {
                 setSearchInput("");
