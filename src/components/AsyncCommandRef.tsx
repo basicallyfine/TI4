@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import COMMAND_DATA from "../lib/data/async-command-help.json";
+import { useEffect, useMemo, useState } from "react";
+import COMMAND_DATA, { AsyncCommand } from "../lib/data/async-command-help";
 
 import "../styles/components/async-commands.scss";
 
@@ -12,16 +12,28 @@ const parseSearchInput = (input: string) =>
     .replace(/\p{Diacritic}/gu, "")
     .replace(/[^a-z\s]/gi, "");
 
+const hashCommandKey = (input: string, len = 12) => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(input);
+  return data
+    .reduce((acc, cur, idx) => {
+      acc[idx % len] = (acc[idx % len] + cur) % 255;
+      return acc;
+    }, new Array(len).fill(0))
+    .map((v) => v.toString(16))
+    .join("");
+};
+
 const AsyncCommandRef = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [search, setSearch] = useState<string | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const commands = useMemo(
     () =>
       COMMAND_DATA.map((command) => ({
         ...command,
         search: parseSearchInput(Object.values(command).join(" ")),
+        key: hashCommandKey(JSON.stringify(command), 32),
       })),
     []
   );
@@ -49,6 +61,8 @@ const AsyncCommandRef = () => {
         <div className="position-relative">
           <input
             type="text"
+            spellCheck="false"
+            autoComplete="false"
             className="form-control full-width"
             placeholder="Filter..."
             onChange={(e) => setSearchInput(e.target.value)}
@@ -79,7 +93,7 @@ const AsyncCommandRef = () => {
       </form>
       <div className="commands-list">
         {filteredCommands.map((command) => (
-          <div className="command-group" key={command.command}>
+          <div className="command-group" key={command.key}>
             {command.heading && <h4>{command.heading}</h4>}
             {command.command && (
               <pre>
