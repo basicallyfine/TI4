@@ -735,6 +735,14 @@ anomalies_can_touch - if set to true, red boarder tiles can touch in slice`,
   {
     command: "/fow remove_all_custom_adjacent_tiles",
   },
+  {
+    command: "/roll roll_command",
+    help: `roll_command: [NUMBER]d[SIDES]hv[HIT]?[COMMENT(optional)]
+Separate multiple commands with a ;
+eg:
+/roll 1d10hv6
+/roll 6d10hv9?fighters; 3d10hv3?war sun`
+  },
 ];
 
 export default commands;
