@@ -7,6 +7,13 @@ import FACTIONS from '../lib/data/factions';
 import '../styles/components/faction-summaries.scss';
 
 const parseURLCodes = (param) => {
+    if (param && param.substring(0,1) === '!') {
+        const faction = _.find(FACTIONS, { image_name: param.substring(1).toLowerCase() });
+        if (faction) {
+            return [faction.code];
+        }
+    }
+
     const input = (param || '').toUpperCase().replace(/[^A-Z0-9-]/g, '');
     if (!input) return [];
     // if (input === 'ALL') return _.map(FACTIONS, 'code');
@@ -108,7 +115,7 @@ const FactionSummaries = ({ match, history, location }) => {
                                 <img
                                     className="image-cell"
                                     key={imageType}
-                                    src={`${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg`}
+                                    src={`#${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg`}
                                     // src={`https://via.placeholder.com/320x${_.random(250,300)}`}
                                     // style={{ backgroundImage: `url(${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg)` }}
                                     alt={name}
@@ -143,7 +150,7 @@ const FactionSummaries = ({ match, history, location }) => {
             >
                 {_.chain(FACTIONS)
                     .sortBy(({ name }) => name.toLowerCase().replace(/^the\s/i, ''))
-                    .map(({ code, name }, i) => (
+                    .map(({ code, name, image_name }, i) => (
                         <div className="form-check" key={code}>
                             <label className="form-check-label" htmlFor={`checkbox-${code}`}>
                                 <input
@@ -179,7 +186,7 @@ const FactionSummaries = ({ match, history, location }) => {
                                 {name}
                             </label>
                             <a
-                                href={match.path.replace(':codes?', code)}
+                                href={match.path.replace(':codes?', `!${image_name}`)}
                                 className="faction-link"
                                 target="_blank"
                             >→</a>
