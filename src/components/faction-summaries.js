@@ -115,7 +115,7 @@ const FactionSummaries = ({ match, history, location }) => {
                                 <img
                                     className="image-cell"
                                     key={imageType}
-                                    src={`#${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg`}
+                                    src={`${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg`}
                                     // src={`https://via.placeholder.com/320x${_.random(250,300)}`}
                                     // style={{ backgroundImage: `url(${URL.ASSETS_BUCKET}ti4/factions/${imageType}/${image_name}.jpg)` }}
                                     alt={name}
