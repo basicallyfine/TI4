@@ -1,6 +1,6 @@
 $tile-w: 9rem;
 $tile-h-ratio: 13/15;
-$tile-w-responsive: 4vw;
+$tile-w-responsive: 17vw;
 
 #slice-display {
   margin: 1rem auto;
@@ -8,14 +8,19 @@ $tile-w-responsive: 4vw;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 0.75rem;
+  row-gap: 2rem;
   .slice {
     position: relative;
-    margin: 2rem;
+    // margin: 1rem;
+    font-size: $tile-w-responsive;
+    @media screen and (min-width: 960px) {
+      font-size: $tile-w;
+    }
     .tiles {
       position: relative;
       width: 2.5em;
       height: 2.5em * $tile-h-ratio;
-      font-size: $tile-w;
       .tile {
         position: absolute;
         width: 1em;
@@ -25,13 +30,13 @@ $tile-w-responsive: 4vw;
         background: no-repeat 50% 50%;
         background-size: contain;
         .label {
-            font-size: 1rem;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            text-shadow: 0 0 2px #000000;
+          font-size: 1rem;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: white;
+          text-shadow: 0 0 2px #000000;
         }
         &.tile-0 {
           bottom: 0;
@@ -58,13 +63,22 @@ $tile-w-responsive: 4vw;
       }
     }
     .info {
-        padding: 0.5rem $tile-w;
-        margin-top: $tile-w * $tile-h-ratio * -0.5;
-        min-height: $tile-w * $tile-h-ratio * 0.9;
+      width: 1em;
+      margin: (-0.5em * $tile-h-ratio) auto 0;
+      min-height: 0.75em * $tile-h-ratio;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0 0.15em;
+      .wrapper {
+        flex-grow: 1;
+        min-height: 100%;
         display: flex;
+        font-size: 1rem;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+      }
     }
   }
 }

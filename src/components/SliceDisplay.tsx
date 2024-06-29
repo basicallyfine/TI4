@@ -33,8 +33,10 @@ export const SliceDisplay = () => {
             ))}
           </div>
           <div className="info">
-            <span>X/X</span>
-            <span>(X/X)</span>
+            <div className="wrapper">
+              <span>X/X</span>
+              <span>(X/X)</span>
+            </div>
           </div>
         </div>
       ))}
