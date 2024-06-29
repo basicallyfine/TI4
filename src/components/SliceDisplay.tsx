@@ -1,20 +1,43 @@
 import { useLayoutEffect, useState } from "react";
 
+import { SYSTEM_PNG_URL } from "./map-builder/map-constants";
+
+import "../styles/slice-display.scss";
+
 export const SliceDisplay = () => {
-    const [sliceNumbers, setSliceNumbers] = useState<number[][]>([]);
+  const [slices, setSlices] = useState<number[][]>([]);
   useLayoutEffect(() => {
-    const query = window?.location?.search;
-    console.log(query);
-    if (query && query.match(/^\?*[\d,;]+/)) {
-        const numbers = query
-            .replace(/^[^\d]+/, "")
-            .split(';')
-            .map(s => s.split(',').map(Number));
-        console.log(numbers);
-        setSliceNumbers(numbers);
+    const query = window?.location?.search?.replace(/^\?/, "");
+    if (query) {
+      const numbers = decodeURIComponent(query)
+        .split(/\s*\|\s*/)
+        .map((s) => s.split(/\s+/).map(Number));
+      console.log(numbers);
+      setSlices(numbers);
     }
-  },[]);
+  }, []);
+
   return (
-    <pre>{JSON.stringify(sliceNumbers)}</pre>
+    <div className="container-fluid" id="slice-display">
+      {slices.map((tiles) => (
+        <div key={tiles.join(",")} className="slice">
+          <div className="tiles">
+            {tiles.map((tile, i) => (
+              <div
+                key={tile}
+                className={`tile tile-${i}`}
+                style={{ backgroundImage: `url(${SYSTEM_PNG_URL}${tile}.png)` }}
+              >
+                <span className="label">{tile}</span>
+              </div>
+            ))}
+          </div>
+          <div className="info">
+            <span>X/X</span>
+            <span>(X/X)</span>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
