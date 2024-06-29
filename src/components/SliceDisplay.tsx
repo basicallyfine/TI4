@@ -6,12 +6,13 @@ import { SYSTEM_PNG_URL } from "./map-builder/map-constants";
 import "../styles/slice-display.scss";
 
 export const SliceDisplay = () => {
-
   const [sliceString, setSliceString] = useState<string | undefined>();
   useLayoutEffect(() => {
     const query = window?.location?.search?.replace(/^\?/, "");
     if (query) {
-      setSliceString(decodeURIComponent(query));
+      setSliceString(
+        decodeURIComponent(query.replace(/^[\s,;|]+|[\s,;|]+$/g, ""))
+      );
     }
   }, []);
 
@@ -32,7 +33,7 @@ export const SliceDisplay = () => {
             influence_max: 0,
             resources_efficient: 0,
             influence_efficient: 0,
-          }
+          },
         };
         slice.systems.forEach((system) => {
           system?.planets.forEach((planet) => {
@@ -77,8 +78,13 @@ export const SliceDisplay = () => {
             </div>
             <div className="info">
               <div className="wrapper">
-                <span>{value.resources_max}/{value.influence_max}</span>
-                <span>({value.resources_efficient.toString(10).replace('.5', '½')}/{value.influence_efficient.toString(10).replace('.5', '½')})</span>
+                <span>
+                  {value.resources_max}/{value.influence_max}
+                </span>
+                <span>
+                  ({value.resources_efficient.toString(10).replace(".5", "½")}/
+                  {value.influence_efficient.toString(10).replace(".5", "½")})
+                </span>
               </div>
             </div>
           </div>
