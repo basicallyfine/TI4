@@ -1,3 +1,4 @@
+import { orderBy } from "lodash";
 import { useLayoutEffect, useMemo, useState } from "react";
 
 import SYSTEMS from "../lib/data/systems";
@@ -7,18 +8,35 @@ import "../styles/slice-display.scss";
 
 export const SliceDisplay = () => {
   const [sliceString, setSliceString] = useState<string | undefined>();
+  const [sorting, setSorting] = useState<string | null>();
   useLayoutEffect(() => {
-    const query = window?.location?.search?.replace(/^\?/, "");
-    if (query) {
+    // const query = window?.location?.search?.replace(/^\?/, "");
+    const params = new URLSearchParams(window.location.search);
+    const paramValues = {
+      slice: params?.get("s"),
+      sort: params?.get("sort"),
+    };
+    console.log(params.keys()?.next().value);
+
+    if (paramValues.slice) {
       setSliceString(
-        decodeURIComponent(query.replace(/^[\s,;|]+|[\s,;|]+$/g, ""))
+        decodeURIComponent(
+          paramValues.slice.replace(/^[\s,;|]+|[\s,;|]+$/g, "")
+        )
       );
+    } else if (params.keys()?.next().value?.match(/^[\d,;\s]+$/)) {
+      const newUrl = new URL(window.location.href);
+      newUrl.search = `s=${newUrl.search}`;
+      window.location.replace(newUrl.toString());
+    }
+    if (paramValues.sort) {
+      setSorting(decodeURIComponent(paramValues.sort));
     }
   }, []);
 
   const slices = useMemo(() => {
     if (sliceString) {
-      return sliceString.split(/\s*\|\s*|\s*;\s*/).map((s) => {
+      const _s = sliceString.split(/\s*\|\s*|\s*;\s*/).map((s) => {
         const slice = {
           key: s,
           systems: s
@@ -51,9 +69,26 @@ export const SliceDisplay = () => {
         });
         return slice;
       });
+
+      switch (sorting) {
+        case "best":
+          return orderBy(
+            _s,
+            (slice) =>
+              slice.value.resources_efficient +
+              slice.value.influence_efficient +
+              (slice.value.resources_max + slice.value.influence_max) / 100 +
+              Math.random() / 1000,
+            "desc"
+          );
+        case "random":
+          return orderBy(_s, () => Math.random(), "asc");
+        default:
+          return _s;
+      }
     }
     return null;
-  }, [sliceString]);
+  }, [sliceString, sorting]);
 
   return (
     <div className="container-fluid" id="slice-display">
