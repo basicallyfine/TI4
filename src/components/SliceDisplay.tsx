@@ -174,7 +174,7 @@ export const SliceDisplay = () => {
             slice.value.resources_efficient += planetValue.resources_efficient;
             slice.value.influence_efficient += planetValue.influence_efficient;
             slice.value.either_efficient += planetValue.either_efficient;
-            slice.value.value_efficient += planetValue.value_efficient
+            slice.value.value_efficient += planetValue.value_efficient;
 
             if (!isEquidistant) {
               slice.non_equi_value.resources_max += planetValue.resources_max;
@@ -187,7 +187,8 @@ export const SliceDisplay = () => {
                 planetValue.influence_efficient;
               slice.non_equi_value.either_efficient +=
                 planetValue.either_efficient;
-              slice.non_equi_value.value_efficient += planetValue.value_efficient;
+              slice.non_equi_value.value_efficient +=
+                planetValue.value_efficient;
             }
           });
 
@@ -205,8 +206,7 @@ export const SliceDisplay = () => {
           return orderBy(
             _s,
             (slice) =>
-              slice.value.resources_efficient +
-              slice.value.influence_efficient +
+              slice.value.value_efficient +
               (slice.value.resources_max + slice.value.influence_max) / 100 +
               Math.random() / 1000,
             "desc"
@@ -219,6 +219,94 @@ export const SliceDisplay = () => {
     }
     return null;
   }, [sliceString, sorting]);
+
+  if (!sliceString?.trim() || (sliceString.trim() && !slices?.length)) {
+    return (
+      <div className="container">
+        <form method="GET" className="my-2">
+          <div className="form-group mb-2">
+            <textarea
+              className="form-control"
+              name="s"
+              placeholder="Copy / paste slice string (eg: 67 69 44 65 19 | 43 25 76 ...)"
+            ></textarea>
+          </div>
+          <div className="form-group mb-2">
+            <label>Sorting</label>
+            <div className="form-check">
+              <label className="form-check-label" htmlFor="sort-original">
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  id="sort-original"
+                  name="sort"
+                  value=""
+                  defaultChecked
+                />
+                Original order
+              </label>
+            </div>
+            <div className="form-check">
+              <label className="form-check-label" htmlFor="sort-best">
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  id="sort-best"
+                  name="sort"
+                  value="best"
+                />
+                Best by efficient value
+              </label>
+            </div>
+            <div className="form-check">
+              <label className="form-check-label" htmlFor="sort-random">
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  id="sort-random"
+                  name="sort"
+                  value="random"
+                />
+                Random
+              </label>
+            </div>
+          </div>
+          <div className="form-group mb-2">
+            <label>Display</label>
+            <div className="form-check">
+              <label className="form-check-label">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  name="d"
+                  value="images"
+                  defaultChecked
+                />
+                Images
+              </label>
+            </div>
+            <div className="form-check">
+              <label className="form-check-label">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  name="d"
+                  value="table"
+                  defaultChecked
+                />
+                Table
+              </label>
+            </div>
+          </div>
+          <div className="form-group mb-2">
+            <button type="submit" className="btn btn-primary">
+              Go
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -265,8 +353,8 @@ export const SliceDisplay = () => {
                 <th>-</th>
                 <th>Optimal</th>
                 <th>Max</th>
-                <th>Optimal+E</th>
-                <th>Max+E</th>
+                <th>Optimal + Equi.</th>
+                <th>Max + Equi.</th>
                 <th>Planets</th>
                 <th>Planets+E</th>
                 <th>Skips, Wormholes, Legendaries</th>
@@ -310,6 +398,14 @@ export const SliceDisplay = () => {
                 )}
             </tbody>
           </table>
+          <figcaption className="small">
+            Notes:
+            <ul>
+            <li>Optimal values refer to spending each planet for the higher of its resource or influence value.</li>
+            <li>Optimal values are represented as <code>resources / influence + either (total)</code> where "either" refers to planets that equal resource and influence values.</li>
+            <li>Max values refer to spending both resources and influence.</li>
+            </ul>
+          </figcaption>
         </div>
       ) : null}
     </>
