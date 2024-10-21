@@ -42,9 +42,13 @@ type SliceDetails = {
   attributes: string[];
 };
 
+type DisplayComponentsType = { images: boolean; table: boolean };
+
 export const SliceDisplay = () => {
   const [sliceString, setSliceString] = useState<string | undefined>();
   const [sorting, setSorting] = useState<string | null>();
+  const [displayComponents, setDisplayComponents] =
+    useState<DisplayComponentsType>({ images: true, table: true });
   useLayoutEffect(() => {
     // const query = window?.location?.search?.replace(/^\?/, "");
     const params = new URLSearchParams(window.location.search);
@@ -72,6 +76,18 @@ export const SliceDisplay = () => {
     }
     if (paramValues.sort) {
       setSorting(decodeURIComponent(paramValues.sort));
+    }
+    if (params.has("d")) {
+      const urlDisplayComponents: DisplayComponentsType = {
+        images: false,
+        table: false,
+      };
+      for (const key of params.getAll("d")) {
+        if (key in urlDisplayComponents) {
+          urlDisplayComponents[key as keyof DisplayComponentsType] = true;
+        }
+      }
+      setDisplayComponents(urlDisplayComponents);
     }
   }, []);
 
@@ -148,7 +164,7 @@ export const SliceDisplay = () => {
               planetValue.value_efficient += planet.influence;
             } else {
               planetValue.either_efficient += planet.resources;
-              planetValue.value_efficient += planet.resources
+              planetValue.value_efficient += planet.resources;
             }
 
             slice.value.resources_max += planetValue.resources_max;
@@ -158,6 +174,7 @@ export const SliceDisplay = () => {
             slice.value.resources_efficient += planetValue.resources_efficient;
             slice.value.influence_efficient += planetValue.influence_efficient;
             slice.value.either_efficient += planetValue.either_efficient;
+            slice.value.value_efficient += planetValue.value_efficient
 
             if (!isEquidistant) {
               slice.non_equi_value.resources_max += planetValue.resources_max;
@@ -170,9 +187,7 @@ export const SliceDisplay = () => {
                 planetValue.influence_efficient;
               slice.non_equi_value.either_efficient +=
                 planetValue.either_efficient;
-              slice.non_equi_value.value_efficient +=
-                planetValue.resources_efficient +
-                planetValue.influence_efficient;
+              slice.non_equi_value.value_efficient += planetValue.value_efficient;
             }
           });
 
@@ -207,92 +222,96 @@ export const SliceDisplay = () => {
 
   return (
     <>
-      <div className="container-fluid" id="slice-display">
-        {slices &&
-          slices.map(({ key, systems, value }) => (
-            <div key={key} className="slice">
-              <div className="tiles">
-                {systems.map(
-                  (system, i) =>
-                    system && (
-                      <div
-                        key={system.number}
-                        className={`tile tile-${i}`}
-                        style={{
-                          backgroundImage: `url(${SYSTEM_PNG_URL}${system.number}.png)`,
-                        }}
-                      >
-                        <span className="label">{system.number}</span>
-                      </div>
-                    )
-                )}
-              </div>
-              <div className="info">
-                <div className="wrapper">
-                  <span>
-                    {value.resources_max}/{value.influence_max}
-                  </span>
-                  <span>
-                    ({value.resources_efficient}/{value.influence_efficient})
-                  </span>
+      {displayComponents.images ? (
+        <div className="container-fluid" id="slice-display">
+          {slices &&
+            slices.map(({ key, systems, value }) => (
+              <div key={key} className="slice">
+                <div className="tiles">
+                  {systems.map(
+                    (system, i) =>
+                      system && (
+                        <div
+                          key={system.number}
+                          className={`tile tile-${i}`}
+                          style={{
+                            backgroundImage: `url(${SYSTEM_PNG_URL}${system.number}.png)`,
+                          }}
+                        >
+                          <span className="label">{system.number}</span>
+                        </div>
+                      )
+                  )}
+                </div>
+                <div className="info">
+                  <div className="wrapper">
+                    <span>
+                      {value.resources_max}/{value.influence_max}
+                    </span>
+                    <span>
+                      ({value.resources_efficient}/{value.influence_efficient})
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-      </div>
-      <div className="container">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>-</th>
-              <th>Optimal</th>
-              <th>Max</th>
-              <th>Optimal+E</th>
-              <th>Max+E</th>
-              <th>Planets</th>
-              <th>Planets+E</th>
-              <th>Skips, Wormholes, Legendaries</th>
-            </tr>
-          </thead>
-          <tbody>
-            {slices &&
-              slices.map(
-                ({ key, label, value, non_equi_value, attributes }) => (
-                  <tr key={key}>
-                    <td>{label}</td>
-                    <td>
-                      {non_equi_value.resources_efficient}/
-                      {non_equi_value.influence_efficient}
-                      {non_equi_value.either_efficient
-                        ? `+${non_equi_value.either_efficient}`
-                        : ""}{" "}
-                      ({non_equi_value.value_efficient})
-                    </td>
-                    <td>
-                      {non_equi_value.resources_max}/
-                      {non_equi_value.influence_max} (
-                      {non_equi_value.value_total})
-                    </td>
-                    <td>
-                      {value.resources_efficient}/{value.influence_efficient}{" "}
-                      {value.either_efficient
-                        ? `+${value.either_efficient}`
-                        : ""}{" "}
-                      ({value.value_efficient})
-                    </td>
-                    <td>
-                      {value.resources_max}/{value.influence_max} (
-                      {value.value_total})
-                    </td>
-                    <td>{non_equi_value.planets}</td>
-                    <td>{value.planets}</td>
-                    <td>{attributes.join(", ")}</td>
-                  </tr>
-                )
-              )}
-          </tbody>
-        </table>
-      </div>
+            ))}
+        </div>
+      ) : null}
+      {displayComponents.table ? (
+        <div className="container">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>-</th>
+                <th>Optimal</th>
+                <th>Max</th>
+                <th>Optimal+E</th>
+                <th>Max+E</th>
+                <th>Planets</th>
+                <th>Planets+E</th>
+                <th>Skips, Wormholes, Legendaries</th>
+              </tr>
+            </thead>
+            <tbody>
+              {slices &&
+                slices.map(
+                  ({ key, label, value, non_equi_value, attributes }) => (
+                    <tr key={key}>
+                      <td>{label}</td>
+                      <td>
+                        {non_equi_value.resources_efficient}/
+                        {non_equi_value.influence_efficient}
+                        {non_equi_value.either_efficient
+                          ? `+${non_equi_value.either_efficient}`
+                          : ""}{" "}
+                        ({non_equi_value.value_efficient})
+                      </td>
+                      <td>
+                        {non_equi_value.resources_max}/
+                        {non_equi_value.influence_max} (
+                        {non_equi_value.value_total})
+                      </td>
+                      <td>
+                        {value.resources_efficient}/{value.influence_efficient}
+                        {value.either_efficient
+                          ? `+${value.either_efficient}`
+                          : ""}{" "}
+                        ({value.value_efficient})
+                      </td>
+                      <td>
+                        {value.resources_max}/{value.influence_max} (
+                        {value.value_total})
+                      </td>
+                      <td>{non_equi_value.planets}</td>
+                      <td>{value.planets}</td>
+                      <td>{attributes.join(", ")}</td>
+                    </tr>
+                  )
+                )}
+            </tbody>
+          </table>
+        </div>
+      ) : null}
     </>
   );
 };
