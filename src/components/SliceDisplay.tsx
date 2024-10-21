@@ -124,6 +124,7 @@ export const SliceDisplay = () => {
               resources_efficient: 0,
               influence_efficient: 0,
               either_efficient: 0,
+              value_efficient: 0,
             };
 
             if (planet.tech) {
@@ -141,10 +142,13 @@ export const SliceDisplay = () => {
             planetValue.influence_max += planet.influence;
             if (planet.resources > planet.influence) {
               planetValue.resources_efficient += planet.resources;
+              planetValue.value_efficient += planet.resources;
             } else if (planet.influence > planet.resources) {
               planetValue.influence_efficient += planet.influence;
+              planetValue.value_efficient += planet.influence;
             } else {
               planetValue.either_efficient += planet.resources;
+              planetValue.value_efficient += planet.resources
             }
 
             slice.value.resources_max += planetValue.resources_max;
@@ -154,8 +158,6 @@ export const SliceDisplay = () => {
             slice.value.resources_efficient += planetValue.resources_efficient;
             slice.value.influence_efficient += planetValue.influence_efficient;
             slice.value.either_efficient += planetValue.either_efficient;
-            slice.value.value_efficient +=
-              planetValue.resources_efficient + planetValue.influence_efficient;
 
             if (!isEquidistant) {
               slice.non_equi_value.resources_max += planetValue.resources_max;
@@ -259,7 +261,7 @@ export const SliceDisplay = () => {
                   <tr key={key}>
                     <td>{label}</td>
                     <td>
-                      {non_equi_value.resources_efficient} /{" "}
+                      {non_equi_value.resources_efficient}/
                       {non_equi_value.influence_efficient}
                       {non_equi_value.either_efficient
                         ? `+${non_equi_value.either_efficient}`
@@ -267,19 +269,19 @@ export const SliceDisplay = () => {
                       ({non_equi_value.value_efficient})
                     </td>
                     <td>
-                      {non_equi_value.resources_max} /{" "}
+                      {non_equi_value.resources_max}/
                       {non_equi_value.influence_max} (
                       {non_equi_value.value_total})
                     </td>
                     <td>
-                      {value.resources_efficient} / {value.influence_efficient}{" "}
+                      {value.resources_efficient}/{value.influence_efficient}{" "}
                       {value.either_efficient
                         ? `+${value.either_efficient}`
                         : ""}{" "}
                       ({value.value_efficient})
                     </td>
                     <td>
-                      {value.resources_max} / {value.influence_max} (
+                      {value.resources_max}/{value.influence_max} (
                       {value.value_total})
                     </td>
                     <td>{non_equi_value.planets}</td>
