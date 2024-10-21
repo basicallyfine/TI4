@@ -5,7 +5,10 @@ import SYSTEMS from "../lib/data/systems";
 import { SYSTEM_PNG_URL } from "./map-builder/map-constants";
 
 import "../styles/slice-display.scss";
-import { sys } from "typescript";
+
+function valueLabel(value: number) {
+  return value.toString(10).replace(".5", "½");
+}
 
 const SLICE_LABELS = [
   "A",
@@ -337,7 +340,15 @@ export const SliceDisplay = () => {
                       {value.resources_max}/{value.influence_max}
                     </span>
                     <span>
-                      ({value.resources_efficient}/{value.influence_efficient})
+                      (
+                      {valueLabel(
+                        value.resources_efficient + value.either_efficient / 2
+                      )}
+                      /
+                      {valueLabel(
+                        value.influence_efficient + value.either_efficient / 2
+                      )}
+                      )
                     </span>
                   </div>
                 </div>
@@ -401,9 +412,19 @@ export const SliceDisplay = () => {
           <figcaption className="small">
             Notes:
             <ul>
-            <li>Optimal values refer to spending each planet for the higher of its resource or influence value.</li>
-            <li>Optimal values are represented as <code>resources / influence + either (total)</code> where "either" refers to planets that equal resource and influence values.</li>
-            <li>Max values refer to spending both resources and influence.</li>
+              <li>
+                Optimal values refer to spending each planet for the higher of
+                its resource or influence value.
+              </li>
+              <li>
+                Optimal values are represented as{" "}
+                <code>resources / influence + either (total)</code> where
+                "either" refers to planets that equal resource and influence
+                values.
+              </li>
+              <li>
+                Max values refer to spending both resources and influence.
+              </li>
             </ul>
           </figcaption>
         </div>
