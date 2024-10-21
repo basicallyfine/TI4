@@ -28,6 +28,7 @@ type SliceValues = {
   value_total: number;
   resources_efficient: number;
   influence_efficient: number;
+  either_efficient: number;
   value_efficient: number;
   planets: number;
 };
@@ -40,10 +41,6 @@ type SliceDetails = {
   non_equi_value: SliceValues;
   attributes: string[];
 };
-
-function valueLabel(value: number) {
-  return value.toString(10).replace(".5", "½");
-}
 
 export const SliceDisplay = () => {
   const [sliceString, setSliceString] = useState<string | undefined>();
@@ -98,6 +95,7 @@ export const SliceDisplay = () => {
             value_total: 0,
             resources_efficient: 0,
             influence_efficient: 0,
+            either_efficient: 0,
             value_efficient: 0,
             planets: 0,
           },
@@ -107,6 +105,7 @@ export const SliceDisplay = () => {
             value_total: 0,
             resources_efficient: 0,
             influence_efficient: 0,
+            either_efficient: 0,
             value_efficient: 0,
             planets: 0,
           },
@@ -124,6 +123,7 @@ export const SliceDisplay = () => {
               influence_max: 0,
               resources_efficient: 0,
               influence_efficient: 0,
+              either_efficient: 0,
             };
 
             if (planet.tech) {
@@ -144,26 +144,33 @@ export const SliceDisplay = () => {
             } else if (planet.influence > planet.resources) {
               planetValue.influence_efficient += planet.influence;
             } else {
-              planetValue.resources_efficient += planet.resources / 2;
-              planetValue.influence_efficient += planet.influence / 2;
+              planetValue.either_efficient += planet.resources;
             }
 
             slice.value.resources_max += planetValue.resources_max;
             slice.value.influence_max += planetValue.influence_max;
-            slice.value.value_total += planetValue.resources_max + planetValue.influence_max;
+            slice.value.value_total +=
+              planetValue.resources_max + planetValue.influence_max;
             slice.value.resources_efficient += planetValue.resources_efficient;
             slice.value.influence_efficient += planetValue.influence_efficient;
-            slice.value.value_efficient += planetValue.resources_efficient + planetValue.influence_efficient;
+            slice.value.either_efficient += planetValue.either_efficient;
+            slice.value.value_efficient +=
+              planetValue.resources_efficient + planetValue.influence_efficient;
 
             if (!isEquidistant) {
               slice.non_equi_value.resources_max += planetValue.resources_max;
               slice.non_equi_value.influence_max += planetValue.influence_max;
-              slice.non_equi_value.value_total += planetValue.resources_max + planetValue.influence_max;
+              slice.non_equi_value.value_total +=
+                planetValue.resources_max + planetValue.influence_max;
               slice.non_equi_value.resources_efficient +=
                 planetValue.resources_efficient;
               slice.non_equi_value.influence_efficient +=
                 planetValue.influence_efficient;
-              slice.non_equi_value.value_efficient += planetValue.resources_efficient + planetValue.influence_efficient;
+              slice.non_equi_value.either_efficient +=
+                planetValue.either_efficient;
+              slice.non_equi_value.value_efficient +=
+                planetValue.resources_efficient +
+                planetValue.influence_efficient;
             }
           });
 
@@ -224,8 +231,7 @@ export const SliceDisplay = () => {
                     {value.resources_max}/{value.influence_max}
                   </span>
                   <span>
-                    ({valueLabel(value.resources_efficient)}/
-                    {valueLabel(value.influence_efficient)})
+                    ({value.resources_efficient}/{value.influence_efficient})
                   </span>
                 </div>
               </div>
@@ -249,29 +255,32 @@ export const SliceDisplay = () => {
           <tbody>
             {slices &&
               slices.map(
-                ({
-                  key,
-                  label,
-                  value,
-                  non_equi_value,
-                  attributes,
-                }) => (
+                ({ key, label, value, non_equi_value, attributes }) => (
                   <tr key={key}>
                     <td>{label}</td>
                     <td>
-                      {valueLabel(non_equi_value.resources_efficient)} /{" "}
-                      {valueLabel(non_equi_value.influence_efficient)} ({valueLabel(non_equi_value.value_efficient)})
+                      {non_equi_value.resources_efficient} /{" "}
+                      {non_equi_value.influence_efficient}
+                      {non_equi_value.either_efficient
+                        ? `+${non_equi_value.either_efficient}`
+                        : ""}{" "}
+                      ({non_equi_value.value_efficient})
                     </td>
                     <td>
                       {non_equi_value.resources_max} /{" "}
-                      {non_equi_value.influence_max} ({valueLabel(non_equi_value.value_total)})
+                      {non_equi_value.influence_max} (
+                      {non_equi_value.value_total})
                     </td>
                     <td>
-                      {valueLabel(value.resources_efficient)} /{" "}
-                      {valueLabel(value.influence_efficient)} ({value.value_efficient})
+                      {value.resources_efficient} / {value.influence_efficient}{" "}
+                      {value.either_efficient
+                        ? `+${value.either_efficient}`
+                        : ""}{" "}
+                      ({value.value_efficient})
                     </td>
                     <td>
-                      {value.resources_max} / {value.influence_max} ({value.value_total})
+                      {value.resources_max} / {value.influence_max} (
+                      {value.value_total})
                     </td>
                     <td>{non_equi_value.planets}</td>
                     <td>{value.planets}</td>
