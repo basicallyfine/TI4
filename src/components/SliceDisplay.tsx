@@ -5,6 +5,7 @@ import SYSTEMS from "../lib/data/systems";
 import { SYSTEM_PNG_URL } from "./map-builder/map-constants";
 
 import "../styles/slice-display.scss";
+import { sys } from "typescript";
 
 const SLICE_LABELS = [
   "A",
@@ -24,8 +25,10 @@ const SLICE_LABELS = [
 type SliceValues = {
   resources_max: number;
   influence_max: number;
+  value_total: number;
   resources_efficient: number;
   influence_efficient: number;
+  value_efficient: number;
   planets: number;
 };
 
@@ -92,15 +95,19 @@ export const SliceDisplay = () => {
           value: {
             resources_max: 0,
             influence_max: 0,
+            value_total: 0,
             resources_efficient: 0,
             influence_efficient: 0,
+            value_efficient: 0,
             planets: 0,
           },
           non_equi_value: {
             resources_max: 0,
             influence_max: 0,
+            value_total: 0,
             resources_efficient: 0,
             influence_efficient: 0,
+            value_efficient: 0,
             planets: 0,
           },
           attributes: [],
@@ -112,7 +119,7 @@ export const SliceDisplay = () => {
             slice.non_equi_value.planets += system?.planets.length || 0;
           }
           system?.planets.forEach((planet) => {
-            const systemValue = {
+            const planetValue = {
               resources_max: 0,
               influence_max: 0,
               resources_efficient: 0,
@@ -130,29 +137,33 @@ export const SliceDisplay = () => {
               );
             }
 
-            systemValue.resources_max += planet.resources;
-            systemValue.influence_max += planet.influence;
+            planetValue.resources_max += planet.resources;
+            planetValue.influence_max += planet.influence;
             if (planet.resources > planet.influence) {
-              systemValue.resources_efficient += planet.resources;
+              planetValue.resources_efficient += planet.resources;
             } else if (planet.influence > planet.resources) {
-              systemValue.influence_efficient += planet.influence;
+              planetValue.influence_efficient += planet.influence;
             } else {
-              systemValue.resources_efficient += planet.resources / 2;
-              systemValue.influence_efficient += planet.influence / 2;
+              planetValue.resources_efficient += planet.resources / 2;
+              planetValue.influence_efficient += planet.influence / 2;
             }
 
-            slice.value.resources_max += systemValue.resources_max;
-            slice.value.influence_max += systemValue.influence_max;
-            slice.value.resources_efficient += systemValue.resources_efficient;
-            slice.value.influence_efficient += systemValue.influence_efficient;
+            slice.value.resources_max += planetValue.resources_max;
+            slice.value.influence_max += planetValue.influence_max;
+            slice.value.value_total += planetValue.resources_max + planetValue.influence_max;
+            slice.value.resources_efficient += planetValue.resources_efficient;
+            slice.value.influence_efficient += planetValue.influence_efficient;
+            slice.value.value_efficient += planetValue.resources_efficient + planetValue.influence_efficient;
 
             if (!isEquidistant) {
-              slice.non_equi_value.resources_max += systemValue.resources_max;
-              slice.non_equi_value.influence_max += systemValue.influence_max;
+              slice.non_equi_value.resources_max += planetValue.resources_max;
+              slice.non_equi_value.influence_max += planetValue.influence_max;
+              slice.non_equi_value.value_total += planetValue.resources_max + planetValue.influence_max;
               slice.non_equi_value.resources_efficient +=
-                systemValue.resources_efficient;
+                planetValue.resources_efficient;
               slice.non_equi_value.influence_efficient +=
-                systemValue.influence_efficient;
+                planetValue.influence_efficient;
+              slice.non_equi_value.value_efficient += planetValue.resources_efficient + planetValue.influence_efficient;
             }
           });
 
@@ -232,7 +243,7 @@ export const SliceDisplay = () => {
               <th>Max+E</th>
               <th>Planets</th>
               <th>Planets+E</th>
-              <th>Skips</th>
+              <th>Skips, Wormholes, Legendaries</th>
             </tr>
           </thead>
           <tbody>
@@ -249,18 +260,18 @@ export const SliceDisplay = () => {
                     <td>{label}</td>
                     <td>
                       {valueLabel(non_equi_value.resources_efficient)} /{" "}
-                      {valueLabel(non_equi_value.influence_efficient)}
+                      {valueLabel(non_equi_value.influence_efficient)} ({valueLabel(non_equi_value.value_efficient)})
                     </td>
                     <td>
                       {non_equi_value.resources_max} /{" "}
-                      {non_equi_value.influence_max}
+                      {non_equi_value.influence_max} ({valueLabel(non_equi_value.value_total)})
                     </td>
                     <td>
                       {valueLabel(value.resources_efficient)} /{" "}
-                      {valueLabel(value.influence_efficient)}
+                      {valueLabel(value.influence_efficient)} ({value.value_efficient})
                     </td>
                     <td>
-                      {value.resources_max} / {value.influence_max}
+                      {value.resources_max} / {value.influence_max} ({value.value_total})
                     </td>
                     <td>{non_equi_value.planets}</td>
                     <td>{value.planets}</td>
